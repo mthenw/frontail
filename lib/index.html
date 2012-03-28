@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>__TITLE__</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+        /* Styles mainly from http://twitter.github.com/bootstrap/ */
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 13px;
+            line-height: 18px;
+            color: #333;
+            padding: 40px 0;
+        }
+
+        .navbar {
+            background-color: #2C2C2C;
+            background-image: -webkit-linear-gradient(top, #333, #222);
+            background-repeat: repeat-x;
+            box-shadow: rgba(0, 0, 0, 0.246094) 0px 1px 3px 0px, rgba(0, 0, 0, 0.0976563) 0px -1px 0px 0px inset;
+            position: fixed;
+            left: 0px;
+            right: 0px;
+            top: 0px;
+            color: #fff;
+            display: block;
+            height: 24px;
+            font-size: 20px;
+            font-weight: 200;
+            padding: 8px 50px;
+        }
+
+        .log {
+            white-space: pre-wrap;
+        }
+
+        .log .line {
+            padding: 0 50px;
+            margin-left: 10em;
+            text-indent: -10em;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">__TITLE__</div>
+    <pre class="log"></pre>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+        (function() {
+            var logContainer = document.getElementsByClassName('log')[0];
+
+            var log = function(line) {
+                var p = document.createElement('p');
+                    p.className = 'line';
+                    p.innerHTML = line;
+
+                logContainer.appendChild(p);
+                window.scrollTo(0, document.body.scrollHeight);
+            };
+
+            var socket  = new io.connect();
+            socket.on('connect', function() {
+                log('<i>Connected...</i>');
+            });
+            socket.on('lines', function(lines) {
+                for (var i in lines) {
+                    log(lines[i]);
+                }
+            });
+        })();
+  </script>
+</body>
+</html>

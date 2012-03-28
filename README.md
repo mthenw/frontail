@@ -2,15 +2,15 @@
 
 ## Introduction
 
-frontail is node.js application for serving tail -F to browser using socket.io
+frontail is node.js application for serving `tail -F` output to browser using [socket.io](http://socket.io/).
 
 ## Usage
 
-   frontail [options] [file ...]
+    frontail [options] [file ...]
 
-   Options:
+    Options:
 
-     -h, --help             output usage information
-     -V, --version          output the version number
-     -p, --port <port>      server port, default 9001
-     -n, --number <number>  starting lines number, default 10
+      -h, --help             output usage information
+      -V, --version          output the version number
+      -p, --port <port>      server port, default 9001
+      -n, --number <number>  starting lines number, default 10

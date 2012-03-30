@@ -52,28 +52,57 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
-        (function() {
-            var logContainer = document.getElementsByClassName('log')[0];
+        var Frontail = (function() {
 
-            var log = function(line) {
-                var p = document.createElement('p');
-                    p.className = 'line';
-                    p.innerHTML = line;
+            /**
+             * @type {Object}
+             * @private
+             */
+            var _socket;
 
-                logContainer.appendChild(p);
-                window.scrollTo(0, document.body.scrollHeight);
-            };
+            /**
+             * @type {HTMLElement}
+             * @private
+             */
+            var _logContainer;
 
-            var socket  = new io.connect();
-            socket.on('connect', function() {
-                log('<i>Connected...</i>');
-            });
-            socket.on('lines', function(lines) {
-                for (var i in lines) {
-                    log(lines[i]);
+            return {
+                /**
+                 * Init socket.io communication and log container
+                 */
+                init: function() {
+                    var that = this;
+                    _socket  = new io.connect();
+
+                    _socket.on('connect', function() {
+                        that.log('<i>Connected...</i>');
+                    });
+
+                    _socket.on('lines', function(lines) {
+                        for (var i in lines) {
+                            that.log(lines[i]);
+                        }
+                    });
+
+                    _logContainer = document.getElementsByClassName('log')[0];
+                },
+
+                /**
+                 * Log data
+                 *
+                 * @param {string} data data to log
+                 */
+                log: function(data) {
+                    var p = document.createElement('p');
+                        p.className = 'line';
+                        p.innerHTML = data;
+                        _logContainer.appendChild(p);
+                        window.scrollTo(0, document.body.scrollHeight);
                 }
-            });
+            }
         })();
+
+        window.load = Frontail.init();
   </script>
 </body>
 </html>

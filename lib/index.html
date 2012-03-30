@@ -35,6 +35,59 @@
             padding: 8px 50px;
         }
 
+        .navbar .query {
+            -webkit-box-shadow: rgba(0, 0, 0, 0.0976563) 0px 1px 2px 0px inset, rgba(255, 255, 255, 0.148438) 0px 1px 0px 0px;
+            -webkit-rtl-ordering: logical;
+            -webkit-transition-delay: 0s;
+            -webkit-transition-duration: 0s;
+            -webkit-transition-property: none;
+            -webkit-transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+            -webkit-user-select: text;
+            background-color: #626262;
+            border-bottom-color: #151515;
+            border-bottom-left-radius: 14px;
+            border-bottom-right-radius: 14px;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-left-color: #151515;
+            border-left-style: solid;
+            border-left-width: 1px;
+            border-right-color: #151515;
+            border-right-style: solid;
+            border-right-width: 1px;
+            border-top-color: #151515;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            border-top-style: solid;
+            border-top-width: 1px;
+            box-shadow: rgba(0, 0, 0, 0.0976563) 0px 1px 2px 0px inset, rgba(255, 255, 255, 0.148438) 0px 1px 0px 0px;
+            color: white;
+            display: inline-block;
+            float: right;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 13px;
+            height: 18px;
+            line-height: 13px;
+            padding-bottom: 4px;
+            padding-left: 9px;
+            padding-right: 9px;
+            padding-top: 4px;
+            width: 160px;
+        }
+
+        .navbar .query:focus,
+        .navbar .query.focused {
+          padding: 5px 10px;
+          color: #333333;
+          text-shadow: 0 1px 0 #ffffff;
+          background-color: #ffffff;
+          border: 0;
+          -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+          -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+          outline: 0;
+        }
+
         .log {
             white-space: pre-wrap;
         }
@@ -44,10 +97,16 @@
             margin-left: 10em;
             text-indent: -10em;
         }
+        .log .line.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <div class="navbar">__TITLE__</div>
+    <div class="navbar">
+        <span class="brand">__TITLE__</span>
+        <input type="text" class="query" placeholder="Filter" tabindex="1">
+    </div>
     <pre class="log"></pre>
 
     <script src="/socket.io/socket.io.js"></script>
@@ -66,25 +125,70 @@
              */
             var _logContainer;
 
+            /**
+             * @type {HTMLElement}
+             * @private
+             */
+            var _filterInput;
+
+            /**
+             * @type {String}
+             * @private
+             */
+            var _filterValue = '';
+
+            /**
+             * Filter logs based on _filterValue
+             *
+             * @function
+             * @private
+             */
+            var _filterLogs = function() {
+                var collection = _logContainer.childNodes;
+                var i = collection.length;
+                while (i-=1) {
+                    var e = collection[i-1];
+                    if (e.innerHTML.indexOf(_filterValue) === -1) {
+                        if (e.className.indexOf('hidden') === -1)
+                            e.className += ' hidden';
+                    } else {
+                        e.className = e.className.replace(/hidden/, '');
+                    }
+                }
+            };
+
             return {
                 /**
                  * Init socket.io communication and log container
+                 *
+                 * @param {Object} opts options
                  */
-                init: function() {
+                init: function(opts) {
                     var that = this;
+
+                    // socket.io init
                     _socket  = new io.connect();
+                    _socket
+                        .on('lines', function(lines) {
+                            for (var i = 0; i < lines.length; i+=1) {
+                                that.log(lines[i]);
+                            }
+                        });
 
-                    _socket.on('connect', function() {
-                        that.log('<i>Connected...</i>');
-                    });
+                    // Elements
+                    _logContainer = opts.container;
+                    _filterInput = opts.filterInput;
 
-                    _socket.on('lines', function(lines) {
-                        for (var i in lines) {
-                            that.log(lines[i]);
+                    // Filter input bind
+                    _filterInput.addEventListener('keyup', function(e) {
+                        if (e.keyCode === 27) {
+                            this.value = '';
+                            _filterValue = '';
+                        } else {
+                            _filterValue = this.value;
+                            _filterLogs();
                         }
                     });
-
-                    _logContainer = document.getElementsByClassName('log')[0];
                 },
 
                 /**
@@ -102,7 +206,10 @@
             }
         })();
 
-        window.load = Frontail.init();
+        window.load = Frontail.init({
+            container: document.getElementsByClassName('log')[0],
+            filterInput: document.getElementsByClassName('query')[0]
+        });
   </script>
 </body>
 </html>

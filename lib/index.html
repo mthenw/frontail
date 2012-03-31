@@ -15,7 +15,7 @@
             font-size: 13px;
             line-height: 18px;
             color: #333;
-            padding: 40px 0;
+            padding: 45px 0 10px;
         }
 
         .navbar {
@@ -97,9 +97,6 @@
             margin-left: 10em;
             text-indent: -10em;
         }
-        .log .line.hidden {
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -146,15 +143,18 @@
             var _filterLogs = function() {
                 var collection = _logContainer.childNodes;
                 var i = collection.length;
+
+                if (i == 0) return;
+
                 while (i-=1) {
                     var e = collection[i-1];
-                    if (e.innerHTML.indexOf(_filterValue) === -1) {
-                        if (e.className.indexOf('hidden') === -1)
-                            e.className += ' hidden';
+                    if (e.textContent.indexOf(_filterValue) === -1) {
+                        e.style.display = 'none';
                     } else {
-                        e.className = e.className.replace(/hidden/, '');
+                        e.style.display = '';
                     }
                 }
+                window.scrollTo(0, document.body.scrollHeight);
             };
 
             return {
@@ -178,16 +178,17 @@
                     // Elements
                     _logContainer = opts.container;
                     _filterInput = opts.filterInput;
+                    _filterInput.focus();
 
                     // Filter input bind
                     _filterInput.addEventListener('keyup', function(e) {
-                        if (e.keyCode === 27) {
+                        if (e.keyCode === 27) { //esc
                             this.value = '';
                             _filterValue = '';
                         } else {
                             _filterValue = this.value;
-                            _filterLogs();
                         }
+                        _filterLogs();
                     });
                 },
 

@@ -1,6 +1,6 @@
 {
     "name": "frontail",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "tail -F output in browser",
     "homepage": "https://github.com/mthenw/frontail",
     "contributors": {

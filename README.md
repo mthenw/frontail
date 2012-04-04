@@ -4,6 +4,10 @@
 
 frontail is node.js application for serving `tail -F` output to browser using [socket.io](http://socket.io/).
 
+## Installation
+
+    npm install frontail -g
+
 ## Usage
 
     frontail [options] [file ...]

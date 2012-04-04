@@ -71,10 +71,14 @@
             white-space: pre-wrap;
         }
 
-        .log .line {
+        .log .inner-line {
             padding: 0 50px;
             margin-left: 10em;
             text-indent: -10em;
+        }
+
+        .log .line.selected {
+            background-color: pink;
         }
     </style>
 </head>
@@ -136,6 +140,19 @@
                 window.scrollTo(0, document.body.scrollHeight);
             };
 
+            /**
+             * Is page is scrolled to bottom
+             *
+             * @return {Boolean}
+             * @private
+             */
+            var _scrolledBottom = function() {
+                var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+                var totalHeight = document.body.offsetHeight;
+                var clientHeight = document.documentElement.clientHeight;
+                return totalHeight <= currentScroll + clientHeight;
+            };
+
             return {
                 /**
                  * Init socket.io communication and log container
@@ -177,11 +194,27 @@
                  * @param {string} data data to log
                  */
                 log: function(data) {
+                    var wasScrolledBottom = _scrolledBottom();
+                    var div = document.createElement('div');
                     var p = document.createElement('p');
-                        p.className = 'line';
-                        p.innerHTML = data;
-                        _logContainer.appendChild(p);
+                    p.className = 'inner-line';
+                    p.innerHTML = data;
+
+                    div.className = 'line';
+                    div.addEventListener('click', function() {
+                        if (this.className.indexOf('selected') === -1) {
+                            this.className += ' selected'
+                        } else {
+                            this.className = this.className.replace(/selected/g, '');
+                        }
+                    });
+
+                    div.appendChild(p);
+                    _logContainer.appendChild(div);
+
+                    if (wasScrolledBottom) {
                         window.scrollTo(0, document.body.scrollHeight);
+                    }
                 }
             }
         })();

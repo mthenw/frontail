@@ -13,7 +13,8 @@
     },
     "dependencies": {
         "commander": ">=0.5.2",
-        "socket.io": ">=0.9.3"
+        "socket.io": ">=0.9.3",
+        "daemon": ">=0.4.1"
     },
     "repository": {
         "type": "git",

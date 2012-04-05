@@ -32,7 +32,7 @@ Web interface is on http://localhost:[port]
 
 ## Screenshot
 
-![screenshot1](http://dl.dropbox.com/u/3101412/frontail1.png)
+![screenshot1](http://dl.dropbox.com/u/3101412/frontail2.png)
 
 ## License
 

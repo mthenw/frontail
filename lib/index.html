@@ -15,7 +15,7 @@
             font-size: 13px;
             line-height: 18px;
             color: #333;
-            padding: 45px 0 10px;
+            padding: 45px 0 20px;
         }
 
         .navbar {
@@ -118,6 +118,20 @@
             var _filterValue = '';
 
             /**
+             * Hide element if doesn't contain filter value
+             *
+             * @param {Object} element
+             * @private
+             */
+            var _filterElement = function(element) {
+                if (element.textContent.indexOf(_filterValue) === -1) {
+                    element.style.display = 'none';
+                } else {
+                    element.style.display = '';
+                }
+            }
+
+            /**
              * Filter logs based on _filterValue
              *
              * @function
@@ -130,12 +144,7 @@
                 if (i == 0) return;
 
                 while (i-=1) {
-                    var e = collection[i-1];
-                    if (e.textContent.indexOf(_filterValue) === -1) {
-                        e.style.display = 'none';
-                    } else {
-                        e.style.display = '';
-                    }
+                    _filterElement(collection[i-1]);
                 }
                 window.scrollTo(0, document.body.scrollHeight);
             };
@@ -210,6 +219,7 @@
                     });
 
                     div.appendChild(p);
+                    _filterElement(div);
                     _logContainer.appendChild(div);
 
                     if (wasScrolledBottom) {

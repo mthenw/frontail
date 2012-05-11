@@ -77,8 +77,32 @@
             text-indent: -96pt;
         }
 
+
+        /* Line colors */
+
         .log .line.selected {
-            background-color: pink;
+          background-color: cyan;
+        }
+
+        .red {
+          background-color: red;
+        }
+
+        .inverse-red {
+          color: #fff;
+          background-color: red;
+        }
+
+        .green {
+          background-color: green;
+        }
+
+        .yellow {
+          background-color: yellow;
+        }
+
+        .bright {
+          font-weight: bold;
         }
     </style>
 </head>
@@ -90,8 +114,44 @@
     <pre class="log"></pre>
 
     <script src="/socket.io/socket.io.js"></script>
+    <!--<script src="user.js"></script>-->
     <script type="text/javascript">
         var Frontail = (function() {
+
+            /**
+             * @type {Array}
+             * @private
+             */
+            var _highlightRules = [
+              { match: new RegExp("EMERGENCY"), color: "bg-red" },
+              { match: new RegExp("FATAL"), color: "red bright" },
+              { match: new RegExp("CRITICAL"), color: "red" },
+              { match: new RegExp("DEBUG"), color: "green" },
+              { match: new RegExp("ERROR"), color: "green" },
+              { match: new RegExp("WARN"), color: "yellow" },
+
+              { match: new RegExp("\"alert\""), color: "yellow" },
+              { match: new RegExp("\"error\""), color: "yellow" },
+              { match: new RegExp("\"debug\""), color: "yellow" },
+              { match: new RegExp("\"info\""), color: "yellow" },
+              { match: new RegExp("\"warn\""), color: "yellow" },
+              { match: new RegExp("\"notice\""), color: "yellow" }
+            ];
+
+            /**
+             * Colorize log output
+             * @type {Function}
+             * @private
+             */
+            var _getRowHighlights = function(line) {
+              var classes = "";
+              for (var i = 0; i < _highlightRules.length; i++) {
+                if (_highlightRules[i].match.test(line)) {
+                  classes += " " + _highlightRules[i].color;
+                }
+              }
+              return classes;
+            };
 
             /**
              * @type {Object}
@@ -210,6 +270,7 @@
                     p.innerHTML = data;
 
                     div.className = 'line';
+                    div.className += _getRowHighlights(data);
                     div.addEventListener('click', function() {
                         if (this.className.indexOf('selected') === -1) {
                             this.className += ' selected'

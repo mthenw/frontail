@@ -14,7 +14,8 @@
     "dependencies": {
         "commander": ">=0.5.2",
         "socket.io": ">=0.9.3",
-        "daemon": ">=0.4.1"
+        "daemon": ">=0.4.1",
+        "connect": ">=2.2.2"
     },
     "repository": {
         "type": "git",

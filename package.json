@@ -12,7 +12,7 @@
         "frontail": "./bin/frontail"
     },
     "dependencies": {
-        "commander": ">=0.5.2",
+        "commander": ">=1.0.0",
         "socket.io": ">=0.9.3",
         "daemon": ">=0.4.1",
         "connect": ">=2.2.2"

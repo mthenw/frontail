@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/mthenw/frontail.png)](http://travis-ci.org/mthenw/frontail)
 
 # frontail – tail -F output in browser
 

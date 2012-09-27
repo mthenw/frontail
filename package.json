@@ -1,6 +1,6 @@
 {
     "name": "frontail",
-    "version": "0.2.8",
+    "version": "0.2.9",
     "description": "tail -F output in browser",
     "homepage": "https://github.com/mthenw/frontail",
     "author": {
@@ -12,10 +12,10 @@
         "frontail": "./bin/frontail"
     },
     "dependencies": {
-        "commander": ">=1.0.0",
-        "socket.io": ">=0.9.6",
-        "daemon": ">=0.5.1",
-        "connect": ">=2.4.0"
+        "commander": "1.0.1",
+        "socket.io": "0.9.6",
+        "daemon": "0.5.1",
+        "connect": "2.2.1"
     },
     "repository": {
         "type": "git",
@@ -26,7 +26,7 @@
         "syslog"
     ],
     "engine": {
-        "node": ">=0.6"
+        "node": ">= 0.4.x"
     },
     "preferGlobal": true
 }

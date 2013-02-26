@@ -12,11 +12,11 @@
         "frontail": "./bin/frontail"
     },
     "dependencies": {
-        "commander": "1.0.1",
-        "socket.io": "0.9.10",
-        "daemon": "0.4.1",
-        "connect": "2.4.4",
-        "validator": "0.4.24"
+        "commander": "1.1.1",
+        "socket.io": "0.9.13",
+        "connect": "2.7.3",
+        "validator": "0.4.24",
+        "forever": "0.10.0"
     },
     "repository": {
         "type": "git",
@@ -27,7 +27,7 @@
         "syslog"
     ],
     "engine": {
-        "node": ">= 0.5.0"
+        "node": "0.8.x"
     },
     "preferGlobal": true
 }

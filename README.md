@@ -25,6 +25,7 @@ frontail is node.js application for serving `tail -F` output to browser using [s
       -V, --version          output the version number
       -p, --port <port>      server port, default 9001
       -n, --number <number>  starting lines number, default 10
+      -l, --lines <number>   number on lines stored in frontend, default 2000
       -d, --daemonize        run as daemon
       --pid-path <path>      if run as deamon file that will store the process ID, default /var/run/frontail.pid
       --log-path <path>      if run as deamon file that will be used as a log, default /dev/null

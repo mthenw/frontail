@@ -16,7 +16,7 @@
         "socket.io": "0.9.13",
         "connect": "2.7.3",
         "validator": "0.4.24",
-        "forever": "0.10.0"
+        "daemon": "1.0.0"
     },
     "repository": {
         "type": "git",
@@ -27,7 +27,7 @@
         "syslog"
     ],
     "engine": {
-        "node": "0.8.x"
+        "node": ">= 0.8.0"
     },
     "preferGlobal": true
 }

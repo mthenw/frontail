@@ -1,9 +1,8 @@
-[![build status](https://secure.travis-ci.org/mthenw/frontail.png)](http://travis-ci.org/mthenw/frontail)
-
 # frontail – tail -F output in browser
 
-
 frontail is node.js application for serving `tail -F` output to browser using [socket.io](http://socket.io/).
+
+[![build status](https://secure.travis-ci.org/mthenw/frontail.png)](http://travis-ci.org/mthenw/frontail)
 
 ### Features
 

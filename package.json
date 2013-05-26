@@ -1,6 +1,6 @@
 {
     "name": "frontail",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "description": "tail -F output in browser",
     "homepage": "https://github.com/mthenw/frontail",
     "author": {
@@ -16,7 +16,8 @@
         "socket.io": "0.9.13",
         "connect": "2.7.3",
         "validator": "0.4.24",
-        "daemon": "1.0.0"
+        "daemon": "1.0.0",
+        "cookie": "0.1.0"
     },
     "repository": {
         "type": "git",

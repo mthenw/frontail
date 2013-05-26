@@ -6,6 +6,7 @@ frontail is node.js application for serving `tail -F` output to browser using [s
 
 ### Features
 
+* basic auth
 * filtering logs (press Tab to focus input)
 * terminal-like autoscrolling
 * marking logs
@@ -20,14 +21,16 @@ frontail is node.js application for serving `tail -F` output to browser using [s
 
     Options:
 
-      -h, --help             output usage information
-      -V, --version          output the version number
-      -p, --port <port>      server port, default 9001
-      -n, --number <number>  starting lines number, default 10
-      -l, --lines <number>   number on lines stored in frontend, default 2000
-      -d, --daemonize        run as daemon
-      --pid-path <path>      if run as deamon file that will store the process ID, default /var/run/frontail.pid
-      --log-path <path>      if run as deamon file that will be used as a log, default /dev/null
+      -h, --help                output usage information
+      -V, --version             output the version number
+      -p, --port <port>         server port, default 9001
+      -n, --number <number>     starting lines number, default 10
+      -l, --lines <number>      number on lines stored in frontend, default 2000
+      -d, --daemonize           run as daemon
+      -U, --user <username>     Basic Auth user
+      -P, --password <password> Basic Auth password
+      --pid-path <path>         if run as daemon file that will store the process ID, default /var/run/frontail.pid
+      --log-path <path>         if run as daemon file that will be used as a log, default /dev/null
 
 Web interface is on http://localhost:[port]
 
@@ -39,7 +42,7 @@ Web interface is on http://localhost:[port]
 
 (The MIT License)
 
-Copyright 2012 Maciej Winnicki http://maciejwinnicki.pl
+Copyright 2013 Maciej Winnicki http://maciejwinnicki.pl
 
 This project is free software released under the MIT/X11 license:
 

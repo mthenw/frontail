@@ -9,6 +9,7 @@
 * log rotation
 * autoscrolling
 * marking logs
+* http/https
 
 ## Installation
 
@@ -20,18 +21,20 @@
 
     Options:
 
-      -h, --help                 output usage information
-      -V, --version              output the version number
-      -p, --port <port>          server port, default 9001
-      -n, --number <number>      starting lines number, default 10
-      -l, --lines <lines>        number on lines stored in browser, default 2000
-      -d, --daemonize            run as daemon
-      -U, --user <username>      Basic Authentication username, this option works only along with -P option
-      -P, --password <password>  Basic Authentication password, this option works only along with -U option
-      --pid-path <path>          if run as daemon file that will store the process id, default /var/run/frontail.pid
-      --log-path <path>          if run as daemon file that will be used as a log, default /dev/null
+      -h, --help                            output usage information
+      -V, --version                         output the version number
+      -p, --port <port>                     server port, default 9001
+      -n, --number <number>                 starting lines number, default 10
+      -l, --lines <lines>                   number on lines stored in browser, default 2000
+      -d, --daemonize                       run as daemon
+      -U, --user <username>                 Basic Authentication username, this option works only along with -P option
+      -P, --password <password>             Basic Authentication password, this option works only along with -U option
+      -k, --key <path/to/key.pem>           Private Key for HTTPS
+      -c, --certificate <path/to/cert.pem>  Certificate for HTTPS
+      --pid-path <path>                     if run as daemon file that will store the process id, default /var/run/frontail.pid
+      --log-path <path>                     if run as daemon file that will be used as a log, default /dev/null
 
-Web interface is on http://localhost:[port]
+Web interface is on http://localhost:[port] (or https://localhost:[port] if a key and certificate were provided)
 
 ## Screenshot
 

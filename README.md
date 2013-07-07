@@ -1,6 +1,6 @@
 # frontail(1) – tail -F output in browser
 
-```frontail``` is node.js application for serving `tail -F` output to browser using [socket.io](http://socket.io/).
+```frontail``` is node.js application for serving `tail -F` output to browser.
 
 ## Features
 

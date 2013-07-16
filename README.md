@@ -28,8 +28,8 @@
       -d, --daemonize               run as daemon
       -U, --user <username>         Basic Authentication username, this option works only along with -P option
       -P, --password <password>     Basic Authentication password, this option works only along with -U option
-      -k, --key <key.pem>           Private Key for HTTPS
-      -c, --certificate <cert.pem>  Certificate for HTTPS
+      -k, --key <key.pem>           private key for HTTPS
+      -c, --certificate <cert.pem>  certificate for HTTPS
       --pid-path <path>             if run as daemon file that will store the process id, default /var/run/frontail.pid
       --log-path <path>             if run as daemon file that will be used as a log, default /dev/null
 

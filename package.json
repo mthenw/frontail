@@ -15,7 +15,10 @@
         "cookie": "0.1.0"
     },
     "devDependencies": {
-        "jshint": "~2.1.10"
+        "jshint": "~2.3.0",
+        "should": "~2.0.2",
+        "mocha": "~1.13.0",
+        "temp": "~0.6.0"
     },
     "repository": {
         "type": "git",

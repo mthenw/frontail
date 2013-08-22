@@ -3,14 +3,9 @@
     "version": "0.4.1",
     "description": "tail -F output in browser",
     "homepage": "https://github.com/mthenw/frontail",
-    "author": {
-        "name": "Maciej Winnicki",
-        "email": "maciej.winnicki@gmail.com"
-    },
+    "author": "Maciej Winnicki <maciej.winnicki@gmail.com>",
     "license": "MIT",
-    "bin": {
-        "frontail": "./bin/frontail"
-    },
+    "bin": "./bin/frontail",
     "dependencies": {
         "commander": "1.3.2",
         "socket.io": "0.9.16",
@@ -30,5 +25,6 @@
     "engine": {
         "node": ">= 0.8.0"
     },
+    "main": "index",
     "preferGlobal": true
 }

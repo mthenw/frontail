@@ -13,7 +13,7 @@ var program      = require('commander')
  * Parse arg
  */
 program
-    .version(require('../package.json').version)
+    .version(require('./package.json').version)
     .usage('[options] [file ...]')
     .option('-p, --port <port>', 'server port, default 9001', Number, 9001)
     .option('-n, --number <number>', 'starting lines number, default 10', Number, 10)
@@ -84,9 +84,9 @@ if (program.daemonize) {
     }
 
     app
-    .use(connect.static(__dirname + '/web/assets'))
+    .use(connect.static(__dirname + '/lib/web/assets'))
     .use(function (req, res) {
-        fs.readFile(__dirname + '/web/index.html', function (err, data) {
+        fs.readFile(__dirname + '/lib/web/index.html', function (err, data) {
             if (err) {
                 res.writeHead(500, {'Content-Type': 'text/plain'});
                 res.end('Internal error');

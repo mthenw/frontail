@@ -12,11 +12,11 @@
         "frontail": "./bin/frontail"
     },
     "dependencies": {
-        "commander": "1.1.1",
-        "socket.io": "0.9.13",
-        "connect": "2.7.3",
-        "validator": "0.4.24",
-        "daemon": "1.0.0",
+        "commander": "1.3.2",
+        "socket.io": "0.9.16",
+        "connect": "2.8.5",
+        "validator": "1.5.0",
+        "daemon": "1.1.0",
         "cookie": "0.1.0"
     },
     "repository": {

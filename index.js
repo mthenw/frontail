@@ -154,7 +154,7 @@ var daemon       = require('daemon');
             });
         });
 
-        /*
+        /**
          * Send incoming data
          */
         var tail = spawn('tail', ['-F'].concat(files));

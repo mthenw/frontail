@@ -105,7 +105,7 @@ var daemon       = require('daemon');
                     res.writeHead(200, {'Content-Type': 'text/html'});
                     res.end(data.toString('utf-8').replace(
                         /__TITLE__/g, 'tail -F ' + files.join(' ')).replace(
-                        /__THEME__/g, program.style), 'utf-8'
+                        /__STYLE__/g, program.style), 'utf-8'
                     );
                 }
             });

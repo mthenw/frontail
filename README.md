@@ -2,6 +2,8 @@
 
 ```frontail``` is node.js application for serving `tail -F` output to browser.
 
+[![Build Status](https://travis-ci.org/mthenw/frontail.png?branch=master)](https://travis-ci.org/mthenw/frontail)
+
 ## Features
 
 * search
@@ -22,7 +24,8 @@
 
       -h, --help                    output usage information
       -V, --version                 output the version number
-      -p, --port <port>             server port, default 9001
+      -h, --host <host>             listening host, default 0.0.0.0
+      -p, --port <port>             listening port, default 9001
       -n, --number <number>         starting lines number, default 10
       -l, --lines <lines>           number on lines stored in browser, default 2000
       -d, --daemonize               run as daemon

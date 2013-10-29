@@ -21,6 +21,7 @@ var daemon       = require('daemon');
         .option('-p, --port <port>', 'server port, default 9001', Number, 9001)
         .option('-n, --number <number>', 'starting lines number, default 10', Number, 10)
         .option('-l, --lines <lines>', 'number on lines stored in browser, default 2000', Number, 2000)
+        .option('-s, --style <style>', 'name of the css style', String, 'default')
         .option('-d, --daemonize', 'run as daemon')
         .option('-U, --user <username>',
             'Basic Authentication username, this option works only along with -P option', String, false)
@@ -100,9 +101,11 @@ var daemon       = require('daemon');
                     res.writeHead(500, {'Content-Type': 'text/plain'});
                     res.end('Internal error');
                 } else {
+
                     res.writeHead(200, {'Content-Type': 'text/html'});
                     res.end(data.toString('utf-8').replace(
-                        /__TITLE__/g, 'tail -F ' + files.join(' ')), 'utf-8'
+                        /__TITLE__/g, 'tail -F ' + files.join(' ')).replace(
+                        /__THEME__/g, program.style), 'utf-8'
                     );
                 }
             });

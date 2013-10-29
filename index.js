@@ -1,24 +1,22 @@
-var program      = require('commander');
-var https        = require('https');
-var http         = require('http');
-var fs           = require('fs');
-var socketio     = require('socket.io');
-var spawn        = require('child_process').spawn;
 var connect      = require('connect');
 var cookieParser = require('cookie');
-var sanitizer    = require('validator').sanitize;
 var daemon       = require('daemon');
+var fs           = require('fs');
+var http         = require('http');
+var https        = require('https');
+var program      = require('commander');
+var sanitizer    = require('validator').sanitize;
+var socketio     = require('socket.io');
+var tail         = require('./lib/tail');
 
 (function () {
     'use strict';
 
-    /**
-     * Parse arg
-     */
     program
         .version(require('./package.json').version)
         .usage('[options] [file ...]')
-        .option('-p, --port <port>', 'server port, default 9001', Number, 9001)
+        .option('-h, --host <host>', 'listening host, default 0.0.0.0', String, '0.0.0.0')
+        .option('-p, --port <port>', 'listening port, default 9001', Number, 9001)
         .option('-n, --number <number>', 'starting lines number, default 10', Number, 10)
         .option('-l, --lines <lines>', 'number on lines stored in browser, default 2000', Number, 2000)
         .option('-t, --theme <theme>', 'name of the theme (default, dark)', String, 'default')
@@ -40,15 +38,12 @@ var daemon       = require('daemon');
      * Validate args
      */
     var doAuthorization = false;
-    var files = [];
     var sessionSecret = null;
     var sessionKey = null;
     if (program.args.length === 0) {
         console.error('Arguments needed, use --help');
         process.exit();
     } else {
-        files = program.args;
-
         if (program.user && program.password) {
             doAuthorization = true;
             sessionSecret = String(+new Date()) + Math.random();
@@ -67,7 +62,7 @@ var daemon       = require('daemon');
             args = args.concat(['-U', program.user, '-P', program.password]);
         }
 
-        args = args.concat(files);
+        args = args.concat(program.args);
 
         var proc = daemon.daemon(
             __filename,
@@ -104,7 +99,7 @@ var daemon       = require('daemon');
 
                     res.writeHead(200, {'Content-Type': 'text/html'});
                     res.end(data.toString('utf-8').replace(
-                        /__TITLE__/g, 'tail -F ' + files.join(' ')).replace(
+                        /__TITLE__/g, 'tail -F ' + program.args.join(' ')).replace(
                         /__STYLE__/g, program.theme), 'utf-8'
                     );
                 }
@@ -118,9 +113,9 @@ var daemon       = require('daemon');
                 key: fs.readFileSync(program.key),
                 cert: fs.readFileSync(program.certificate)
             };
-            server = https.createServer(options, app).listen(program.port);
+            server = https.createServer(options, app).listen(program.port, program.host);
         } else {
-            server = http.createServer(app).listen(program.port);
+            server = http.createServer(app).listen(program.port, program.host);
         }
 
         /**
@@ -146,25 +141,20 @@ var daemon       = require('daemon');
         /**
          * When connected send starting data
          */
+        var tailer = tail(program.args, {buffer: program.number});
         io.sockets.on('connection', function (socket) {
             socket.emit('options:lines', program.lines);
 
-            var tail = spawn('tail', ['-n', program.number].concat(files));
-            tail.stdout.on('data', function (data) {
-                var lines = sanitizer(data.toString('utf-8')).xss().split('\n');
-                lines.pop();
-                socket.emit('lines', lines);
+            tailer.getBuffer().forEach(function (line) {
+                socket.emit('line', line);
             });
         });
 
         /**
          * Send incoming data
          */
-        var tail = spawn('tail', ['-F'].concat(files));
-        tail.stdout.on('data', function (data) {
-            var lines = sanitizer(data.toString('utf-8')).xss().split('\n');
-            lines.pop();
-            io.sockets.emit('lines', lines);
+        tailer.on('line', function (line) {
+            io.sockets.emit('line', sanitizer(line).xss());
         });
     }
 })();

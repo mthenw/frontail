@@ -23,6 +23,8 @@
     "browser": true,
 
     "globals": {
-        "io": false
+        "io": false,
+        "describe": false,
+        "it": false
     }
 }

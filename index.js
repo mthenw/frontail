@@ -15,7 +15,8 @@ var tail         = require('./lib/tail');
     program
         .version(require('./package.json').version)
         .usage('[options] [file ...]')
-        .option('-p, --port <port>', 'server port, default 9001', Number, 9001)
+        .option('-h, --host <host>', 'listening host, default 0.0.0.0', String, '0.0.0.0')
+        .option('-p, --port <port>', 'listening port, default 9001', Number, 9001)
         .option('-n, --number <number>', 'starting lines number, default 10', Number, 10)
         .option('-l, --lines <lines>', 'number on lines stored in browser, default 2000', Number, 2000)
         .option('-d, --daemonize', 'run as daemon')
@@ -109,9 +110,9 @@ var tail         = require('./lib/tail');
                 key: fs.readFileSync(program.key),
                 cert: fs.readFileSync(program.certificate)
             };
-            server = https.createServer(options, app).listen(program.port);
+            server = https.createServer(options, app).listen(program.port, program.host);
         } else {
-            server = http.createServer(app).listen(program.port);
+            server = http.createServer(app).listen(program.port, program.host);
         }
 
         /**

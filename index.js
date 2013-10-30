@@ -81,10 +81,10 @@ var connectBuilder = require('./lib/connect_builder');
 
         if (doAuthorization) {
             builder.session(sessionSecret, sessionKey);
-            builder.authorize(program.user, program.password)
+            builder.authorize(program.user, program.password);
         }
 
-        builder.static(__dirname + '/lib/web/assets')
+        builder.static(__dirname + '/lib/web/assets');
 
         var app = builder.build().use(function (req, res) {
             fs.readFile(__dirname + '/lib/web/index.html', function (err, data) {

@@ -1,5 +1,4 @@
 var connectBuilder = require('../lib/connect_builder');
-var connect = require('connect');
 
 (function () {
     'use strict';
@@ -50,7 +49,7 @@ var connect = require('connect');
                 .request()
                 .get('/')
                 .end(function (res) {
-                    res.headers['set-cookie'][0].should.startWith('sessionkey')
+                    res.headers['set-cookie'][0].should.startWith('sessionkey');
                     done();
                 });
         });

@@ -1,13 +1,14 @@
-var connect      = require('connect');
-var cookieParser = require('cookie');
-var daemon       = require('daemon');
-var fs           = require('fs');
-var http         = require('http');
-var https        = require('https');
-var program      = require('commander');
-var sanitizer    = require('validator').sanitize;
-var socketio     = require('socket.io');
-var tail         = require('./lib/tail');
+var connect        = require('connect');
+var cookieParser   = require('cookie');
+var daemon         = require('daemon');
+var fs             = require('fs');
+var http           = require('http');
+var https          = require('https');
+var program        = require('commander');
+var sanitizer      = require('validator').sanitize;
+var socketio       = require('socket.io');
+var tail           = require('./lib/tail');
+var connectBuilder = require('./lib/connect_builder');
 
 (function () {
     'use strict';
@@ -76,20 +77,16 @@ var tail         = require('./lib/tail');
         /**
          * HTTP server setup
          */
-        var app = connect();
+        var builder = connectBuilder();
 
         if (doAuthorization) {
-            app
-            .use(connect.cookieParser())
-            .use(connect.session({secret: sessionSecret, key: sessionKey}))
-            .use(connect.basicAuth(function (user, password) {
-                return program.user === user && program.password === password;
-            }));
+            builder.session(sessionSecret, sessionKey);
+            builder.authorize(program.user, program.password)
         }
 
-        app
-        .use(connect.static(__dirname + '/lib/web/assets'))
-        .use(function (req, res) {
+        builder.static(__dirname + '/lib/web/assets')
+
+        var app = builder.build().use(function (req, res) {
             fs.readFile(__dirname + '/lib/web/index.html', function (err, data) {
                 if (err) {
                     res.writeHead(500, {'Content-Type': 'text/plain'});

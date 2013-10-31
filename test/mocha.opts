@@ -1,0 +1,3 @@
+--reporter spec
+--require test/support/http
+--require should

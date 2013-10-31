@@ -1,13 +1,14 @@
-var connect      = require('connect');
-var cookieParser = require('cookie');
-var daemon       = require('daemon');
-var fs           = require('fs');
-var http         = require('http');
-var https        = require('https');
-var program      = require('commander');
-var sanitizer    = require('validator').sanitize;
-var socketio     = require('socket.io');
-var tail         = require('./lib/tail');
+var connect        = require('connect');
+var cookieParser   = require('cookie');
+var daemon         = require('daemon');
+var fs             = require('fs');
+var http           = require('http');
+var https          = require('https');
+var program        = require('commander');
+var sanitizer      = require('validator').sanitize;
+var socketio       = require('socket.io');
+var tail           = require('./lib/tail');
+var connectBuilder = require('./lib/connect_builder');
 
 (function () {
     'use strict';
@@ -56,7 +57,7 @@ var tail         = require('./lib/tail');
          * Daemonize process
          */
         var logFile = fs.openSync(program.logPath, 'a');
-        var args = ['-p', program.port, '-n', program.number, '-l', program.lines];
+        var args = ['-p', program.port, '-n', program.number, '-l', program.lines, '-t', program.theme];
 
         if (doAuthorization) {
             args = args.concat(['-U', program.user, '-P', program.password]);
@@ -77,35 +78,17 @@ var tail         = require('./lib/tail');
         /**
          * HTTP server setup
          */
-        var app = connect();
+        var builder = connectBuilder();
 
         if (doAuthorization) {
-            app
-            .use(connect.cookieParser())
-            .use(connect.session({secret: sessionSecret, key: sessionKey}))
-            .use(connect.basicAuth(function (user, password) {
-                return program.user === user && program.password === password;
-            }));
+            builder.session(sessionSecret, sessionKey);
+            builder.authorize(program.user, program.password);
         }
 
-        app
-        .use(connect.static(__dirname + '/lib/web/assets'))
-        .use(function (req, res) {
-            fs.readFile(__dirname + '/lib/web/index.html', function (err, data) {
-                if (err) {
-                    res.writeHead(500, {'Content-Type': 'text/plain'});
-                    res.end('Internal error');
-                } else {
+        builder.static(__dirname + '/lib/web/assets');
+        builder.index(__dirname + '/lib/web/index.html', { 'title': program.args.join(' '), 'theme': program.theme });
 
-                    res.writeHead(200, {'Content-Type': 'text/html'});
-                    res.end(data.toString('utf-8').replace(
-                        /__TITLE__/g, 'tail -F ' + program.args.join(' ')).replace(
-                        /__STYLE__/g, program.theme), 'utf-8'
-                    );
-                }
-            });
-        });
-
+        var app = builder.build();
         var server;
 
         if (program.key && program.certificate) {

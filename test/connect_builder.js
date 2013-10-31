@@ -22,7 +22,7 @@ var connectBuilder = require('../lib/connect_builder');
                 });
         });
 
-        it('return app allowing user to login', function (done) {
+        it('returns app allowing user to login', function (done) {
             var app = connectBuilder().authorize('user', 'pass').build();
             app.use(function (req, res) {
                 res.end('secret!');
@@ -39,7 +39,7 @@ var connectBuilder = require('../lib/connect_builder');
                 });
         });
 
-        it('return app that setup session', function (done)  {
+        it('returns app that setup session', function (done)  {
             var app = connectBuilder().session('secret', 'sessionkey').build();
             app.use(function (req, res) {
                 res.end();
@@ -54,13 +54,35 @@ var connectBuilder = require('../lib/connect_builder');
                 });
         });
 
-        it('return app that serve static files', function (done) {
+        it('returns app that serve static files', function (done) {
             var app = connectBuilder().static(__dirname + '/fixtures').build();
 
             app
                 .request()
                 .get('/foo')
                 .expect('bar', done);
+        });
+
+        it('returns app that serve index file', function (done) {
+            var app = connectBuilder().index(__dirname + '/fixtures/index').build();
+
+            app
+                .request()
+                .get('/')
+                .end(function (res) {
+                    res.headers['content-type'].should.equal('text/html');
+                    res.statusCode.should.equal(200);
+                    done();
+                });
+        });
+
+        it('returns app that replace index title', function (done) {
+            var app = connectBuilder().index(__dirname + '/fixtures/index_with_title', 'Test').build();
+
+            app
+                .request()
+                .get('/')
+                .expect('<head><title>Test</title></head>', done);
         });
     });
 })();

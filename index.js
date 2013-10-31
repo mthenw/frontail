@@ -85,21 +85,9 @@ var connectBuilder = require('./lib/connect_builder');
         }
 
         builder.static(__dirname + '/lib/web/assets');
+        builder.index(__dirname + '/lib/web/index.html', program.args.join(' '));
 
-        var app = builder.build().use(function (req, res) {
-            fs.readFile(__dirname + '/lib/web/index.html', function (err, data) {
-                if (err) {
-                    res.writeHead(500, {'Content-Type': 'text/plain'});
-                    res.end('Internal error');
-                } else {
-                    res.writeHead(200, {'Content-Type': 'text/html'});
-                    res.end(data.toString('utf-8').replace(
-                        /__TITLE__/g, 'tail -F ' + program.args.join(' ')), 'utf-8'
-                    );
-                }
-            });
-        });
-
+        var app = builder.build();
         var server;
 
         if (program.key && program.certificate) {

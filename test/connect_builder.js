@@ -77,15 +77,42 @@ var connectBuilder = require('../lib/connect_builder');
         });
 
         it('returns app that replace index title', function (done) {
-            var app = connectBuilder().index(
-                __dirname + '/fixtures/index_with_title',
-                  { 'title': 'Test', 'theme': 'default' })
-            .build();
+            var app = connectBuilder()
+                .index(__dirname + '/fixtures/index_with_title', 'Test')
+                .build();
 
             app
                 .request()
                 .get('/')
                 .expect('<head><title>Test</title></head>', done);
+        });
+
+        it('returns app that sets theme', function (done) {
+            var app = connectBuilder()
+                .index(__dirname + '/fixtures/index_with_theme', 'Test', 'dark')
+                .build();
+
+            app
+                .request()
+                .get('/')
+                .expect(
+                    '<head><title>Test</title><link href="dark.css" rel="stylesheet" type="text/css"/></head>',
+                    done
+                );
+        });
+
+        it('returns app that sets default theme', function (done) {
+            var app = connectBuilder()
+                .index(__dirname + '/fixtures/index_with_theme', 'Test')
+                .build();
+
+            app
+                .request()
+                .get('/')
+                .expect(
+                    '<head><title>Test</title><link href="default.css" rel="stylesheet" type="text/css"/></head>',
+                    done
+                );
         });
     });
 })();

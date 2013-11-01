@@ -86,7 +86,7 @@ var connectBuilder = require('./lib/connect_builder');
         }
 
         builder.static(__dirname + '/lib/web/assets');
-        builder.index(__dirname + '/lib/web/index.html', { 'title': program.args.join(' '), 'theme': program.theme });
+        builder.index(__dirname + '/lib/web/index.html', program.args.join(' '), program.theme);
 
         var app = builder.build();
         var server;

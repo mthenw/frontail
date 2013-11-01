@@ -78,8 +78,8 @@ var connectBuilder = require('../lib/connect_builder');
 
         it('returns app that replace index title', function (done) {
             var app = connectBuilder().index(
-                __dirname + '/fixtures/index_with_title', 
-                { 'title': 'Test', 'theme': 'default' })
+                __dirname + '/fixtures/index_with_title',
+                  { 'title': 'Test', 'theme': 'default' })
             .build();
 
             app

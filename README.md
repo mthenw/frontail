@@ -11,6 +11,7 @@
 * log rotation
 * autoscrolling
 * marking logs
+* themes
 
 ## Installation
 
@@ -41,7 +42,7 @@ Web interface is on http://localhost:[port]
 
 ## Screenshot
 
-![screenshot1](http://dl.dropbox.com/u/3101412/frontail3.png)
+![screenshot1](http://dl.dropboxusercontent.com/u/3101412/frontail4.png)
 
 ## License
 

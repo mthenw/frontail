@@ -20,6 +20,7 @@ var connectBuilder = require('./lib/connect_builder');
         .option('-p, --port <port>', 'listening port, default 9001', Number, 9001)
         .option('-n, --number <number>', 'starting lines number, default 10', Number, 10)
         .option('-l, --lines <lines>', 'number on lines stored in browser, default 2000', Number, 2000)
+        .option('-t, --theme <theme>', 'name of the theme (default, dark)', String, 'default')
         .option('-d, --daemonize', 'run as daemon')
         .option('-U, --user <username>',
             'Basic Authentication username, this option works only along with -P option', String, false)
@@ -56,7 +57,7 @@ var connectBuilder = require('./lib/connect_builder');
          * Daemonize process
          */
         var logFile = fs.openSync(program.logPath, 'a');
-        var args = ['-p', program.port, '-n', program.number, '-l', program.lines];
+        var args = ['-p', program.port, '-n', program.number, '-l', program.lines, '-t', program.theme];
 
         if (doAuthorization) {
             args = args.concat(['-U', program.user, '-P', program.password]);
@@ -85,7 +86,7 @@ var connectBuilder = require('./lib/connect_builder');
         }
 
         builder.static(__dirname + '/lib/web/assets');
-        builder.index(__dirname + '/lib/web/index.html', program.args.join(' '));
+        builder.index(__dirname + '/lib/web/index.html', { 'title': program.args.join(' '), 'theme': program.theme });
 
         var app = builder.build();
         var server;

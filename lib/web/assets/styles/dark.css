@@ -1,0 +1,79 @@
+/* Styles mainly from http://twitter.github.com/bootstrap/ */
+@import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono);
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: "Ubuntu Mono","Courier New",Courier;
+    font-size: 13px;
+    line-height: 18px;
+    color: #E0D4C2;
+    background:#212326;
+    padding: 45px 0 20px;
+}
+
+.navbar {
+    background-color: #2C2C2C;
+    background-image: -webkit-linear-gradient(top, #333, #222);
+    background-repeat: repeat-x;
+    box-shadow: rgba(0, 0, 0, 0.246094) 0px 1px 3px 0px, rgba(0, 0, 0, 0.0976563) 0px -1px 0px 0px inset;
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    color: #fff;
+    display: block;
+    height: 24px;
+    font-size: 20px;
+    font-weight: 200;
+    padding: 8px 50px;
+}
+
+.navbar .query {
+    background-color: #626262;
+    border-color: #151515;
+    border-radius: 14px 14px 14px 14px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.098) inset, 0 1px 0 0 rgba(255, 255, 255, 0.15);
+    color: white;
+    display: inline-block;
+    float: right;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    height: 18px;
+    line-height: 13px;
+    margin-top: -2px;
+    padding: 4px 9px;
+    width: 160px;
+}
+
+.navbar .query:focus,
+.navbar .query.focused {
+  padding: 5px 10px;
+  color: #333333;
+  text-shadow: 0 1px 0 #ffffff;
+  background-color: #ffffff;
+  border: 0;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+  outline: 0;
+}
+
+.log {
+    white-space: pre-wrap;
+}
+
+.log .inner-line {
+    padding: 0 50px;
+    margin-left: 96pt;
+    text-indent: -96pt;
+}
+
+.log .line.selected {
+    background-color: #412A4F;
+}

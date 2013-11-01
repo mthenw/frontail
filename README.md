@@ -28,6 +28,7 @@
       -p, --port <port>             listening port, default 9001
       -n, --number <number>         starting lines number, default 10
       -l, --lines <lines>           number on lines stored in browser, default 2000
+      -t, --theme <theme>           name of the theme (default, dark), default "default"
       -d, --daemonize               run as daemon
       -U, --user <username>         Basic Authentication username, this option works only along with -P option
       -P, --password <password>     Basic Authentication password, this option works only along with -U option

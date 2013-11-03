@@ -3,6 +3,7 @@
 ```frontail``` is node.js application for serving `tail -F` output to browser.
 
 [![Build Status](https://travis-ci.org/mthenw/frontail.png?branch=master)](https://travis-ci.org/mthenw/frontail)
+[![NPM version](https://badge.fury.io/js/frontail.png)](http://badge.fury.io/js/frontail)
 
 ## Features
 

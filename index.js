@@ -1,5 +1,6 @@
 var connect        = require('connect');
 var cookieParser   = require('cookie');
+var crypto         = require('crypto');
 var daemon         = require('daemon');
 var fs             = require('fs');
 var http           = require('http');
@@ -41,6 +42,7 @@ var connectBuilder = require('./lib/connect_builder');
     var doAuthorization = false;
     var sessionSecret = null;
     var sessionKey = null;
+    var filesNamespace = null;
     if (program.args.length === 0) {
         console.error('Arguments needed, use --help');
         process.exit();
@@ -50,6 +52,7 @@ var connectBuilder = require('./lib/connect_builder');
             sessionSecret = String(+new Date()) + Math.random();
             sessionKey = 'sid';
         }
+        filesNamespace = crypto.createHash('md5').update(program.args.join(' ')).digest('hex');
     }
 
     if (program.daemonize) {
@@ -86,7 +89,7 @@ var connectBuilder = require('./lib/connect_builder');
         }
 
         builder.static(__dirname + '/lib/web/assets');
-        builder.index(__dirname + '/lib/web/index.html', program.args.join(' '), program.theme);
+        builder.index(__dirname + '/lib/web/index.html', program.args.join(' '), filesNamespace, program.theme);
 
         var app = builder.build();
         var server;
@@ -125,7 +128,7 @@ var connectBuilder = require('./lib/connect_builder');
          * When connected send starting data
          */
         var tailer = tail(program.args, {buffer: program.number});
-        io.sockets.on('connection', function (socket) {
+        var filesSocket = io.of('/' + filesNamespace).on('connection', function (socket) {
             socket.emit('options:lines', program.lines);
 
             tailer.getBuffer().forEach(function (line) {
@@ -137,7 +140,7 @@ var connectBuilder = require('./lib/connect_builder');
          * Send incoming data
          */
         tailer.on('line', function (line) {
-            io.sockets.emit('line', sanitizer(line).xss());
+            filesSocket.emit('line', sanitizer(line).xss());
         });
     }
 })();

@@ -64,7 +64,7 @@ var connectBuilder = require('../lib/connect_builder');
         });
 
         it('builds app that serve index file', function (done) {
-            var app = connectBuilder().index(__dirname + '/fixtures/index').build();
+            var app = connectBuilder().index(__dirname + '/fixtures/index', '/testfile').build();
 
             app
                 .request()
@@ -78,39 +78,50 @@ var connectBuilder = require('../lib/connect_builder');
 
         it('builds app that replace index title', function (done) {
             var app = connectBuilder()
-                .index(__dirname + '/fixtures/index_with_title', 'Test')
+                .index(__dirname + '/fixtures/index_with_title', '/testfile')
                 .build();
 
             app
                 .request()
                 .get('/')
-                .expect('<head><title>Test</title></head>', done);
+                .expect('<head><title>/testfile</title></head>', done);
+        });
+
+        it('builds app that sets socket.io namespace based on files', function (done) {
+            var app = connectBuilder()
+                .index(__dirname + '/fixtures/index_with_ns', '/testfile', 'ns', 'dark')
+                .build();
+
+            app
+                .request()
+                .get('/')
+                .expect('ns', done);
         });
 
         it('builds app that sets theme', function (done) {
             var app = connectBuilder()
-                .index(__dirname + '/fixtures/index_with_theme', 'Test', 'dark')
+                .index(__dirname + '/fixtures/index_with_theme', '/testfile', 'ns', 'dark')
                 .build();
 
             app
                 .request()
                 .get('/')
                 .expect(
-                    '<head><title>Test</title><link href="dark.css" rel="stylesheet" type="text/css"/></head>',
+                    '<head><title>/testfile</title><link href="dark.css" rel="stylesheet" type="text/css"/></head>',
                     done
                 );
         });
 
         it('builds app that sets default theme', function (done) {
             var app = connectBuilder()
-                .index(__dirname + '/fixtures/index_with_theme', 'Test')
+                .index(__dirname + '/fixtures/index_with_theme', '/testfile')
                 .build();
 
             app
                 .request()
                 .get('/')
                 .expect(
-                    '<head><title>Test</title><link href="default.css" rel="stylesheet" type="text/css"/></head>',
+                    '<head><title>/testfile</title><link href="default.css" rel="stylesheet" type="text/css"/></head>',
                     done
                 );
         });

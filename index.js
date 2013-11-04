@@ -2,13 +2,12 @@ var connect        = require('connect');
 var cookieParser   = require('cookie');
 var daemon         = require('daemon');
 var fs             = require('fs');
-var http           = require('http');
-var https          = require('https');
 var program        = require('commander');
 var sanitizer      = require('validator').sanitize;
 var socketio       = require('socket.io');
 var tail           = require('./lib/tail');
 var connectBuilder = require('./lib/connect_builder');
+var serverBuilder = require('./lib/server_builder');
 
 (function () {
     'use strict';
@@ -39,6 +38,7 @@ var connectBuilder = require('./lib/connect_builder');
      * Validate args
      */
     var doAuthorization = false;
+    var doSecure = false;
     var sessionSecret = null;
     var sessionKey = null;
     if (program.args.length === 0) {
@@ -49,6 +49,10 @@ var connectBuilder = require('./lib/connect_builder');
             doAuthorization = true;
             sessionSecret = String(+new Date()) + Math.random();
             sessionKey = 'sid';
+        }
+
+        if (program.key && program.certificate) {
+            doSecure = true;
         }
     }
 
@@ -78,28 +82,24 @@ var connectBuilder = require('./lib/connect_builder');
         /**
          * HTTP server setup
          */
-        var builder = connectBuilder();
-
+        var appBuilder = connectBuilder();
         if (doAuthorization) {
-            builder.session(sessionSecret, sessionKey);
-            builder.authorize(program.user, program.password);
+            appBuilder.session(sessionSecret, sessionKey);
+            appBuilder.authorize(program.user, program.password);
         }
+        appBuilder
+            .static(__dirname + '/lib/web/assets')
+            .index(__dirname + '/lib/web/index.html', program.args.join(' '), program.theme);
 
-        builder.static(__dirname + '/lib/web/assets');
-        builder.index(__dirname + '/lib/web/index.html', program.args.join(' '), program.theme);
-
-        var app = builder.build();
-        var server;
-
-        if (program.key && program.certificate) {
-            var options = {
-                key: fs.readFileSync(program.key),
-                cert: fs.readFileSync(program.certificate)
-            };
-            server = https.createServer(options, app).listen(program.port, program.host);
-        } else {
-            server = http.createServer(app).listen(program.port, program.host);
+        var builder = serverBuilder();
+        if (doSecure) {
+            builder.secure(program.key, program.certificate);
         }
+        var server = builder
+            .use(appBuilder.build())
+            .port(program.port)
+            .host(program.host)
+            .build();
 
         /**
          * socket.io setup

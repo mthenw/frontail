@@ -18,7 +18,8 @@
         "jshint": "~2.3.0",
         "should": "~2.0.2",
         "mocha": "~1.13.0",
-        "temp": "~0.6.0"
+        "temp": "~0.6.0",
+        "sinon": "~1.7.3"
     },
     "repository": {
         "type": "git",

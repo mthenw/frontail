@@ -4,12 +4,12 @@ var connectBuilder = require('../lib/connect_builder');
     'use strict';
 
     describe('connectBuilder', function () {
-        it('build connect app', function () {
+        it('should build connect app', function () {
             connectBuilder().build().should.have.property('use');
             connectBuilder().build().should.have.property('listen');
         });
 
-        it('returns app requiring authorized user', function (done) {
+        it('should build app requiring authorized user', function (done) {
             var app = connectBuilder().authorize('user', 'pass').build();
 
             app
@@ -22,7 +22,7 @@ var connectBuilder = require('../lib/connect_builder');
                 });
         });
 
-        it('returns app allowing user to login', function (done) {
+        it('should build app allowing user to login', function (done) {
             var app = connectBuilder().authorize('user', 'pass').build();
             app.use(function (req, res) {
                 res.end('secret!');
@@ -39,7 +39,7 @@ var connectBuilder = require('../lib/connect_builder');
                 });
         });
 
-        it('returns app that setup session', function (done)  {
+        it('should build app that setup session', function (done)  {
             var app = connectBuilder().session('secret', 'sessionkey').build();
             app.use(function (req, res) {
                 res.end();
@@ -54,7 +54,7 @@ var connectBuilder = require('../lib/connect_builder');
                 });
         });
 
-        it('returns app that serve static files', function (done) {
+        it('should build app that serve static files', function (done) {
             var app = connectBuilder().static(__dirname + '/fixtures').build();
 
             app
@@ -63,7 +63,7 @@ var connectBuilder = require('../lib/connect_builder');
                 .expect('bar', done);
         });
 
-        it('returns app that serve index file', function (done) {
+        it('should build app that serve index file', function (done) {
             var app = connectBuilder().index(__dirname + '/fixtures/index').build();
 
             app
@@ -76,7 +76,7 @@ var connectBuilder = require('../lib/connect_builder');
                 });
         });
 
-        it('returns app that replace index title', function (done) {
+        it('should build app that replace index title', function (done) {
             var app = connectBuilder()
                 .index(__dirname + '/fixtures/index_with_title', 'Test')
                 .build();
@@ -87,7 +87,7 @@ var connectBuilder = require('../lib/connect_builder');
                 .expect('<head><title>Test</title></head>', done);
         });
 
-        it('returns app that sets theme', function (done) {
+        it('should build app that sets theme', function (done) {
             var app = connectBuilder()
                 .index(__dirname + '/fixtures/index_with_theme', 'Test', 'dark')
                 .build();
@@ -101,7 +101,7 @@ var connectBuilder = require('../lib/connect_builder');
                 );
         });
 
-        it('returns app that sets default theme', function (done) {
+        it('should build app that sets default theme', function (done) {
             var app = connectBuilder()
                 .index(__dirname + '/fixtures/index_with_theme', 'Test')
                 .build();

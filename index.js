@@ -1,5 +1,6 @@
 var connect        = require('connect');
 var cookieParser   = require('cookie');
+var crypto         = require('crypto');
 var daemon         = require('daemon');
 var fs             = require('fs');
 var program        = require('commander');
@@ -7,7 +8,7 @@ var sanitizer      = require('validator').sanitize;
 var socketio       = require('socket.io');
 var tail           = require('./lib/tail');
 var connectBuilder = require('./lib/connect_builder');
-var serverBuilder = require('./lib/server_builder');
+var serverBuilder  = require('./lib/server_builder');
 
 (function () {
     'use strict';
@@ -34,27 +35,20 @@ var serverBuilder = require('./lib/server_builder');
             String, '/dev/null')
         .parse(process.argv);
 
-    /**
-     * Validate args
-     */
-    var doAuthorization = false;
-    var doSecure = false;
-    var sessionSecret = null;
-    var sessionKey = null;
     if (program.args.length === 0) {
         console.error('Arguments needed, use --help');
         process.exit();
-    } else {
-        if (program.user && program.password) {
-            doAuthorization = true;
-            sessionSecret = String(+new Date()) + Math.random();
-            sessionKey = 'sid';
-        }
-
-        if (program.key && program.certificate) {
-            doSecure = true;
-        }
     }
+
+    /**
+     * Validate params
+     */
+    var doAuthorization = !!(program.user && program.password);
+    var doSecure = !!(program.key && program.certificate);
+    var sessionSecret = String(+new Date()) + Math.random();
+    var sessionKey = 'sid';
+    var files = program.args.join(' ');
+    var filesNamespace = crypto.createHash('md5').update(files).digest('hex');
 
     if (program.daemonize) {
         /**
@@ -80,7 +74,7 @@ var serverBuilder = require('./lib/server_builder');
         fs.writeFileSync(program.pidPath, proc.pid);
     } else {
         /**
-         * HTTP server setup
+         * HTTP(s) server setup
          */
         var appBuilder = connectBuilder();
         if (doAuthorization) {
@@ -89,7 +83,7 @@ var serverBuilder = require('./lib/server_builder');
         }
         appBuilder
             .static(__dirname + '/lib/web/assets')
-            .index(__dirname + '/lib/web/index.html', program.args.join(' '), program.theme);
+            .index(__dirname + '/lib/web/index.html', files, filesNamespace, program.theme);
 
         var builder = serverBuilder();
         if (doSecure) {
@@ -125,7 +119,7 @@ var serverBuilder = require('./lib/server_builder');
          * When connected send starting data
          */
         var tailer = tail(program.args, {buffer: program.number});
-        io.sockets.on('connection', function (socket) {
+        var filesSocket = io.of('/' + filesNamespace).on('connection', function (socket) {
             socket.emit('options:lines', program.lines);
 
             tailer.getBuffer().forEach(function (line) {
@@ -137,7 +131,7 @@ var serverBuilder = require('./lib/server_builder');
          * Send incoming data
          */
         tailer.on('line', function (line) {
-            io.sockets.emit('line', sanitizer(line).xss());
+            filesSocket.emit('line', sanitizer(line).xss());
         });
     }
 })();

@@ -8,7 +8,7 @@ var temp = require('temp');
     describe('tail', function () {
         temp.track();
 
-        it('should call event line if new line appear in file', function (done) {
+        it('calls event line if new line appear in file', function (done) {
             temp.open('', function (err, info) {
                 tail(info.path).on('line', function (line) {
                     line.should.equal('testline');
@@ -20,7 +20,7 @@ var temp = require('temp');
             });
         });
 
-        it('should buffer lines on start', function (done) {
+        it('buffers lines on start', function (done) {
             temp.open('', function (err, info) {
                 fs.writeSync(info.fd, 'testline1\n');
                 fs.writeSync(info.fd, 'testline2\n');

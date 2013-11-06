@@ -8,7 +8,7 @@ var sanitizer      = require('validator').sanitize;
 var socketio       = require('socket.io');
 var tail           = require('./lib/tail');
 var connectBuilder = require('./lib/connect_builder');
-var serverBuilder = require('./lib/server_builder');
+var serverBuilder  = require('./lib/server_builder');
 
 (function () {
     'use strict';
@@ -35,30 +35,20 @@ var serverBuilder = require('./lib/server_builder');
             String, '/dev/null')
         .parse(process.argv);
 
-    /**
-     * Validate args
-     */
-    var doAuthorization = false;
-    var doSecure = false;
-    var sessionSecret = null;
-    var sessionKey = null;
-    var filesNamespace = null;
     if (program.args.length === 0) {
         console.error('Arguments needed, use --help');
         process.exit();
-    } else {
-        if (program.user && program.password) {
-            doAuthorization = true;
-            sessionSecret = String(+new Date()) + Math.random();
-            sessionKey = 'sid';
-        }
-
-        if (program.key && program.certificate) {
-            doSecure = true;
-        }
-
-        filesNamespace = crypto.createHash('md5').update(program.args.join(' ')).digest('hex');
     }
+
+    /**
+     * Validate params
+     */
+    var doAuthorization = !!(program.user && program.password);
+    var doSecure = !!(program.key && program.certificate);
+    var sessionSecret = String(+new Date()) + Math.random();
+    var sessionKey = 'sid';
+    var files = program.args.join(' ');
+    var filesNamespace = crypto.createHash('md5').update(files).digest('hex');
 
     if (program.daemonize) {
         /**
@@ -84,7 +74,7 @@ var serverBuilder = require('./lib/server_builder');
         fs.writeFileSync(program.pidPath, proc.pid);
     } else {
         /**
-         * HTTP server setup
+         * HTTP(s) server setup
          */
         var appBuilder = connectBuilder();
         if (doAuthorization) {
@@ -93,7 +83,7 @@ var serverBuilder = require('./lib/server_builder');
         }
         appBuilder
             .static(__dirname + '/lib/web/assets')
-            .index(__dirname + '/lib/web/index.html', program.args.join(' '), filesNamespace, program.theme);
+            .index(__dirname + '/lib/web/index.html', files, filesNamespace, program.theme);
 
         var builder = serverBuilder();
         if (doSecure) {

@@ -26,8 +26,8 @@ var serverBuilder  = require('./lib/server_builder');
             'Basic Authentication username, this option works only along with -P option', String, false)
         .option('-P, --password <password>',
             'Basic Authentication password, this option works only along with -U option', String, false)
-        .option('-k, --key <path/to/key.pem>', 'Private Key for HTTPS', String, false)
-        .option('-c, --certificate <path/to/cert.pem>', 'Certificate for HTTPS', String, false)
+        .option('-k, --key <path/to/key.pem>', 'Private Key for HTTPS, this option works only along with -c option', String, false)
+        .option('-c, --certificate <path/to/cert.pem>', 'Certificate for HTTPS, this option works only along with -k option', String, false)
         .option('--pid-path <path>',
             'if run as daemon file that will store the process id, default /var/run/frontail.pid',
             String, '/var/run/frontail.pid')

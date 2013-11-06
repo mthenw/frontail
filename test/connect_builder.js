@@ -1,4 +1,5 @@
 var connectBuilder = require('../lib/connect_builder');
+var request = require('supertest');
 
 (function () {
     'use strict';
@@ -12,14 +13,10 @@ var connectBuilder = require('../lib/connect_builder');
         it('should build app requiring authorized user', function (done) {
             var app = connectBuilder().authorize('user', 'pass').build();
 
-            app
-                .request()
+            request(app)
                 .get('/')
-                .end(function (res) {
-                    res.statusCode.should.equal(401);
-                    res.headers['www-authenticate'].should.equal('Basic realm="Authorization Required"');
-                    done();
-                });
+                .expect('www-authenticate', 'Basic realm="Authorization Required"')
+                .expect(401, done);
         });
 
         it('should build app allowing user to login', function (done) {
@@ -28,15 +25,10 @@ var connectBuilder = require('../lib/connect_builder');
                 res.end('secret!');
             });
 
-            app
-                .request()
+            request(app)
                 .get('/')
                 .set('Authorization', 'Basic dXNlcjpwYXNz')
-                .end(function (res) {
-                    res.statusCode.should.equal(200);
-                    res.body.should.equal('secret!');
-                    done();
-                });
+                .expect(200, 'secret!', done);
         });
 
         it('should build app that setup session', function (done)  {
@@ -45,20 +37,15 @@ var connectBuilder = require('../lib/connect_builder');
                 res.end();
             });
 
-            app
-                .request()
+            request(app)
                 .get('/')
-                .end(function (res) {
-                    res.headers['set-cookie'][0].should.startWith('sessionkey');
-                    done();
-                });
+                .expect('set-cookie', /^sessionkey/, done);
         });
 
         it('should build app that serve static files', function (done) {
             var app = connectBuilder().static(__dirname + '/fixtures').build();
 
-            app
-                .request()
+            request(app)
                 .get('/foo')
                 .expect('bar', done);
         });
@@ -66,14 +53,10 @@ var connectBuilder = require('../lib/connect_builder');
         it('should build app that serve index file', function (done) {
             var app = connectBuilder().index(__dirname + '/fixtures/index').build();
 
-            app
-                .request()
+            request(app)
                 .get('/')
-                .end(function (res) {
-                    res.headers['content-type'].should.equal('text/html');
-                    res.statusCode.should.equal(200);
-                    done();
-                });
+                .expect(200)
+                .expect('Content-Type', 'text/html', done);
         });
 
         it('should build app that replace index title', function (done) {
@@ -81,8 +64,7 @@ var connectBuilder = require('../lib/connect_builder');
                 .index(__dirname + '/fixtures/index_with_title', 'Test')
                 .build();
 
-            app
-                .request()
+            request(app)
                 .get('/')
                 .expect('<head><title>Test</title></head>', done);
         });
@@ -92,8 +74,7 @@ var connectBuilder = require('../lib/connect_builder');
                 .index(__dirname + '/fixtures/index_with_theme', 'Test', 'dark')
                 .build();
 
-            app
-                .request()
+            request(app)
                 .get('/')
                 .expect(
                     '<head><title>Test</title><link href="dark.css" rel="stylesheet" type="text/css"/></head>',
@@ -106,8 +87,7 @@ var connectBuilder = require('../lib/connect_builder');
                 .index(__dirname + '/fixtures/index_with_theme', 'Test')
                 .build();
 
-            app
-                .request()
+            request(app)
                 .get('/')
                 .expect(
                     '<head><title>Test</title><link href="default.css" rel="stylesheet" type="text/css"/></head>',

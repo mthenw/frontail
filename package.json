@@ -19,7 +19,8 @@
         "should": "~2.0.2",
         "mocha": "~1.13.0",
         "temp": "~0.6.0",
-        "sinon": "~1.7.3"
+        "sinon": "~1.7.3",
+        "supertest": "~0.8.1"
     },
     "repository": {
         "type": "git",

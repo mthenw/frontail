@@ -23,11 +23,15 @@ var serverBuilder  = require('./lib/server_builder');
         .option('-t, --theme <theme>', 'name of the theme (default, dark)', String, 'default')
         .option('-d, --daemonize', 'run as daemon')
         .option('-U, --user <username>',
-            'Basic Authentication username, this option works only along with -P option', String, false)
+            'Basic Authentication username, option works only along with -P option', String, false)
         .option('-P, --password <password>',
-            'Basic Authentication password, this option works only along with -U option', String, false)
-        .option('-k, --key <path/to/key.pem>', 'Private Key for HTTPS, this option works only along with -c option', String, false)
-        .option('-c, --certificate <path/to/cert.pem>', 'Certificate for HTTPS, this option works only along with -k option', String, false)
+            'Basic Authentication password, option works only along with -U option', String, false)
+        .option('-k, --key <key.pem>',
+            'Private Key for HTTPS, option works only along with -c option',
+            String, false)
+        .option('-c, --certificate <cert.pem>',
+            'Certificate for HTTPS, option works only along with -k option',
+            String, false)
         .option('--pid-path <path>',
             'if run as daemon file that will store the process id, default /var/run/frontail.pid',
             String, '/var/run/frontail.pid')

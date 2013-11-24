@@ -23,7 +23,7 @@
     "browser": true,
 
     "globals": {
-        "io": false,
+        "io": true,
         "describe": false,
         "it": false,
         "beforeEach": false,

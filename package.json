@@ -12,7 +12,8 @@
         "connect": "2.11.0",
         "validator": "1.5.0",
         "daemon": "1.1.0",
-        "cookie": "0.1.0"
+        "cookie": "0.1.0",
+        "cas-sfu": "1.0.6"
     },
     "devDependencies": {
         "jshint": "~2.3.0",

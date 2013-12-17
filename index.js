@@ -5,6 +5,7 @@ var cookieParser   = require('cookie');
 var crypto         = require('crypto');
 var daemon         = require('daemon');
 var fs             = require('fs');
+var net            = require('net');
 var program        = require('commander');
 var sanitizer      = require('validator').sanitize;
 var socketio       = require('socket.io');
@@ -17,6 +18,8 @@ program
     .usage('[options] [file ...]')
     .option('-h, --host <host>', 'listening host, default 0.0.0.0', String, '0.0.0.0')
     .option('-p, --port <port>', 'listening port, default 9001', Number, 9001)
+    .option('-H, --nethost <nethost>', 'listening host for netcat, default 0.0.0.0', String, '0.0.0.0')
+    .option('-P, --netport <netport>', 'listening port for netcat, default 9002', Number, 9002)
     .option('-n, --number <number>', 'starting lines number, default 10', Number, 10)
     .option('-l, --lines <lines>', 'number on lines stored in browser, default 2000', Number, 2000)
     .option('-t, --theme <theme>', 'name of the theme (default, dark)', String, 'default')
@@ -130,6 +133,16 @@ if (program.daemonize) {
         });
     });
 
+    var net_server = net.createServer(function(socket) {
+        socket.on('data', function(data) {
+            var lines = data.toString().split('\n');
+            lines.forEach(function(line) {
+                filesSocket.emit('line', sanitizer(line).xss());
+            });
+        });
+    });
+    net_server.listen(program.netport, program.nethost);
+        
     /**
      * Send incoming data
      */

@@ -39,6 +39,9 @@ program
         String, '/var/run/frontail.pid')
     .option('--log-path <path>', 'if run as daemon file that will be used as a log, default /dev/null',
         String, '/dev/null')
+    .option('--cas-service <service>', 'cas service host', String, 'http://app.yoursite.com/app')
+    .option('--cas-baseurl <baseurl>', 'cas base url', String, '/cas')
+    .option('--cas-host <host>', 'cas host name', String, 'http://cas.server.com')
     .parse(process.argv);
 
 if (program.args.length === 0) {
@@ -89,7 +92,8 @@ if (program.daemonize) {
     }
     appBuilder
         .static(__dirname + '/lib/web/assets')
-        .index(__dirname + '/lib/web/index.html', files, filesNamespace, program.theme);
+        .cas(program.casService, program.casHost, program.casBaseurl)
+        .index(__dirname + '/lib/web/index.html', files, filesNamespace, program.theme, program.casService, program.casHost, program.casBaseurl);
 
     var builder = serverBuilder();
     if (doSecure) {

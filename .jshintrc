@@ -23,8 +23,10 @@
     "browser": true,
 
     "globals": {
-        "io": false,
+        "io": true,
         "describe": false,
-        "it": false
+        "it": false,
+        "beforeEach": false,
+        "afterEach": false
     }
 }

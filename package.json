@@ -1,6 +1,6 @@
 {
     "name": "frontail",
-    "version": "0.6.0",
+    "version": "0.7.0",
     "description": "tail -F output in browser",
     "homepage": "https://github.com/mthenw/frontail",
     "author": "Maciej Winnicki <maciej.winnicki@gmail.com>",

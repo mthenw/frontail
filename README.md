@@ -13,6 +13,7 @@
 * autoscrolling
 * marking logs
 * themes
+* number of unreaded logs in favicon
 
 ## Installation
 

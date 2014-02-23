@@ -1,38 +1,39 @@
 {
-    "name": "frontail",
-    "version": "0.7.0",
-    "description": "tail -F output in browser",
-    "homepage": "https://github.com/mthenw/frontail",
-    "author": "Maciej Winnicki <maciej.winnicki@gmail.com>",
-    "license": "MIT",
-    "bin": "./bin/frontail",
-    "dependencies": {
-        "commander": "1.3.2",
-        "socket.io": "0.9.16",
-        "connect": "2.11.0",
-        "validator": "1.5.0",
-        "daemon": "1.1.0",
-        "cookie": "0.1.0"
-    },
-    "devDependencies": {
-        "jshint": "~2.3.0",
-        "should": "~2.0.2",
-        "mocha": "~1.13.0",
-        "temp": "~0.6.0",
-        "sinon": "~1.7.3",
-        "supertest": "~0.8.1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "http://github.com/mthenw/frontail.git"
-    },
-    "keywords": [
-        "tail",
-        "syslog"
-    ],
-    "engine": {
-        "node": ">= 0.8.0"
-    },
-    "main": "index",
-    "preferGlobal": true
+  "name": "frontail",
+  "version": "0.7.0",
+  "description": "tail -F output in browser",
+  "homepage": "https://github.com/mthenw/frontail",
+  "author": "Maciej Winnicki <maciej.winnicki@gmail.com>",
+  "license": "MIT",
+  "bin": "./bin/frontail",
+  "dependencies": {
+    "commander": "1.3.2",
+    "socket.io": "0.9.16",
+    "connect": "2.11.0",
+    "validator": "1.5.0",
+    "daemon": "1.1.0",
+    "cookie": "0.1.0"
+  },
+  "devDependencies": {
+    "jshint": "~2.3.0",
+    "should": "~2.0.2",
+    "mocha": "~1.13.0",
+    "temp": "~0.6.0",
+    "sinon": "~1.7.3",
+    "supertest": "~0.8.1",
+    "jsdom": "~0.10.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/mthenw/frontail.git"
+  },
+  "keywords": [
+    "tail",
+    "syslog"
+  ],
+  "engine": {
+    "node": ">= 0.8.0"
+  },
+  "main": "index",
+  "preferGlobal": true
 }

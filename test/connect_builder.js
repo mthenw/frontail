@@ -1,5 +1,6 @@
 'use strict';
 
+require('should');
 var connectBuilder = require('../lib/connect_builder');
 var request = require('supertest');
 

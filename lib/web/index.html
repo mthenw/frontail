@@ -24,10 +24,12 @@
     <script src="/tinycon.min.js"></script>
     <script src="/app.js"></script>
     <script type="text/javascript">
+        var socket = new io.connect('/' + '__NAMESPACE__');
+
         window.load = App.init({
+            socket: socket,
             container: document.getElementsByClassName('log')[0],
-            filterInput: document.getElementsByClassName('query')[0],
-            namespace: '__NAMESPACE__'
+            filterInput: document.getElementsByClassName('query')[0]
         });
   </script>
 </body>

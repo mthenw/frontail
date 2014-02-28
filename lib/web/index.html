@@ -3,7 +3,6 @@
 <head>
     <title>tail -F __TITLE__</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="/styles/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/styles/__THEME__.css">
     <link rel="icon" href="/favicon.ico">
 </head>
@@ -25,10 +24,12 @@
     <script src="/tinycon.min.js"></script>
     <script src="/app.js"></script>
     <script type="text/javascript">
+        var socket = new io.connect('/' + '__NAMESPACE__');
+
         window.load = App.init({
+            socket: socket,
             container: document.getElementsByClassName('log')[0],
-            filterInput: document.getElementsByClassName('query')[0],
-            namespace: '__NAMESPACE__'
+            filterInput: document.getElementsByClassName('query')[0]
         });
   </script>
 </body>

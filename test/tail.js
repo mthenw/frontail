@@ -1,5 +1,6 @@
 'use strict';
 
+require('should');
 var fs = require('fs');
 var tail = require('../lib/tail');
 var temp = require('temp');

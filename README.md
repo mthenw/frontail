@@ -44,4 +44,4 @@ Web interface is on http://localhost:[port]
 
 ## Screenshot
 
-![screenshot1](http://dl.dropboxusercontent.com/u/3101412/frontail5.png)
+![screenshot1](https://dl.dropboxusercontent.com/u/3101412/frontail1.0.png)

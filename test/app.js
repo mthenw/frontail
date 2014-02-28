@@ -42,8 +42,6 @@ describe('browser application', function () {
         line.className.should.be.equal('line-selected');
     });
 
-
-
     it('should deselect line when selected line clicked', function () {
         initApp();
         io.emit('line', 'test');

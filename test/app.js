@@ -32,21 +32,25 @@ describe('browser application', function () {
         log.childNodes[0].innerHTML.should.be.equal('<p class="inner-line">test</p>');
     });
 
-    it('should toggle line when clicked', function () {
+    it('should select line when clicked', function () {
         initApp();
-
         io.emit('line', 'test');
 
         var line = window.document.querySelector('.line');
-        var firstClick = window.document.createEvent('MouseEvents');
-        firstClick.initMouseEvent('click', true, true);
-        line.dispatchEvent(firstClick);
+        clickOnElement(line);
 
         line.className.should.be.equal('line-selected');
+    });
 
-        var secondClick = window.document.createEvent('MouseEvents');
-        secondClick.initMouseEvent('click', true, true);
-        line.dispatchEvent(secondClick);
+
+
+    it('should deselect line when selected line clicked', function () {
+        initApp();
+        io.emit('line', 'test');
+
+        var line = window.document.querySelector('.line');
+        clickOnElement(line);
+        clickOnElement(line);
 
         line.className.should.be.equal('line');
     });
@@ -71,5 +75,11 @@ describe('browser application', function () {
             container: window.document.getElementById('log'),
             filterInput: window.document.getElementById('filter')
         });
+    }
+
+    function clickOnElement(line) {
+        var click = window.document.createEvent('MouseEvents');
+        click.initMouseEvent('click', true, true);
+        line.dispatchEvent(click);
     }
 });

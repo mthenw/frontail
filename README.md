@@ -7,13 +7,13 @@
 
 ## Features
 
-* search
-* user authentication
+* search (```Tab``` to focus, ```Esc``` to clear)
+* user basic authentication
 * log rotation
-* autoscrolling
+* auto-scrolling
 * marking logs
-* themes
-* number of unreaded logs in favicon
+* themes (default, dark)
+* number of unread logs in favicon
 
 ## Installation
 

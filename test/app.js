@@ -11,7 +11,8 @@ describe('browser application', function () {
         io = new EventEmitter();
 
         jsdom.env(
-            '<title></title><body><div class="topbar"></div><div class="log"></div><input type="test" id="filter"/></body>',
+            '<title></title><body><div class="topbar"></div>' +
+            '<div class="log"></div><input type="test" id="filter"/></body>',
             ['../lib/web/assets/app.js', './lib/jquery.js'],
             function (errors, domWindow) {
                 window = domWindow;

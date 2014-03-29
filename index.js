@@ -37,7 +37,7 @@ program
     .option('--log-path <path>', 'if run as daemon file that will be used as a log, default /dev/null',
         String, '/dev/null')
     .option('--ui-hide-topbar', 'hide topbar (log file name and search box)')
-    .option('--ui-no-indent', 'don\'t indent log lines (every line after first one)')
+    .option('--ui-no-indent', 'don\'t indent log lines')
     .parse(process.argv);
 
 if (program.args.length === 0) {

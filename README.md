@@ -40,7 +40,7 @@
       --pid-path <path>             if run as daemon file that will store the process id, default /var/run/frontail.pid
       --log-path <path>             if run as daemon file that will be used as a log, default /dev/null
       --ui-hide-topbar              hide topbar (log file name and search box)
-      --ui-no-indent                don't indent log lines (every line after first one)
+      --ui-no-indent                don't indent log lines
 
 Web interface is on http://localhost:[port]
 

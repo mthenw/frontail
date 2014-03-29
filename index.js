@@ -36,6 +36,8 @@ program
         String, '/var/run/frontail.pid')
     .option('--log-path <path>', 'if run as daemon file that will be used as a log, default /dev/null',
         String, '/dev/null')
+    .option('--ui-hide-topbar', 'hide topbar (log file name and search box)')
+    .option('--ui-no-indent', 'don\'t indent log lines (every line after first one)')
     .parse(process.argv);
 
 if (program.args.length === 0) {
@@ -124,6 +126,9 @@ if (program.daemonize) {
     var tailer = tail(program.args, {buffer: program.number});
     var filesSocket = io.of('/' + filesNamespace).on('connection', function (socket) {
         socket.emit('options:lines', program.lines);
+
+        program.uiHideTopbar && socket.emit('options:hide-topbar');
+        !program.uiIndent && socket.emit('options:no-indent');
 
         tailer.getBuffer().forEach(function (line) {
             socket.emit('line', line);

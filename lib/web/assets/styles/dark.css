@@ -5,6 +5,10 @@ body {
     background-color: #2F3238;
 }
 
+.no-topbar {
+    padding-top: 10px;
+}
+
 .navbar {
     background-color: #26292E;
     border: 0;
@@ -30,6 +34,11 @@ body {
     margin-left: 84pt;
     text-indent: -84pt;
     margin-bottom: 0;
+}
+
+.log.no-indent .inner-line {
+    margin-left: 0;
+    text-indent: 0;
 }
 
 .log .line-selected {

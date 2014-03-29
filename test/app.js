@@ -11,7 +11,7 @@ describe('browser application', function () {
         io = new EventEmitter();
 
         jsdom.env(
-            '<title></title><body><div id="log"></div><input type="test" id="filter"/></body>',
+            '<title></title><body><div class="topbar"></div><div class="log"></div><input type="test" id="filter"/></body>',
             ['../lib/web/assets/app.js', './lib/jquery.js'],
             function (errors, domWindow) {
                 window = domWindow;
@@ -24,7 +24,7 @@ describe('browser application', function () {
 
         io.emit('line', 'test');
 
-        var log = window.document.getElementById('log');
+        var log = window.document.querySelector('.log');
         log.childNodes.length.should.be.equal(1);
         log.childNodes[0].textContent.should.be.equal('test');
         log.childNodes[0].className.should.be.equal('line');
@@ -61,17 +61,39 @@ describe('browser application', function () {
         io.emit('line', 'line2');
         io.emit('line', 'line3');
 
-        var log = window.document.getElementById('log');
+        var log = window.document.querySelector('.log');
         log.childNodes.length.should.be.equal(2);
         log.childNodes[0].textContent.should.be.equal('line2');
         log.childNodes[1].textContent.should.be.equal('line3');
     });
 
+    it('should hide topbar', function () {
+        initApp();
+
+        io.emit('options:hide-topbar');
+
+        var topbar = window.document.querySelector('.topbar');
+        topbar.className.should.match(/hide/);
+        var body = window.document.querySelector('body');
+        body.className.should.match(/no-topbar/);
+    });
+
+    it('should not indent log lines', function () {
+        initApp();
+
+        io.emit('options:no-indent');
+
+        var log = window.document.querySelector('.log');
+        log.className.should.match(/no-indent/);
+    });
+
     function initApp() {
         window.App.init({
             socket: io,
-            container: window.document.getElementById('log'),
-            filterInput: window.document.getElementById('filter')
+            container: window.document.querySelector('.log'),
+            filterInput: window.document.querySelector('#filter'),
+            topbar: window.document.querySelector('.topbar'),
+            body: window.document.querySelector('body')
         });
     }
 

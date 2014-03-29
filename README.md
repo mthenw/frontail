@@ -2,7 +2,7 @@
 
 ```frontail``` is node.js application for serving `tail -F` output to browser.
 
-[![Build Status](https://travis-ci.org/mthenw/frontail.png?branch=master)](https://travis-ci.org/mthenw/frontail)
+[![Build Status](https://travis-ci.org/mthenw/frontail.svg?branch=master)](https://travis-ci.org/mthenw/frontail)
 [![NPM version](https://badge.fury.io/js/frontail.png)](http://badge.fury.io/js/frontail)
 
 ## Features
@@ -39,6 +39,8 @@
       -c, --certificate <cert.pem>  Certificate for HTTPS, option works only along with -k option
       --pid-path <path>             if run as daemon file that will store the process id, default /var/run/frontail.pid
       --log-path <path>             if run as daemon file that will be used as a log, default /dev/null
+      --ui-hide-topbar              hide topbar (log file name and search box)
+      --ui-no-indent                don't indent log lines (every line after first one)
 
 Web interface is on http://localhost:[port]
 

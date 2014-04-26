@@ -1,4 +1,4 @@
-# frontail(1) – tail -F output in browser
+# frontail(1) – realtime log stream in the browser
 
 ```frontail``` is node.js application for serving `tail -F` output to browser.
 

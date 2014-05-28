@@ -70,7 +70,7 @@ describe('connectBuilder', function () {
             .expect('<head><title>/testfile</title></head>', done);
     });
 
-    it('builds app that sets socket.io namespace based on files', function (done) {
+    it('should build app that sets socket.io namespace based on files', function (done) {
         var app = connectBuilder()
             .index(__dirname + '/fixtures/index_with_ns', '/testfile', 'ns', 'dark')
             .build();

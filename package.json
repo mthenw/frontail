@@ -1,6 +1,6 @@
 {
   "name": "frontail",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "realtime log stream in the browser",
   "homepage": "https://github.com/mthenw/frontail",
   "author": "Maciej Winnicki <maciej.winnicki@gmail.com>",
@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "jshint": "~2.3.0",
-    "should": "~2.0.2",
+    "should": "~3.3.2",
     "mocha": "~1.13.0",
     "temp": "~0.6.0",
     "sinon": "~1.7.3",

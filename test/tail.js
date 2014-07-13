@@ -24,7 +24,7 @@ describe('tail', function () {
 
     it('buffers lines on start', function (done) {
         temp.open(TEMP_FILE_PROFIX, function (err, info) {
-            writeLines(info.fd, 20)
+            writeLines(info.fd, 20);
 
             var tailer = tail(info.path, {buffer: 2});
             setTimeout(function () {
@@ -36,12 +36,12 @@ describe('tail', function () {
 
     it('buffers no lines on start by default', function (done) {
         temp.open(TEMP_FILE_PROFIX, function (err, info) {
-            writeLines(info.fd, 3)
+            writeLines(info.fd, 3);
 
             var tailer = tail(info.path);
             setTimeout(function () {
                 tailer.getBuffer().should.be.empty;
-                done()
+                done();
             }, SPAWN_DELAY);
         });
     });

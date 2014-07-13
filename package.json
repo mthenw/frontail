@@ -1,6 +1,6 @@
 {
   "name": "frontail",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "realtime log stream in the browser",
   "homepage": "https://github.com/mthenw/frontail",
   "author": "Maciej Winnicki <maciej.winnicki@gmail.com>",
@@ -12,7 +12,8 @@
     "connect": "2.11.0",
     "validator": "1.5.0",
     "daemon": "1.1.0",
-    "cookie": "0.1.0"
+    "cookie": "0.1.0",
+    "CBuffer": "0.1.4"
   },
   "devDependencies": {
     "jshint": "~2.3.0",

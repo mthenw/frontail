@@ -79,6 +79,15 @@ if (program.daemonize) {
     }
 
     /**
+     * setup UI highlights
+     */
+
+    if (program.highlights) {
+        var path = require('path');
+        var highlights = require(path.resolve(program.highlights));
+    }
+
+    /**
      * When connected send starting data
      */
     var tailer = tail(program.args, {buffer: program.number});
@@ -87,6 +96,7 @@ if (program.daemonize) {
 
         program.uiHideTopbar && socket.emit('options:hide-topbar');
         !program.uiIndent && socket.emit('options:no-indent');
+        program.highlights && socket.emit('options:highlights', highlights);
 
         tailer.getBuffer().forEach(function (line) {
             socket.emit('line', line);

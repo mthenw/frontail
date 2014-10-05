@@ -50,7 +50,6 @@ describe('connectBuilder', function () {
             .expect('bar', done);
     });
 
-
     it('should build app that serve index file', function (done) {
         var app = connectBuilder().index(__dirname + '/fixtures/index', '/testfile').build();
 

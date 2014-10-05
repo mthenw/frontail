@@ -16,13 +16,19 @@
     "CBuffer": "0.1.4"
   },
   "devDependencies": {
+    "jscs": "^1.6.2",
+    "jsdom": "~0.10.1",
     "jshint": "~2.3.0",
-    "should": "~3.3.2",
     "mocha": "~1.13.0",
-    "temp": "~0.6.0",
+    "should": "~3.3.2",
     "sinon": "~1.7.3",
     "supertest": "~0.8.1",
-    "jsdom": "~0.10.1"
+    "temp": "~0.8.1"
+  },
+  "scripts": {
+    "lint": "./node_modules/.bin/jshint .",
+    "cs": "./node_modules/.bin/jscs .",
+    "test": "./node_modules/.bin/mocha --reporter spec test/*.js"
   },
   "repository": {
     "type": "git",

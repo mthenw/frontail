@@ -23,7 +23,7 @@
     "should": "~3.3.2",
     "sinon": "~1.7.3",
     "supertest": "~0.8.1",
-    "temp": "~0.6.0"
+    "temp": "~0.8.1"
   },
   "scripts": {
     "lint": "./node_modules/.bin/jshint .",

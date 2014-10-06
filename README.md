@@ -41,8 +41,26 @@
       --log-path <path>             if run as daemon file that will be used as a log, default /dev/null
       --ui-hide-topbar              hide topbar (log file name and search box)
       --ui-no-indent                don't indent log lines
+      --ui-highlight [path]         highlight words or lines if defined string found in logs, default preset ./preset/default.json
 
-Web interface is on http://localhost:[port]
+Web interface is on **http://localhost:[port]**.
+
+### Highlighting
+
+```--ui-highlight``` option turns on highlighting in UI. By default preset from ```./preset/defatult.json``` is used:
+
+```
+{
+    "words": {
+        "err": "color: red;"
+    },
+    "lines": {
+        "err": "font-weight: bold;"
+    }
+}
+```
+
+which means that every "err" string will be in red and every line with "err" will be bolded.
 
 ## Screenshot
 

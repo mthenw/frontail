@@ -1,0 +1,8 @@
+{
+    "words": {
+        "err": "color: red;"
+    },
+    "lines": {
+        "err": "font-weight: bold;"
+    }
+}

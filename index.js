@@ -3,6 +3,7 @@
 var connect        = require('connect');
 var cookieParser   = require('cookie');
 var crypto         = require('crypto');
+var path           = require('path');
 var sanitizer      = require('validator').sanitize;
 var socketio       = require('socket.io');
 var tail           = require('./lib/tail');
@@ -79,6 +80,15 @@ if (program.daemonize) {
     }
 
     /**
+     * Setup UI highlights
+     */
+    var highlightConfig;
+    if (program.uiHighlight) {
+        var configPath = program.uiHighlight === true ? './preset/default.json' : program.uiHighlight;
+        highlightConfig = require(path.resolve(configPath));
+    }
+
+    /**
      * When connected send starting data
      */
     var tailer = tail(program.args, {buffer: program.number});
@@ -87,6 +97,7 @@ if (program.daemonize) {
 
         program.uiHideTopbar && socket.emit('options:hide-topbar');
         !program.uiIndent && socket.emit('options:no-indent');
+        program.uiHighlight && socket.emit('options:highlightConfig', highlightConfig);
 
         tailer.getBuffer().forEach(function (line) {
             socket.emit('line', line);

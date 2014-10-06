@@ -88,6 +88,28 @@ describe('browser application', function () {
         log.className.should.match(/no-indent/);
     });
 
+    it('should highlight word', function () {
+        initApp();
+
+        io.emit('options:highlightConfig', {words: {line: 'background: black'}});
+        io.emit('line', 'line1');
+
+        var line = window.document.querySelector('.line');
+        line.innerHTML.should.containEql('<span style="background: black">line</span>');
+    });
+
+    it('should highlight line', function () {
+        initApp();
+
+        io.emit('options:highlightConfig', {lines: {line: 'background: black'}});
+        io.emit('line', 'line1');
+
+        var line = window.document.querySelector('.line');
+        line.parentNode.innerHTML.should.equal(
+            '<div class="line" style="background: black;"><p class="inner-line">line1</p></div>'
+        );
+    });
+
     function initApp() {
         window.App.init({
             socket: io,

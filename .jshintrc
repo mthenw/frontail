@@ -4,7 +4,6 @@
     "curly": true,
     "eqeqeq": true,
     "forin": true,
-    "indent": 4,
     "latedef": true,
     "newcap": true,
     "noarg": true,
@@ -16,9 +15,6 @@
     "strict": true,
     "trailing": true,
     "expr": true,
-
-    "maxlen": 120,
-    "white": true,
 
     "node": true,
     "browser": true,

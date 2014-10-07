@@ -60,5 +60,6 @@
   "requireCapitalizedConstructors": true,
   "requireDotNotation": true,
   "disallowYodaConditions": true,
-  "disallowNewlineBeforeBlockStatements": true
+  "disallowNewlineBeforeBlockStatements": true,
+  "maximumLineLength": 120
 }

@@ -12,17 +12,18 @@ describe('browser application', function () {
 
         jsdom.env(
             '<title></title><body><div class="topbar"></div>' +
-            '<div class="log"></div><input type="test" id="filter"/></body>',
+                '<div class="log"></div><input type="test" id="filter"/></body>',
             ['../lib/web/assets/app.js', './lib/jquery.js'],
             function (errors, domWindow) {
                 window = domWindow;
+
+                initApp();
                 done();
-            });
+            }
+        );
     });
 
     it('should show lines from socket.io', function () {
-        initApp();
-
         io.emit('line', 'test');
 
         var log = window.document.querySelector('.log');
@@ -34,7 +35,6 @@ describe('browser application', function () {
     });
 
     it('should select line when clicked', function () {
-        initApp();
         io.emit('line', 'test');
 
         var line = window.document.querySelector('.line');
@@ -44,7 +44,6 @@ describe('browser application', function () {
     });
 
     it('should deselect line when selected line clicked', function () {
-        initApp();
         io.emit('line', 'test');
 
         var line = window.document.querySelector('.line');
@@ -55,8 +54,6 @@ describe('browser application', function () {
     });
 
     it('should limit number of lines in browser', function () {
-        initApp();
-
         io.emit('options:lines', 2);
         io.emit('line', 'line1');
         io.emit('line', 'line2');
@@ -69,8 +66,6 @@ describe('browser application', function () {
     });
 
     it('should hide topbar', function () {
-        initApp();
-
         io.emit('options:hide-topbar');
 
         var topbar = window.document.querySelector('.topbar');
@@ -80,8 +75,6 @@ describe('browser application', function () {
     });
 
     it('should not indent log lines', function () {
-        initApp();
-
         io.emit('options:no-indent');
 
         var log = window.document.querySelector('.log');
@@ -89,8 +82,6 @@ describe('browser application', function () {
     });
 
     it('should highlight word', function () {
-        initApp();
-
         io.emit('options:highlightConfig', {words: {line: 'background: black'}});
         io.emit('line', 'line1');
 
@@ -99,8 +90,6 @@ describe('browser application', function () {
     });
 
     it('should highlight line', function () {
-        initApp();
-
         io.emit('options:highlightConfig', {lines: {line: 'background: black'}});
         io.emit('line', 'line1');
 

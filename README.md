@@ -8,12 +8,13 @@
 ## Features
 
 * search (```Tab``` to focus, ```Esc``` to clear)
-* user basic authentication
+* basic authentication
 * log rotation
 * auto-scrolling
 * marking logs
 * themes (default, dark)
 * number of unread logs in favicon
+* [highlighting](https://github.com/mthenw/frontail#highlighting)
 
 ## Installation
 
@@ -47,7 +48,7 @@ Web interface is on **http://localhost:[port]**.
 
 ### Highlighting
 
-```--ui-highlight``` option turns on highlighting in UI. By default preset from ```./preset/defatult.json``` is used:
+```--ui-highlight [path]``` option turns on highlighting in UI. By default preset from ```./preset/defatult.json``` is used:
 
 ```
 {
@@ -60,7 +61,9 @@ Web interface is on **http://localhost:[port]**.
 }
 ```
 
-which means that every "err" string will be in red and every line with "err" will be bolded.
+which means that every "err" string will be in red and every line with "err" will be bolded. Custom preset can be provided by
+
+*New presets are very welcome. If you don't like default or you would like to share your, please create PR with json file.*
 
 ## Screenshot
 

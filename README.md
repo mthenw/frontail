@@ -2,8 +2,8 @@
 
 ```frontail``` is node.js application for serving `tail -F` output to browser.
 
-[![Build Status](https://travis-ci.org/mthenw/frontail.svg?branch=master)](https://travis-ci.org/mthenw/frontail)
-[![Version](http://img.shields.io/npm/v/frontail.svg)](https://www.npmjs.org/package/frontail)
+[![Build Status](https://img.shields.io/travis/mthenw/frontail.svg?style=flat)](https://travis-ci.org/mthenw/frontail)
+[![Version](http://img.shields.io/npm/v/frontail.svg?style=flat)](https://www.npmjs.org/package/frontail)
 
 ## Features
 

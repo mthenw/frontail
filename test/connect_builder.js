@@ -31,7 +31,7 @@ describe('connectBuilder', function () {
             .expect(200, 'secret!', done);
     });
 
-    it('should build app that setup session', function (done)  {
+    it('should build app that setup session', function (done) {
         var app = connectBuilder().session('secret', 'sessionkey').build();
         app.use(function (req, res) {
             res.end();

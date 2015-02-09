@@ -91,7 +91,12 @@ if (program.daemonize) {
     /**
      * When connected send starting data
      */
-    var tailer = tail(program.args, {buffer: program.number});
+    var sshOptions = {
+        remoteHost: program.remoteHost,
+        remoteUser: program.remoteUser,
+        remotePort: program.remotePort
+    };
+    var tailer = tail(program.args, {buffer: program.number, sshOptions:sshOptions});
     var filesSocket = io.of('/' + filesNamespace).on('connection', function (socket) {
         socket.emit('options:lines', program.lines);
 

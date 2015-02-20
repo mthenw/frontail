@@ -93,7 +93,12 @@ describe('daemonize', function () {
         });
 
         it('with ssh configuration', function () {
-            optionsParser.parse(['node', '/path/to/frontail', '--remote-host', 'remoteHost', '--remote-user', 'remoteUser', '--remote-port', '23']);
+            optionsParser.parse([
+                'node', '/path/to/frontail',
+                '--remote-host', 'remoteHost',
+                '--remote-user', 'remoteUser',
+                '--remote-port', '23'
+            ]);
 
             var sshOptions = {
                 remoteHost: 'remoteHost',
@@ -103,7 +108,11 @@ describe('daemonize', function () {
 
             daemonize('script', optionsParser, {sshOptions: sshOptions});
 
-            daemon.daemon.lastCall.args[1].should.containDeep(['--remote-host', 'remoteHost', '--remote-user', 'remoteUser', '--remote-port', '23']);
+            daemon.daemon.lastCall.args[1].should.containDeep([
+                '--remote-host', 'remoteHost',
+                '--remote-user', 'remoteUser',
+                '--remote-port', '23'
+            ]);
         });
 
         it('without secure connection if option doSecure not passed', function () {

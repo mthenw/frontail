@@ -31,10 +31,20 @@ var sessionKey = 'sid';
 var files = program.args.join(' ');
 var filesNamespace = crypto.createHash('md5').update(files).digest('hex');
 
+/**
+ * When connected send starting data
+ */
+var sshOptions = {
+    remoteHost: program.remoteHost,
+    remoteUser: program.remoteUser,
+    remotePort: program.remotePort
+};
+
 if (program.daemonize) {
     daemonize(__filename, program, {
         doAuthorization: doAuthorization,
-        doSecure: doSecure
+        doSecure: doSecure,
+        sshOptions: sshOptions
     });
 } else {
     /**
@@ -88,14 +98,6 @@ if (program.daemonize) {
         highlightConfig = require(path.resolve(configPath));
     }
 
-    /**
-     * When connected send starting data
-     */
-    var sshOptions = {
-        remoteHost: program.remoteHost,
-        remoteUser: program.remoteUser,
-        remotePort: program.remotePort
-    };
     var tailer = tail(program.args, {buffer: program.number, sshOptions:sshOptions});
     var filesSocket = io.of('/' + filesNamespace).on('connection', function (socket) {
         socket.emit('options:lines', program.lines);

@@ -92,6 +92,20 @@ describe('daemonize', function () {
             daemon.daemon.lastCall.args[1].should.containDeep(['-k', 'key.file', '-c', 'cert.file']);
         });
 
+        it('with ssh configuration', function () {
+            optionsParser.parse(['node', '/path/to/frontail', '--remote-host', 'remoteHost', '--remote-user', 'remoteUser', '--remote-port', '23']);
+
+            var sshOptions = {
+                remoteHost: 'remoteHost',
+                remoteUser: 'remoteUser',
+                remotePort: '23'
+            };
+
+            daemonize('script', optionsParser, {sshOptions: sshOptions});
+
+            daemon.daemon.lastCall.args[1].should.containDeep(['--remote-host', 'remoteHost', '--remote-user', 'remoteUser', '--remote-port', '23']);
+        });
+
         it('without secure connection if option doSecure not passed', function () {
             optionsParser.parse(['node', '/path/to/frontail', '-k', 'key.file', '-c', 'cert.file']);
 

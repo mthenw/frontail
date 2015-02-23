@@ -26,6 +26,7 @@ if (program.args.length === 0) {
  */
 var doAuthorization = !!(program.user && program.password);
 var doSecure = !!(program.key && program.certificate);
+var doSSH = (program.remoteHost);
 var sessionSecret = String(+new Date()) + Math.random();
 var sessionKey = 'sid';
 var files = program.args.join(' ');
@@ -34,7 +35,8 @@ var filesNamespace = crypto.createHash('md5').update(files).digest('hex');
 if (program.daemonize) {
     daemonize(__filename, program, {
         doAuthorization: doAuthorization,
-        doSecure: doSecure
+        doSecure: doSecure,
+        doSSH: doSSH
     });
 } else {
     /**
@@ -96,6 +98,7 @@ if (program.daemonize) {
         remoteUser: program.remoteUser,
         remotePort: program.remotePort
     };
+
     var tailer = tail(program.args, {buffer: program.number, sshOptions:sshOptions});
     var filesSocket = io.of('/' + filesNamespace).on('connection', function (socket) {
         socket.emit('options:lines', program.lines);

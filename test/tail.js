@@ -4,6 +4,8 @@ require('should');
 var fs = require('fs');
 var tail = require('../lib/tail');
 var temp = require('temp');
+var sinon = require('sinon');
+var childProcess = require('child_process');
 
 var TEMP_FILE_PROFIX = '';
 var SPAWN_DELAY = 10;
@@ -43,6 +45,22 @@ describe('tail', function () {
                 tailer.getBuffer().should.be.empty;
                 done();
             }, SPAWN_DELAY);
+        });
+    });
+
+    describe('with ssh options', function () {
+        it('should call ssh command', function () {
+            sinon.spy(childProcess, 'spawn');
+            var sshOptions = {
+                remoteUser: 'testUser',
+                remoteHost: 'host',
+                remotePort: 1234
+            };
+
+            tail('test/path', {ssh: sshOptions});
+
+            childProcess.spawn.calledWith('ssh', ['testUser@host', '-p', 1234, 'tail -f test/path']).should.be.true;
+            childProcess.spawn.restore();
         });
     });
 

@@ -93,13 +93,19 @@ if (program.daemonize) {
     /**
      * When connected send starting data
      */
-    var sshOptions = {
-        remoteHost: program.remoteHost,
-        remoteUser: program.remoteUser,
-        remotePort: program.remotePort
-    };
+    var tailer;
+    if (doSSH) {
+        var sshOptions = {
+            remoteHost: program.remoteHost,
+            remoteUser: program.remoteUser,
+            remotePort: program.remotePort
+        };
 
-    var tailer = tail(program.args, {buffer: program.number, sshOptions:sshOptions});
+        tailer = tail(program.args, {buffer: program.number, ssh: sshOptions});
+    } else {
+        tailer = tail(program.args, {buffer: program.number});
+    }
+
     var filesSocket = io.of('/' + filesNamespace).on('connection', function (socket) {
         socket.emit('options:lines', program.lines);
 

@@ -26,7 +26,7 @@ if (program.args.length === 0) {
  */
 var doAuthorization = !!(program.user && program.password);
 var doSecure = !!(program.key && program.certificate);
-var doSSH = (program.remoteHost);
+var doSSH = !!program.remoteHost;
 var sessionSecret = String(+new Date()) + Math.random();
 var sessionKey = 'sid';
 var files = program.args.join(' ');

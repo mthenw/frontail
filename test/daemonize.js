@@ -100,13 +100,7 @@ describe('daemonize', function () {
                 '--remote-port', '23'
             ]);
 
-            var sshOptions = {
-                remoteHost: 'remoteHost',
-                remoteUser: 'remoteUser',
-                remotePort: '23'
-            };
-
-            daemonize('script', optionsParser, {sshOptions: sshOptions});
+            daemonize('script', optionsParser, {doSSH: true});
 
             daemon.daemon.lastCall.args[1].should.containDeep([
                 '--remote-host', 'remoteHost',

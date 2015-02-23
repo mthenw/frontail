@@ -109,6 +109,22 @@ describe('daemonize', function () {
             ]);
         });
 
+        it('without ssh configuration', function () {
+            optionsParser.parse([
+                'node', '/path/to/frontail',
+                '--remote-user', 'remoteUser',
+                '--remote-port', '23'
+            ]);
+
+            daemonize('script', optionsParser, {doSSH: false});
+
+            daemon.daemon.lastCall.args[1].should.not.containDeep([
+                '--remote-host', 'remoteHost',
+                '--remote-user', 'remoteUser',
+                '--remote-port', '23'
+            ]);
+        });
+
         it('without secure connection if option doSecure not passed', function () {
             optionsParser.parse(['node', '/path/to/frontail', '-k', 'key.file', '-c', 'cert.file']);
 

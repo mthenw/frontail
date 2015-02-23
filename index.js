@@ -26,25 +26,17 @@ if (program.args.length === 0) {
  */
 var doAuthorization = !!(program.user && program.password);
 var doSecure = !!(program.key && program.certificate);
+var doSSH = (program.remoteHost);
 var sessionSecret = String(+new Date()) + Math.random();
 var sessionKey = 'sid';
 var files = program.args.join(' ');
 var filesNamespace = crypto.createHash('md5').update(files).digest('hex');
 
-/**
- * When connected send starting data
- */
-var sshOptions = {
-    remoteHost: program.remoteHost,
-    remoteUser: program.remoteUser,
-    remotePort: program.remotePort
-};
-
 if (program.daemonize) {
     daemonize(__filename, program, {
         doAuthorization: doAuthorization,
         doSecure: doSecure,
-        sshOptions: sshOptions
+        doSSH: doSSH
     });
 } else {
     /**
@@ -97,6 +89,15 @@ if (program.daemonize) {
         var configPath = program.uiHighlight === true ? './preset/default.json' : program.uiHighlight;
         highlightConfig = require(path.resolve(configPath));
     }
+
+    /**
+     * When connected send starting data
+     */
+    var sshOptions = {
+        remoteHost: program.remoteHost,
+        remoteUser: program.remoteUser,
+        remotePort: program.remotePort
+    };
 
     var tailer = tail(program.args, {buffer: program.number, sshOptions:sshOptions});
     var filesSocket = io.of('/' + filesNamespace).on('connection', function (socket) {

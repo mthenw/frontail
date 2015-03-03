@@ -43,7 +43,8 @@
       --log-path <path>             if run as daemon file that will be used as a log, default /dev/null
       --ui-hide-topbar              hide topbar (log file name and search box)
       --ui-no-indent                don't indent log lines
-      --ui-highlight [path]         highlight words or lines if defined string found in logs, default preset ./preset/default.json
+      --ui-highlight                highlight words or lines if defined string found in logs, default preset ./preset/default.json
+      --ui-highlight-preset <path>  custom preset for highlighting (see ./preset/default.json)
       --remote-host <remote_host>   setting the remote host for a tail over ssh (e.g: 192.168.0.2)
       --remote-user <remote_user>   setting the remote user for a tail over ssh, default root
       --remote-port <remote_port>   setting the remote port for a tail over ssh, default 22

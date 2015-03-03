@@ -86,8 +86,7 @@ if (program.daemonize) {
      */
     var highlightConfig;
     if (program.uiHighlight) {
-        var configPath = program.uiHighlight === true ? './preset/default.json' : program.uiHighlight;
-        highlightConfig = require(path.resolve(configPath));
+        highlightConfig = require(path.resolve(program.uiHighlightPreset));
     }
 
     /**

@@ -149,6 +149,15 @@ describe('daemonize', function () {
             daemon.daemon.lastCall.args[1].should.containDeep(['--ui-no-indent']);
         });
 
+        it('with highlight option', function () {
+            optionsParser.parse(['node', '/path/to/frontail', '--ui-highlight']);
+
+            daemonize('script', optionsParser);
+
+            daemon.daemon.lastCall.args[1].should.containDeep(['--ui-highlight']);
+            daemon.daemon.lastCall.args[1].should.containDeep(['--ui-highlight-preset', './preset/default.json']);
+        });
+
         it('with file to tail', function () {
             optionsParser.parse(['node', '/path/to/frontail', '/path/to/file']);
 

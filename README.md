@@ -53,7 +53,7 @@ Web interface is on **http://localhost:[port]**.
 
 ### Highlighting
 
-```--ui-highlight [path]``` option turns on highlighting in UI. By default preset from ```./preset/defatult.json``` is used:
+```--ui-highlight``` option turns on highlighting in UI. By default preset from ```./preset/defatult.json``` is used:
 
 ```
 {

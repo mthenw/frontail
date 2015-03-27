@@ -1,6 +1,7 @@
 'use strict';
 
 require('should');
+var fs = require('fs');
 var jsdom = require('jsdom');
 var EventEmitter = require('events').EventEmitter;
 
@@ -9,18 +10,16 @@ describe('browser application', function () {
 
     beforeEach(function (done) {
         io = new EventEmitter();
+        var html = '<title></title><body><div class="topbar"></div>' +
+            '<div class="log"></div><input type="test" id="filter"/></body>';
+        var src = fs.readFileSync('./lib/web/assets/app.js', 'utf-8');
 
-        jsdom.env(
-            '<title></title><body><div class="topbar"></div>' +
-                '<div class="log"></div><input type="test" id="filter"/></body>',
-            ['../lib/web/assets/app.js', './lib/jquery.js'],
-            function (errors, domWindow) {
-                window = domWindow;
+        jsdom.env({ html: html, src: src, loaded: function (errors, domWindow) {
+            window = domWindow;
 
-                initApp();
-                done();
-            }
-        );
+            initApp();
+            done();
+        }});
     });
 
     it('should show lines from socket.io', function () {

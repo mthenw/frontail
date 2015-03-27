@@ -59,7 +59,7 @@ describe('tail', function () {
 
             tail('test/path', {ssh: sshOptions});
 
-            childProcess.spawn.calledWith('ssh', ['testUser@host', '-p', 1234, 'tail -f test/path']).should.be.true;
+            childProcess.spawn.calledWith('ssh', ['testUser@host', '-p', 1234, 'tail -f', 'test/path']).should.be.true;
             childProcess.spawn.restore();
         });
     });

@@ -21,6 +21,8 @@
 
     npm install frontail -g
 
+or use [Docker image](https://registry.hub.docker.com/u/mthenw/frontail/)
+
 ## Usage
 
     frontail [options] [file ...]

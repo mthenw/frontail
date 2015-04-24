@@ -7,6 +7,7 @@ var path           = require('path');
 var sanitizer      = require('validator').sanitize;
 var socketio       = require('socket.io');
 var tail           = require('./lib/tail');
+var portMap        = require('./lib/port_map');
 var connectBuilder = require('./lib/connect_builder');
 var program        = require('./lib/options_parser');
 var serverBuilder  = require('./lib/server_builder');
@@ -27,6 +28,7 @@ if (program.args.length === 0) {
 var doAuthorization = !!(program.user && program.password);
 var doSecure = !!(program.key && program.certificate);
 var doSSH = !!program.remoteHost;
+var tailPort = !!program.tailPort;
 var sessionSecret = String(+new Date()) + Math.random();
 var sessionKey = 'sid';
 var files = program.args.join(' ');
@@ -101,6 +103,8 @@ if (program.daemonize) {
         };
 
         tailer = tail(program.args, {buffer: program.number, ssh: sshOptions});
+    } else if (tailPort) {
+        tailer = portMap(program.tailPort);
     } else {
         tailer = tail(program.args, {buffer: program.number});
     }

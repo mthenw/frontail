@@ -1,4 +1,4 @@
-# frontail(1) – realtime log stream in the browser
+# frontail – realtime log stream in the browser
 
 ```frontail``` is node.js application for serving `tail -F` output to browser.
 
@@ -22,6 +22,8 @@
     npm install frontail -g
 
 or use [Docker image](https://registry.hub.docker.com/u/mthenw/frontail/)
+
+    docker run -d -v /var/log/syslog:/syslog -P mthenw/frontail /syslog
 
 ## Usage
 

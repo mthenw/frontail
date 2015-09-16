@@ -98,6 +98,13 @@ describe('browser application', function () {
         );
     });
 
+    it('should escape HTML', function () {
+        io.emit('line', '<a/>');
+
+        var line = window.document.querySelector('.line');
+        line.innerHTML.should.equal('<p class="inner-line">&lt;a/&gt;</p>');
+    });
+
     function initApp() {
         window.App.init({
             socket: io,

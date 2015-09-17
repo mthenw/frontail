@@ -53,7 +53,11 @@ or use [Docker image](https://registry.hub.docker.com/u/mthenw/frontail/)
       --remote-user <remote_user>   setting the remote user for a tail over ssh, default root
       --remote-port <remote_port>   setting the remote port for a tail over ssh, default 22
 
-Web interface is on **http://localhost:[port]**.
+Web interface runs on **http://localhost:[port]**.
+
+### Tailing multiple files
+
+`[file ...]` argument is passed directly to `tail` command which means that `*`, `?` and other shell special characters can be used (I recommend reading [Wildcards, Quotes, Back Quotes and Apostrophes in shell commands](http://www.codecoffee.com/tipsforlinux/articles/26-1.html)).
 
 ### Highlighting
 

@@ -15,7 +15,8 @@
 * marking logs
 * themes (default, dark)
 * number of unread logs in favicon
-* [highlighting](https://github.com/mthenw/frontail#highlighting)
+* [tailing multiple files](#tailing-multiple-files)
+* [highlighting](#highlighting)
 
 ## Installation
 

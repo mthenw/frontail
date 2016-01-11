@@ -127,7 +127,7 @@ if (program.daemonize) {
     /**
      * Handle signals
      */
-    var cleanExit = function() { process.exit() };
+    var cleanExit = function () { process.exit(); };
     process.on('SIGINT', cleanExit);
     process.on('SIGTERM', cleanExit);
 }

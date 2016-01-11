@@ -123,4 +123,11 @@ if (program.daemonize) {
     tailer.on('line', function (line) {
         filesSocket.emit('line', sanitizer(line).xss());
     });
+
+    /**
+     * Handle signals
+     */
+    var cleanExit = function() { process.exit() };
+    process.on('SIGINT', cleanExit);
+    process.on('SIGTERM', cleanExit);
 }

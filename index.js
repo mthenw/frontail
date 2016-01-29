@@ -86,7 +86,7 @@ if (program.daemonize) {
      */
     var highlightConfig;
     if (program.uiHighlight) {
-        highlightConfig = require(path.resolve(program.uiHighlightPreset));
+        highlightConfig = require(path.resolve(__dirname, program.uiHighlightPreset));
     }
 
     /**

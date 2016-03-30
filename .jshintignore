@@ -1,2 +1,3 @@
 node_modules
 lib/web/assets/tinycon.min.js
+lib/web/assets/ansi_up.js

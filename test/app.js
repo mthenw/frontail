@@ -12,9 +12,11 @@ describe('browser application', function () {
         io = new EventEmitter();
         var html = '<title></title><body><div class="topbar"></div>' +
             '<div class="log"></div><input type="test" id="filter"/></body>';
+        var ansi_up = fs.readFileSync('./lib/web/assets/ansi_up.js', 'utf-8');
         var src = fs.readFileSync('./lib/web/assets/app.js', 'utf-8');
+        
 
-        jsdom.env({ html: html, src: src, loaded: function (errors, domWindow) {
+        jsdom.env({ html: html, src: [ansi_up, src], loaded: function (errors, domWindow) {
             window = domWindow;
 
             initApp();

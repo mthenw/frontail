@@ -64,10 +64,10 @@ describe('tail', function () {
         });
     });
 
-    function writeLines(fd, count) {
+    var writeLines = function (fd, count) {
         for (var i = 0; i < count; i += 1) {
             fs.writeSync(fd, 'line' + i + '\n');
         }
         fs.closeSync(fd);
-    }
+    };
 });

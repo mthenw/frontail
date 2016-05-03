@@ -6,7 +6,7 @@ var jsdom = require('jsdom');
 var EventEmitter = require('events').EventEmitter;
 
 describe('browser application', function () {
-    var window, io;
+    var io, window;
 
     beforeEach(function (done) {
         io = new EventEmitter();
@@ -16,7 +16,7 @@ describe('browser application', function () {
         var src = fs.readFileSync('./lib/web/assets/app.js', 'utf-8');
 
 
-        jsdom.env({ html: html, src: [ansiup, src], loaded: function (errors, domWindow) {
+        jsdom.env({html: html, src: [ansiup, src], loaded: function (errors, domWindow) {
             window = domWindow;
 
             initApp();
@@ -107,7 +107,7 @@ describe('browser application', function () {
         line.innerHTML.should.equal('<p class="inner-line">&lt;a/&gt;</p>');
     });
 
-    function initApp() {
+    var initApp = function () {
         window.App.init({
             socket: io,
             container: window.document.querySelector('.log'),
@@ -115,11 +115,11 @@ describe('browser application', function () {
             topbar: window.document.querySelector('.topbar'),
             body: window.document.querySelector('body')
         });
-    }
+    };
 
-    function clickOnElement(line) {
+    var clickOnElement = function (line) {
         var click = window.document.createEvent('MouseEvents');
         click.initMouseEvent('click', true, true);
         line.dispatchEvent(click);
-    }
+    };
 });

@@ -4,5 +4,4 @@ node_js:
   - 0.12
 script:
   - npm run lint
-  - npm run cs
   - npm test

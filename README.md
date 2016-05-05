@@ -20,6 +20,8 @@
 
 ## Installation
 
+Note that as of 3.0.0 release, frontail requires Node.js 4 or newer. Earlier versions (2.x) work on legacy Node.js versions like 0.10 or 0.12.
+
     npm install frontail -g
 
 or use [Docker image](https://registry.hub.docker.com/u/mthenw/frontail/)

@@ -16,7 +16,7 @@ describe('browser application', function () {
         var src = fs.readFileSync('./lib/web/assets/app.js', 'utf-8');
 
 
-        jsdom.env({html: html, src: [ansiup, src], loaded: function (errors, domWindow) {
+        jsdom.env({html: html, src: [ansiup, src], onload: function (domWindow) {
             window = domWindow;
 
             initApp();
@@ -96,7 +96,7 @@ describe('browser application', function () {
 
         var line = window.document.querySelector('.line');
         line.parentNode.innerHTML.should.equal(
-            '<div class="line" style="background: black;"><p class="inner-line">line1</p></div>'
+            '<div class="line" style="background: black"><p class="inner-line">line1</p></div>'
         );
     });
 
@@ -119,7 +119,7 @@ describe('browser application', function () {
 
     var clickOnElement = function (line) {
         var click = window.document.createEvent('MouseEvents');
-        click.initMouseEvent('click', true, true);
+        click.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
         line.dispatchEvent(click);
     };
 });

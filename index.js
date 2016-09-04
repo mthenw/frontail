@@ -67,16 +67,17 @@ if (program.daemonize) {
     var io = socketio.listen(server, {log: false});
 
     if (doAuthorization) {
-        io.set('authorization', function (handshakeData, accept) {
+        io.use(function (socket, next) {
+            var handshakeData = socket.request;
             if (handshakeData.headers.cookie) {
                 var cookie = cookieParser.parse(handshakeData.headers.cookie);
                 var sessionId = connect.utils.parseSignedCookie(cookie[sessionKey], sessionSecret);
                 if (sessionId) {
-                    return accept(null, true);
+                    return next(null);
                 }
-                return accept('Invalid cookie', false);
+                return next(new Error('Invalid cookie'), false);
             } else {
-                return accept('No cookie in header', false);
+                return next(new Error('No cookie in header'), false);
             }
         });
     }

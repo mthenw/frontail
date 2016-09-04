@@ -7,13 +7,12 @@
   "license": "MIT",
   "bin": "./bin/frontail",
   "dependencies": {
+    "CBuffer": "0.1.4",
     "commander": "1.3.2",
-    "socket.io": "1.4.8",
     "connect": "2.11.0",
-    "validator": "1.5.0",
-    "daemon": "1.1.0",
     "cookie": "0.1.0",
-    "CBuffer": "0.1.4"
+    "daemon": "1.1.0",
+    "socket.io": "1.4.8"
   },
   "devDependencies": {
     "eslint": "^3.4.0",

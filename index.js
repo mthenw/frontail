@@ -4,7 +4,6 @@ var connect        = require('connect');
 var cookieParser   = require('cookie');
 var crypto         = require('crypto');
 var path           = require('path');
-var sanitizer      = require('validator').sanitize;
 var socketio       = require('socket.io');
 var tail           = require('./lib/tail');
 var connectBuilder = require('./lib/connect_builder');
@@ -122,7 +121,7 @@ if (program.daemonize) {
      * Send incoming data
      */
     tailer.on('line', function (line) {
-        filesSocket.emit('line', sanitizer(line).xss());
+        filesSocket.emit('line', line);
     });
 
     /**

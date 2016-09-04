@@ -100,9 +100,9 @@ if (program.daemonize) {
             remotePort: program.remotePort
         };
 
-        tailer = tail(program.args, {buffer: program.number, ssh: sshOptions});
+        tailer = tail(program.args, {buffer: program.number, grep: program.grep, ssh: sshOptions});
     } else {
-        tailer = tail(program.args, {buffer: program.number});
+        tailer = tail(program.args, {buffer: program.number, grep: program.grep});
     }
 
     var filesSocket = io.of('/' + filesNamespace).on('connection', function (socket) {

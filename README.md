@@ -20,13 +20,13 @@
 
 ## Installation
 
-Note that as of 3.0.0 release, frontail requires Node.js 4 or newer. Earlier versions (2.x) work on legacy Node.js versions like 0.10 or 0.12.
+_Note that as of 3.0.0 release, frontail requires Node.js 4 or newer. Earlier versions (2.x) work on legacy Node.js versions like 0.10 or 0.12._
 
     npm install frontail -g
 
 or use [Docker image](https://registry.hub.docker.com/u/mthenw/frontail/)
 
-    docker run -d -v /var/log/syslog:/syslog -P mthenw/frontail /syslog
+    docker run -d -P -v /var/log:/log mthenw/frontail /log/syslog
 
 ## Usage
 

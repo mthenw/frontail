@@ -16,9 +16,8 @@
     "CBuffer": "0.1.4"
   },
   "devDependencies": {
-    "eslint": "^2.9.0",
+    "eslint": "^3.4.0",
     "jsdom": "^8.5.0",
-    "jshint": "~2.3.0",
     "mocha": "~2.3.2",
     "should": "~3.3.2",
     "sinon": "~1.7.3",
@@ -26,8 +25,8 @@
     "temp": "~0.8.1"
   },
   "scripts": {
-    "lint": "./node_modules/.bin/eslint .",
-    "test": "./node_modules/.bin/mocha --reporter spec test/*.js"
+    "lint": "eslint .",
+    "test": "mocha --reporter spec test/*.js"
   },
   "repository": {
     "type": "git",

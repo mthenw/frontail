@@ -1,28 +1,31 @@
-# frontail – realtime log stream in the browser
+# frontail – realtime streaming logs to the browser
 
-```frontail``` is node.js application for serving `tail -F` output to browser.
+```frontail``` is a Node.js application for streaming logs to the browser.
 
 [![Build Status](https://img.shields.io/travis/mthenw/frontail.svg?style=flat)](https://travis-ci.org/mthenw/frontail)
 [![Version](http://img.shields.io/npm/v/frontail.svg?style=flat)](https://www.npmjs.org/package/frontail)
 
+## Quick start
+
+- `npm i frontail -g`
+- `frontail /var/log/syslog`
+- visit [http://127.0.0.1:9001](http://127.0.0.1:9001)
+
 ## Features
 
-* search (```Tab``` to focus, ```Esc``` to clear)
-* basic authentication
-* working over ssh
 * log rotation
 * auto-scrolling
 * marking logs
-* themes (default, dark)
 * number of unread logs in favicon
-* [tailing multiple files](#tailing-multiple-files)
+* themes (default, dark)
 * [highlighting](#highlighting)
+* search (```Tab``` to focus, ```Esc``` to clear)
+* [tailing multiple files](#tailing-multiple-files)
+* basic authentication
 
 ## Installation
 
-_Note that as of 3.0.0 release, frontail requires Node.js 4 or newer. Earlier versions (2.x) work on legacy Node.js versions like 0.10 or 0.12._
-
-    npm install frontail -g
+    npm i frontail -g
 
 or use [Docker image](https://registry.hub.docker.com/u/mthenw/frontail/)
 
@@ -52,11 +55,8 @@ or use [Docker image](https://registry.hub.docker.com/u/mthenw/frontail/)
       --ui-no-indent                don't indent log lines
       --ui-highlight                highlight words or lines if defined string found in logs, default preset
       --ui-highlight-preset <path>  custom preset for highlighting (see ./preset/default.json)
-      --remote-host <remote_host>   setting the remote host for a tail over ssh (e.g: 192.168.0.2)
-      --remote-user <remote_user>   setting the remote user for a tail over ssh, default root
-      --remote-port <remote_port>   setting the remote port for a tail over ssh, default 22
 
-Web interface runs on **http://localhost:[port]**.
+Web interface runs on **http://127.0.0.1:[port]**.
 
 ### Tailing multiple files
 

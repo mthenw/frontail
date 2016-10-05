@@ -28,6 +28,11 @@ body {
     margin-bottom: 0;
 }
 
+.log .inner-line:empty::after {
+    content: '.';
+    visibility: hidden;
+}
+
 .log.no-indent .inner-line {
     margin-left: 0;
     text-indent: 0;

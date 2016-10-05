@@ -20,7 +20,7 @@
 * themes (default, dark)
 * [highlighting](#highlighting)
 * search (```Tab``` to focus, ```Esc``` to clear)
-* [tailing multiple files](#tailing-multiple-files)
+* tailing [multiple files](#tailing-multiple-files) and [stdin](#stdin)
 * basic authentication
 
 ## Installation
@@ -60,7 +60,13 @@ Web interface runs on **http://127.0.0.1:[port]**.
 
 ### Tailing multiple files
 
-`[file ...]` argument is passed directly to `tail` command which means that `*`, `?` and other shell special characters can be used (I recommend reading [Wildcards, Quotes, Back Quotes and Apostrophes in shell commands](http://www.codecoffee.com/tipsforlinux/articles/26-1.html)).
+`[file ...]` accepts multiple paths, `*`, `?` and other shell special characters([Wildcards, Quotes, Back Quotes and Apostrophes in shell commands](http://www.codecoffee.com/tipsforlinux/articles/26-1.html)).
+
+### stdin
+
+Use `-` for streaming stdin:
+
+    ./server | frontail -
 
 ### Highlighting
 

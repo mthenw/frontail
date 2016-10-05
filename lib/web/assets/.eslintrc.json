@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "no-var": "off",
+    "no-underscore-dangle": "off",
+    "prefer-arrow-callback": "off",
+    "func-names": "off",
+    "space-before-function-paren": "off",
+    "prefer-template": "off"
+  },
+  "env": {
+    "browser": true
+  }
+}

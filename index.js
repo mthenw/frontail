@@ -1,122 +1,134 @@
 'use strict';
 
-var connect        = require('connect');
-var cookieParser   = require('cookie');
-var crypto         = require('crypto');
-var path           = require('path');
-var socketio       = require('socket.io');
-var tail           = require('./lib/tail');
-var connectBuilder = require('./lib/connect_builder');
-var program        = require('./lib/options_parser');
-var serverBuilder  = require('./lib/server_builder');
-var daemonize      = require('./lib/daemonize');
+const connect = require('connect');
+const cookieParser = require('cookie');
+const crypto = require('crypto');
+const path = require('path');
+const socketio = require('socket.io');
+const tail = require('./lib/tail');
+const connectBuilder = require('./lib/connect_builder');
+const program = require('./lib/options_parser');
+const serverBuilder = require('./lib/server_builder');
+const daemonize = require('./lib/daemonize');
 
 /**
  * Parse args
  */
 program.parse(process.argv);
 if (program.args.length === 0) {
-    console.error('Arguments needed, use --help');
-    process.exit();
+  console.error('Arguments needed, use --help');
+  process.exit();
 }
 
 /**
  * Validate params
  */
-var doAuthorization = !!(program.user && program.password);
-var doSecure = !!(program.key && program.certificate);
-var sessionSecret = String(+new Date()) + Math.random();
-var sessionKey = 'sid';
-var files = program.args.join(' ');
-var filesNamespace = crypto.createHash('md5').update(files).digest('hex');
+const doAuthorization = !!(program.user && program.password);
+const doSecure = !!(program.key && program.certificate);
+const sessionSecret = String(+new Date()) + Math.random();
+const sessionKey = 'sid';
+const files = program.args.join(' ');
+const filesNamespace = crypto.createHash('md5').update(files).digest('hex');
 
 if (program.daemonize) {
-    daemonize(__filename, program, {
-        doAuthorization: doAuthorization,
-        doSecure: doSecure
-    });
+  daemonize(__filename, program, {
+    doAuthorization,
+    doSecure,
+  });
 } else {
-    /**
-     * HTTP(s) server setup
-     */
-    var appBuilder = connectBuilder();
-    if (doAuthorization) {
-        appBuilder.session(sessionSecret, sessionKey);
-        appBuilder.authorize(program.user, program.password);
+  /**
+   * HTTP(s) server setup
+   */
+  const appBuilder = connectBuilder();
+  if (doAuthorization) {
+    appBuilder.session(sessionSecret, sessionKey);
+    appBuilder.authorize(program.user, program.password);
+  }
+  appBuilder
+    .static(path.join(__dirname, 'lib/web/assets'))
+    .index(path.join(__dirname, 'lib/web/index.html'), files, filesNamespace, program.theme);
+
+  const builder = serverBuilder();
+  if (doSecure) {
+    builder.secure(program.key, program.certificate);
+  }
+  const server = builder
+    .use(appBuilder.build())
+    .port(program.port)
+    .host(program.host)
+    .build();
+
+  /**
+   * socket.io setup
+   */
+  const io = socketio.listen(server, {
+    log: false,
+  });
+
+  if (doAuthorization) {
+    io.use((socket, next) => {
+      const handshakeData = socket.request;
+      if (handshakeData.headers.cookie) {
+        const cookie = cookieParser.parse(handshakeData.headers.cookie);
+        const sessionId = connect.utils.parseSignedCookie(cookie[sessionKey], sessionSecret);
+        if (sessionId) {
+          return next(null);
+        }
+        return next(new Error('Invalid cookie'), false);
+      }
+
+      return next(new Error('No cookie in header'), false);
+    });
+  }
+
+  /**
+   * Setup UI highlights
+   */
+  let highlightConfig;
+  if (program.uiHighlight) {
+    highlightConfig = require(path.resolve(__dirname, program.uiHighlightPreset)); // eslint-disable-line
+  }
+
+  /**
+   * When connected send starting data
+   */
+  const tailer = tail(program.args, {
+    buffer: program.number,
+  });
+
+  const filesSocket = io.of(`/${filesNamespace}`).on('connection', (socket) => {
+    socket.emit('options:lines', program.lines);
+
+    if (program.uiHideTopbar) {
+      socket.emit('options:hide-topbar');
     }
-    appBuilder
-        .static(__dirname + '/lib/web/assets')
-        .index(__dirname + '/lib/web/index.html', files, filesNamespace, program.theme);
 
-    var builder = serverBuilder();
-    if (doSecure) {
-        builder.secure(program.key, program.certificate);
-    }
-    var server = builder
-        .use(appBuilder.build())
-        .port(program.port)
-        .host(program.host)
-        .build();
-
-    /**
-     * socket.io setup
-     */
-    var io = socketio.listen(server, {log: false});
-
-    if (doAuthorization) {
-        io.use(function (socket, next) {
-            var handshakeData = socket.request;
-            if (handshakeData.headers.cookie) {
-                var cookie = cookieParser.parse(handshakeData.headers.cookie);
-                var sessionId = connect.utils.parseSignedCookie(cookie[sessionKey], sessionSecret);
-                if (sessionId) {
-                    return next(null);
-                }
-                return next(new Error('Invalid cookie'), false);
-            } else {
-                return next(new Error('No cookie in header'), false);
-            }
-        });
+    if (!program.uiIndent) {
+      socket.emit('options:no-indent');
     }
 
-    /**
-     * Setup UI highlights
-     */
-    var highlightConfig;
     if (program.uiHighlight) {
-        highlightConfig = require(path.resolve(__dirname, program.uiHighlightPreset));
+      socket.emit('options:highlightConfig', highlightConfig);
     }
 
-    /**
-     * When connected send starting data
-     */
-    var tailer = tail(program.args, {buffer: program.number});
-
-    var filesSocket = io.of('/' + filesNamespace).on('connection', function (socket) {
-        socket.emit('options:lines', program.lines);
-
-        program.uiHideTopbar && socket.emit('options:hide-topbar');
-        !program.uiIndent && socket.emit('options:no-indent');
-        program.uiHighlight && socket.emit('options:highlightConfig', highlightConfig);
-
-        tailer.getBuffer().forEach(function (line) {
-            socket.emit('line', line);
-        });
+    tailer.getBuffer().forEach((line) => {
+      socket.emit('line', line);
     });
+  });
 
-    /**
-     * Send incoming data
-     */
-    tailer.on('line', function (line) {
-        filesSocket.emit('line', line);
-    });
+  /**
+   * Send incoming data
+   */
+  tailer.on('line', (line) => {
+    filesSocket.emit('line', line);
+  });
 
-    /**
-     * Handle signals
-     */
-    var cleanExit = function () {
-        process.exit();
-    };
-    process.on('SIGINT', cleanExit);
-    process.on('SIGTERM', cleanExit);
+  /**
+   * Handle signals
+   */
+  const cleanExit = () => {
+    process.exit();
+  };
+  process.on('SIGINT', cleanExit);
+  process.on('SIGTERM', cleanExit);
 }

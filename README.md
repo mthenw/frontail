@@ -1,4 +1,4 @@
-# frontail – realtime streaming logs to the browser
+# frontail – streaming logs to the browser
 
 ```frontail``` is a Node.js application for streaming logs to the browser.
 

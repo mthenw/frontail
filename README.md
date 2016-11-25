@@ -83,9 +83,9 @@ Use `-` for streaming stdin:
 }
 ```
 
-which means that every "err" string will be in red and every line with "err" will be bolded. Custom preset can be provided by
+which means that every "err" string will be in red and every line containing "err" will be bolded.
 
-*New presets are very welcome. If you don't like default or you would like to share your, please create PR with json file.*
+*New presets are very welcome. If you don't like default or you would like to share yours, please create PR with json file.*
 
 ## Screenshot
 

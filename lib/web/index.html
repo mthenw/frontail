@@ -11,7 +11,7 @@
         <div class="container-fluid">
             <span class="navbar-brand" href="#">tail -F __TITLE__</span>
             <button class="btn btn-danger navbar-btn">Clear</button>
-            <form class="navbar-form navbar-right" role="search">
+            <form class="navbar-form navbar-right" role="search" onkeypress="return event.keyCode != 13;">
                 <div class="form-group">
                     <input type="text" class="form-control query" placeholder="Filter" tabindex="1">
                 </div>

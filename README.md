@@ -89,4 +89,4 @@ which means that every "err" string will be in red and every line containing "er
 
 ## Screenshot
 
-![screenshot1](https://dl.dropboxusercontent.com/u/3101412/frontail1.0.png)
+![screenshot1](https://cloud.githubusercontent.com/assets/455261/24855370/ba3151bc-1de1-11e7-914d-d438cfdd1e94.png)

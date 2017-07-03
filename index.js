@@ -69,8 +69,12 @@ if (program.daemonize) {
     io.use((socket, next) => {
       const handshakeData = socket.request;
       if (handshakeData.headers.cookie) {
-        const cookie = cookieParser.parse(handshakeData.headers.cookie);
-        const sessionId = connect.utils.parseSignedCookie(cookie[sessionKey], sessionSecret);
+        const cookies = cookieParser.parse(handshakeData.headers.cookie);
+        const sessionIdEncoded = cookies[sessionKey];
+        if (!sessionIdEncoded) {
+          return next(new Error('Session cookie not provided'), false);
+        }
+        const sessionId = connect.utils.parseSignedCookie(sessionIdEncoded, sessionSecret);
         if (sessionId) {
           return next(null);
         }

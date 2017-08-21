@@ -8,6 +8,7 @@
   "bin": "./bin/frontail",
   "dependencies": {
     "CBuffer": "0.1.4",
+    "byline": "^5.0.0",
     "commander": "1.3.2",
     "connect": "2.11.0",
     "cookie": "0.1.0",
@@ -33,7 +34,13 @@
     "type": "git",
     "url": "http://github.com/mthenw/frontail.git"
   },
-  "keywords": ["tail", "syslog", "realtime", "log", "devops"],
+  "keywords": [
+    "tail",
+    "syslog",
+    "realtime",
+    "log",
+    "devops"
+  ],
   "main": "index",
   "preferGlobal": true
 }

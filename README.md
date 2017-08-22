@@ -1,8 +1,10 @@
-# frontail – streaming logs to the browser
+# frontail – streaming logs to the browser 
 
 ```frontail``` is a Node.js application for streaming logs to the browser. It's a `tail -F` with UI.
 
-[![Build Status](https://img.shields.io/travis/mthenw/frontail.svg?style=flat)](https://travis-ci.org/mthenw/frontail)
+![frontial](https://user-images.githubusercontent.com/455261/29570317-660c8122-8756-11e7-9d2f-8fea19e05211.gif)
+
+[![Build Status](https://img.shields.io/travis/mthenw/frontail.svg?style=flat)](https://travis-ci.org/mthenw/frontail) 
 [![Version](http://img.shields.io/npm/v/frontail.svg?style=flat)](https://www.npmjs.org/package/frontail)
 
 ## Quick start
@@ -86,7 +88,3 @@ Use `-` for streaming stdin:
 which means that every "err" string will be in red and every line containing "err" will be bolded.
 
 *New presets are very welcome. If you don't like default or you would like to share yours, please create PR with json file.*
-
-## Screenshot
-
-![screenshot1](https://cloud.githubusercontent.com/assets/455261/24855370/ba3151bc-1de1-11e7-914d-d438cfdd1e94.png)

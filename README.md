@@ -1,11 +1,11 @@
-# frontail – streaming logs to the browser 
+# frontail – streaming logs to the browser
 
 ```frontail``` is a Node.js application for streaming logs to the browser. It's a `tail -F` with UI.
 
 ![frontial](https://user-images.githubusercontent.com/455261/29570317-660c8122-8756-11e7-9d2f-8fea19e05211.gif)
 
-[![Build Status](https://img.shields.io/travis/mthenw/frontail.svg?style=flat)](https://travis-ci.org/mthenw/frontail) 
-[![Version](http://img.shields.io/npm/v/frontail.svg?style=flat)](https://www.npmjs.org/package/frontail)
+[![Build Status](https://img.shields.io/travis/mthenw/frontail.svg?style=flat)](https://travis-ci.org/mthenw/frontail)
+[![Docker Pulls](https://img.shields.io/docker/pulls/mthenw/frontail.svg)](https://hub.docker.com/r/mthenw/frontail/)
 
 ## Quick start
 

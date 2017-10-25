@@ -76,7 +76,7 @@ Use `-` for streaming stdin:
 
 ### Highlighting
 
-```--ui-highlight``` option turns on highlighting in UI. By default preset from ```./preset/defatult.json``` is used:
+```--ui-highlight``` option turns on highlighting in UI. By default preset from ```./preset/default.json``` is used:
 
 ```
 {

@@ -7,10 +7,6 @@
 [![Build Status](https://img.shields.io/travis/mthenw/frontail.svg?style=flat)](https://travis-ci.org/mthenw/frontail)
 [![Docker Pulls](https://img.shields.io/docker/pulls/mthenw/frontail.svg)](https://hub.docker.com/r/mthenw/frontail/)
 
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/PJLLb6aSiCY7bQt7Jrim8KLL/mthenw/frontail'>
-  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/PJLLb6aSiCY7bQt7Jrim8KLL/mthenw/frontail.svg' />
-</a>
-
 ## Quick start
 
 - `npm i frontail -g`

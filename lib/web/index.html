@@ -12,7 +12,8 @@
             <span class="navbar-brand" href="#">tail -F __TITLE__</span>
             <form class="navbar-form navbar-right" role="search" onkeypress="return event.keyCode != 13;">
                 <div class="form-group">
-                    <input type="text" class="form-control query" placeholder="Filter" tabindex="1">
+                    <input type="text" id="q1" class="form-control query" placeholder="Filter" tabindex="1">
+                    <input type="text" id="q2" class="form-control query" placeholder="Inverse Filter" tabindex="2">
                 </div>
             </form>
         </div>
@@ -30,7 +31,8 @@
         window.load = App.init({
             socket: socket,
             container: document.getElementsByClassName('log')[0],
-            filterInput: document.getElementsByClassName('query')[0],
+            filterInput: document.getElementById('q1'),
+            invFilterInput: document.getElementById('q2'),
             topbar: document.getElementsByClassName('topbar')[0],
             body: document.getElementsByTagName('body')[0]
         });

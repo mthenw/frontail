@@ -13,6 +13,7 @@ describe('browser application', () => {
       socket: io,
       container: window.document.querySelector('.log'),
       filterInput: window.document.querySelector('#filter'),
+      invFilterInput: window.document.querySelector('#filter2'),
       topbar: window.document.querySelector('.topbar'),
       body: window.document.querySelector('body'),
     });
@@ -27,7 +28,7 @@ describe('browser application', () => {
   beforeEach((done) => {
     io = new EventEmitter();
     const html = '<title></title><body><div class="topbar"></div>' +
-      '<div class="log"></div><input type="test" id="filter"/></body>';
+      '<div class="log"></div><input type="test" id="filter"/><input type="test" id="filter2"/></body>';
     const ansiup = fs.readFileSync('./lib/web/assets/ansi_up.js', 'utf-8');
     const src = fs.readFileSync('./lib/web/assets/app.js', 'utf-8');
 

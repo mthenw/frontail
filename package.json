@@ -10,7 +10,7 @@
     "CBuffer": "2.0.0",
     "byline": "^5.0.0",
     "commander": "2.12.2",
-    "connect": "3.6.5",
+    "connect": "2.30.2",
     "cookie": "0.3.1",
     "daemon": "github:zipang/daemon.node#48d0977c26fb3a6a44ae99aae3471b9d5a761085",
     "socket.io": "2.0.4"

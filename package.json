@@ -1,19 +1,19 @@
 {
   "name": "frontail",
-  "version": "4.0.5",
+  "version": "4.1.0",
   "description": "Streaming logs to the browser",
   "homepage": "https://github.com/mthenw/frontail",
   "author": "Maciej Winnicki <maciej.winnicki@gmail.com>",
   "license": "MIT",
   "bin": "./bin/frontail",
   "dependencies": {
-    "CBuffer": "0.1.4",
+    "CBuffer": "2.0.0",
     "byline": "^5.0.0",
-    "commander": "1.3.2",
-    "connect": "2.11.0",
-    "cookie": "0.1.0",
+    "commander": "2.12.2",
+    "connect": "3.6.5",
+    "cookie": "0.3.1",
     "daemon": "github:zipang/daemon.node#48d0977c26fb3a6a44ae99aae3471b9d5a761085",
-    "socket.io": "1.4.8"
+    "socket.io": "2.0.4"
   },
   "devDependencies": {
     "eslint": "^3.6.0",

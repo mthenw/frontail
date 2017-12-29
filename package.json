@@ -28,7 +28,8 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "test": "mocha -r should --reporter spec test/*.js"
+    "test": "mocha -r should --reporter spec test/*.js",
+    "start": "node bin/frontail C:\\Users\\Nima\\.IntelliJIdea2017.3\\system\\log\\idea.log"
   },
   "repository": {
     "type": "git",

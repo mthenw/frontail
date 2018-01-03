@@ -26,10 +26,11 @@ describe('browser application', () => {
 
   beforeEach((done) => {
     io = new EventEmitter();
-    const html = '<title></title><body><div class="topbar"></div>' +
+    const html =
+      '<title></title><body><div class="topbar"></div>' +
       '<div class="log"></div><input type="test" id="filter"/></body>';
-    const ansiup = fs.readFileSync('./lib/web/assets/ansi_up.js', 'utf-8');
-    const src = fs.readFileSync('./lib/web/assets/app.js', 'utf-8');
+    const ansiup = fs.readFileSync('./web/assets/ansi_up.js', 'utf-8');
+    const src = fs.readFileSync('./web/assets/app.js', 'utf-8');
 
     jsdom.env({
       html,
@@ -122,9 +123,7 @@ describe('browser application', () => {
     io.emit('line', 'line1');
 
     const line = window.document.querySelector('.line');
-    line.parentNode.innerHTML.should.equal(
-      '<div class="line" style="background: black"><p class="inner-line">line1</p></div>'
-    );
+    line.parentNode.innerHTML.should.equal('<div class="line" style="background: black"><p class="inner-line">line1</p></div>');
   });
 
   it('should escape HTML', () => {

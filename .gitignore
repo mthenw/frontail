@@ -1,3 +1,4 @@
 node_modules
 test/fixtures/*.pem
 npm-debug.log
+dist

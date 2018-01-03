@@ -10,6 +10,8 @@ const connectBuilder = require('./lib/connect_builder');
 const program = require('./lib/options_parser');
 const serverBuilder = require('./lib/server_builder');
 const daemonize = require('./lib/daemonize');
+const fs = require('fs');
+const untildify = require('untildify');
 
 /**
  * Parse args
@@ -45,8 +47,8 @@ if (program.daemonize) {
     appBuilder.authorize(program.user, program.password);
   }
   appBuilder
-    .static(path.join(__dirname, 'lib/web/assets'))
-    .index(path.join(__dirname, 'lib/web/index.html'), files, filesNamespace, program.theme);
+    .static(path.join(__dirname, 'web/assets'))
+    .index(path.join(__dirname, 'web/index.html'), files, filesNamespace, program.theme);
 
   const builder = serverBuilder();
   if (doSecure) {
@@ -90,7 +92,19 @@ if (program.daemonize) {
    */
   let highlightConfig;
   if (program.uiHighlight) {
-    highlightConfig = require(path.resolve(__dirname, program.uiHighlightPreset)); // eslint-disable-line
+    let presetPath;
+
+    if (!program.uiHighlightPreset) {
+      presetPath = path.join(__dirname, 'preset/default.json');
+    } else {
+      presetPath = path.resolve(untildify(program.uiHighlightPreset));
+    }
+
+    if (fs.existsSync(presetPath)) {
+      highlightConfig = JSON.parse(fs.readFileSync(presetPath));
+    } else {
+      throw new Error(`Preset file ${presetPath} doesn't exists`);
+    }
   }
 
   /**

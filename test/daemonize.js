@@ -129,7 +129,20 @@ describe('daemonize', () => {
       daemonize('script', optionsParser);
 
       daemon.daemon.lastCall.args[1].should.containDeep(['--ui-highlight']);
-      daemon.daemon.lastCall.args[1].should.containDeep(['--ui-highlight-preset', './preset/default.json']);
+    });
+
+    it('with highlight preset option', () => {
+      optionsParser.parse([
+        'node',
+        '/path/to/frontail',
+        '--ui-highlight',
+        '--ui-highlight-preset',
+        'test.json',
+      ]);
+
+      daemonize('script', optionsParser);
+
+      daemon.daemon.lastCall.args[1].should.containDeep(['--ui-highlight-preset', 'test.json']);
     });
 
     it('with file to tail', () => {

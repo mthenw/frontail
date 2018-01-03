@@ -9,7 +9,7 @@
 
 ## Quick start
 
-- `npm i frontail -g`
+- `npm i frontail -g` or download a binary file from [Releases](https://github.com/mthenw/frontail/releases) page
 - `frontail /var/log/syslog`
 - visit [http://127.0.0.1:9001](http://127.0.0.1:9001)
 
@@ -25,13 +25,11 @@
 * tailing [multiple files](#tailing-multiple-files) and [stdin](#stdin)
 * basic authentication
 
-## Installation
+## Installation options
 
-    npm i frontail -g
-
-or use [Docker image](https://registry.hub.docker.com/u/mthenw/frontail/)
-
-    docker run -d -P -v /var/log:/log mthenw/frontail /log/syslog
+* download a binary file from [Releases](https://github.com/mthenw/frontail/releases) page
+* using [npm package](https://www.npmjs.com/package/frontail): `npm i frontail -g`
+* using [Docker image](https://registry.hub.docker.com/u/mthenw/frontail/): `docker run -d -P -v /var/log:/log mthenw/frontail /log/syslog`
 
 ## Usage
 

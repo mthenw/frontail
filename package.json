@@ -13,7 +13,7 @@
     "connect": "2.11.0",
     "cookie": "0.1.0",
     "daemon": "github:zipang/daemon.node#48d0977c26fb3a6a44ae99aae3471b9d5a761085",
-    "socket.io": "1.4.8",
+    "socket.io": "^1.7.0",
     "untildify": "^3.0.2"
   },
   "devDependencies": {

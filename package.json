@@ -12,7 +12,7 @@
     "commander": "1.3.2",
     "connect": "2.11.0",
     "cookie": "0.1.0",
-    "daemon": "github:zipang/daemon.node#48d0977c26fb3a6a44ae99aae3471b9d5a761085",
+    "daemon-fix41": "1.1.2",
     "socket.io": "^1.7.0",
     "untildify": "^3.0.2"
   },

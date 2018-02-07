@@ -1,6 +1,6 @@
 'use strict';
 
-const daemon = require('daemon');
+const daemon = require('daemon-fix41');
 const optionsParser = require('../lib/options_parser');
 const daemonize = require('../lib/daemonize');
 const sinon = require('sinon');

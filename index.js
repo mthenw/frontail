@@ -139,6 +139,8 @@ if (program.daemonize) {
    */
   tailer.on('line', (line) => {
     filesSocket.emit('line', line);
+    //console.log(`test:${line}`)
+    process.stdout.write(line + '\n')
   });
 
   /**

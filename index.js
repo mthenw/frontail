@@ -139,9 +139,9 @@ if (program.daemonize) {
    */
   tailer.on('line', (line) => {
     filesSocket.emit('line', line);
-    if (program.stdout) {
+    //if (program.stdout) {
         process.stdout.write(line + '\n')
-    }
+    //}
   });
 
   /**

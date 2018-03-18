@@ -3,4 +3,6 @@ test/fixtures/*.pem
 npm-debug.log
 dist
 .idea
+*.iml
+
 

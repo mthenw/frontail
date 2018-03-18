@@ -72,7 +72,7 @@ if (program.daemonize) {
   }
   appBuilder
     .static(path.join(__dirname, 'web/assets'))
-    .index(path.join(__dirname, 'web/index.html'), title || files , filesNamespace, program.theme);
+    .index(path.join(__dirname, 'web/index.html'), title || files, filesNamespace, program.theme);
 
   const builder = serverBuilder();
   if (doSecure) {
@@ -163,7 +163,10 @@ if (program.daemonize) {
    */
   tailer.on('line', (line) => {
     filesSocket.emit('line', line);
-    process.stdout.write(line + '\n')
+    if (program.stdout) {
+        process.stdout.write(line + '\n')
+    }
+
   });
 
   /**

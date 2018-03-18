@@ -53,7 +53,6 @@ const doSecure = !!(program.key && program.certificate);
 const sessionSecret = String(+new Date()) + Math.random();
 const sessionKey = 'sid';
 const files = program.args.join(' ');
-const title = program.title;
 const filesNamespace = crypto.createHash('md5').update(files).digest('hex');
 
 if (program.daemonize) {
@@ -72,7 +71,7 @@ if (program.daemonize) {
   }
   appBuilder
     .static(path.join(__dirname, 'web/assets'))
-    .index(path.join(__dirname, 'web/index.html'), title || files, filesNamespace, program.theme);
+    .index(path.join(__dirname, 'web/index.html'), files, filesNamespace, program.theme);
 
   const builder = serverBuilder();
   if (doSecure) {

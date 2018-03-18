@@ -98,8 +98,3 @@ Use `-o` or `--stdout` for outputting everything to stdout as well
 
     ./server | frontail - -O
 
-### Change browsers page title
-
-Use `-T` or `--title` to give a custom page title.
-Otherwise the default title will be applied, which is a concatenation
-of the names of all tail'd files.

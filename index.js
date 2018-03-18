@@ -22,27 +22,31 @@ if (program.args.length === 0) {
   process.exit();
 }
 
-function epipeBomb(stream, callback) {
-    if (stream == null) stream = process.stdout
-    if (callback == null) callback = process.exit
+function epipeBomb(_stream, _callback) {
+  let stream = _stream;
+  let callback = _callback;
+  if (stream == null) stream = process.stdout;
+  if (callback == null) callback = process.exit;
 
-    function epipeFilter(err) {
-        if (err.code === 'EPIPE') return callback()
+  function epipeFilter(err) {
+    if (err.code === 'EPIPE') return callback();
 
-        // If there's more than one error handler (ie, us),
-        // then the error won't be bubbled up anyway
-        if (stream.listeners('error').length <= 1) {
-            stream.removeAllListeners()     // Pretend we were never here
-            stream.emit('error', err)       // Then emit as if we were never here
-            stream.on('error', epipeFilter) // Then reattach, ready for the next error!
-        }
+    // If there's more than one error handler (ie, us),
+    // then the error won't be bubbled up anyway
+    if (stream.listeners('error').length <= 1) {
+      stream.removeAllListeners();     // Pretend we were never here
+      stream.emit('error', err);       // Then emit as if we were never here
+      stream.on('error', epipeFilter); // Then reattach, ready for the next error!
     }
 
-    stream.on('error', epipeFilter)
+    return null;
+  }
+
+  stream.on('error', epipeFilter);
 }
 
 // make sure no broken pipes / e-pipe
-epipeBomb()
+epipeBomb();
 
 
 /**
@@ -163,9 +167,8 @@ if (program.daemonize) {
   tailer.on('line', (line) => {
     filesSocket.emit('line', line);
     if (program.stdout) {
-        process.stdout.write(line + '\n')
+      process.stdout.write(`${line}\n`);
     }
-
   });
 
   /**

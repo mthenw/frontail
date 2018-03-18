@@ -67,6 +67,9 @@ Web interface runs on **http://127.0.0.1:[port]**.
 Use `-` for streaming stdin:
 
     ./server | frontail -
+    
+    
+   
 
 ### Highlighting
 
@@ -86,3 +89,17 @@ Use `-` for streaming stdin:
 which means that every "err" string will be in red and every line containing "err" will be bolded.
 
 *New presets are very welcome. If you don't like default or you would like to share yours, please create PR with json file.*
+
+
+### stdout
+
+Use `-o` or `--stdout` for outputting everything to stdout as well
+(disabled by default):
+
+    ./server | frontail - -O
+
+### Change browsers page title
+
+Use `-T` or `--title` to give a custom page title.
+Otherwise the default title will be applied, which is a concatenation
+of the names of all tail'd files.

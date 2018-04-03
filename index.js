@@ -31,6 +31,7 @@ const sessionSecret = String(+new Date()) + Math.random();
 const sessionKey = 'sid';
 const files = program.args.join(' ');
 const filesNamespace = crypto.createHash('md5').update(files).digest('hex');
+const prefixPath = program.path.replace(/\/$/, '');
 
 if (program.daemonize) {
   daemonize(__filename, program, {
@@ -48,7 +49,7 @@ if (program.daemonize) {
   }
   appBuilder
     .static(path.join(__dirname, 'web/assets'))
-    .index(path.join(__dirname, 'web/index.html'), files, filesNamespace, program.theme);
+    .index(path.join(__dirname, 'web/index.html'), files, filesNamespace, program.theme, prefixPath);
 
   const builder = serverBuilder();
   if (doSecure) {

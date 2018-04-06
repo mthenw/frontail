@@ -25,7 +25,9 @@
     <script src="__PATH__/ansi_up.js"></script>
     <script src="__PATH__/app.js"></script>
     <script type="text/javascript">
-        var socket = new io.connect('/' + '__NAMESPACE__');
+        var socket = new io.connect('/__NAMESPACE__', {
+            path: '__PATH__/socket.io/'
+        });
 
         window.load = App.init({
             socket: socket,

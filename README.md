@@ -96,10 +96,19 @@ Using frontail with `--path /frontail`
 
 
 ```
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    '' close;
+}
+
 location ~/frontail/(?<rst>.*)$ {
     proxy_pass http://127.0.0.1:9001/$rst?$args;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection $connection_upgrade;
+
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
 }
 ```

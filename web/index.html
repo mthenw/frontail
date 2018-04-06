@@ -3,8 +3,8 @@
 <head>
     <title>tail -F __TITLE__</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="/styles/__THEME__.css">
-    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="__PATH__/styles/__THEME__.css">
+    <link rel="icon" href="__PATH__/favicon.ico">
 </head>
 <body>
     <nav class="topbar navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -20,12 +20,14 @@
 
     <pre class="log"></pre>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/tinycon.min.js"></script>
-    <script src="/ansi_up.js"></script>
-    <script src="/app.js"></script>
+    <script src="__PATH__/socket.io/socket.io.js"></script>
+    <script src="__PATH__/tinycon.min.js"></script>
+    <script src="__PATH__/ansi_up.js"></script>
+    <script src="__PATH__/app.js"></script>
     <script type="text/javascript">
-        var socket = new io.connect('/' + '__NAMESPACE__');
+        var socket = new io.connect('/__NAMESPACE__', {
+            path: '__PATH__/socket.io/'
+        });
 
         window.load = App.init({
             socket: socket,

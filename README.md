@@ -55,6 +55,7 @@
       --ui-no-indent                don't indent log lines
       --ui-highlight                highlight words or lines if defined string found in logs, default preset
       --ui-highlight-preset <path>  custom preset for highlighting (see ./preset/default.json)
+      --path <path>                 prefix path for the running application, default /
 
 Web interface runs on **http://127.0.0.1:[port]**.
 
@@ -86,3 +87,28 @@ Use `-` for streaming stdin:
 which means that every "err" string will be in red and every line containing "err" will be bolded.
 
 *New presets are very welcome. If you don't like default or you would like to share yours, please create PR with json file.*
+
+### Running behind nginx
+
+Using the `--path` option frontail can run behind nginx with the example configuration
+
+Using frontail with `--path /frontail`
+
+
+```
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    '' close;
+}
+
+location ~/frontail/(?<rst>.*)$ {
+    proxy_pass http://127.0.0.1:9001/$rst?$args;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+}
+```

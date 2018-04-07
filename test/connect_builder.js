@@ -6,7 +6,7 @@ const path = require('path');
 
 describe('connectBuilder', () => {
   it('should build connect app', () => {
-    connectBuilder()
+    connectBuilder('/')
       .build()
       .should.have.property('use');
     connectBuilder()
@@ -15,7 +15,7 @@ describe('connectBuilder', () => {
   });
 
   it('should build app requiring authorized user', (done) => {
-    const app = connectBuilder()
+    const app = connectBuilder('/')
       .authorize('user', 'pass')
       .build();
 
@@ -26,7 +26,7 @@ describe('connectBuilder', () => {
   });
 
   it('should build app allowing user to login', (done) => {
-    const app = connectBuilder()
+    const app = connectBuilder('/')
       .authorize('user', 'pass')
       .build();
     app.use((req, res) => {
@@ -40,7 +40,7 @@ describe('connectBuilder', () => {
   });
 
   it('should build app that setup session', (done) => {
-    const app = connectBuilder()
+    const app = connectBuilder('/')
       .session('secret', 'sessionkey')
       .build();
     app.use((req, res) => {
@@ -53,7 +53,7 @@ describe('connectBuilder', () => {
   });
 
   it('should build app that serve static files', (done) => {
-    const app = connectBuilder()
+    const app = connectBuilder('/')
       .static(path.join(__dirname, 'fixtures'))
       .build();
 
@@ -63,7 +63,7 @@ describe('connectBuilder', () => {
   });
 
   it('should build app that serve index file', (done) => {
-    const app = connectBuilder()
+    const app = connectBuilder('/')
       .index(path.join(__dirname, 'fixtures/index'), '/testfile')
       .build();
 
@@ -73,8 +73,19 @@ describe('connectBuilder', () => {
       .expect('Content-Type', 'text/html', done);
   });
 
+  it('should build app that serve index file on specified path', (done) => {
+    const app = connectBuilder('/test')
+      .index(path.join(__dirname, 'fixtures/index'), '/testfile')
+      .build();
+
+    request(app)
+      .get('/test')
+      .expect(200)
+      .expect('Content-Type', 'text/html', done);
+  });
+
   it('should build app that replace index title', (done) => {
-    const app = connectBuilder()
+    const app = connectBuilder('/')
       .index(path.join(__dirname, 'fixtures/index_with_title'), '/testfile')
       .build();
 
@@ -84,7 +95,7 @@ describe('connectBuilder', () => {
   });
 
   it('should build app that sets socket.io namespace based on files', (done) => {
-    const app = connectBuilder()
+    const app = connectBuilder('/')
       .index(path.join(__dirname, 'fixtures/index_with_ns'), '/testfile', 'ns', 'dark')
       .build();
 
@@ -94,7 +105,7 @@ describe('connectBuilder', () => {
   });
 
   it('should build app that sets theme', (done) => {
-    const app = connectBuilder()
+    const app = connectBuilder('/')
       .index(path.join(__dirname, '/fixtures/index_with_theme'), '/testfile', 'ns', 'dark')
       .build();
 
@@ -107,7 +118,7 @@ describe('connectBuilder', () => {
   });
 
   it('should build app that sets default theme', (done) => {
-    const app = connectBuilder()
+    const app = connectBuilder('/')
       .index(path.join(__dirname, '/fixtures/index_with_theme'), '/testfile')
       .build();
 

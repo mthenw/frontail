@@ -64,6 +64,12 @@ window.App = (function app(window, document) {
   var _highlightConfig;
 
   /**
+   * @type {HTMLElement}
+   * @private
+   */
+  var _clearButton;
+
+  /**
    * Hide element if doesn't contain filter value
    *
    * @param {Object} element
@@ -189,6 +195,7 @@ window.App = (function app(window, document) {
       _filterInput.focus();
       _topbar = opts.topbar;
       _body = opts.body;
+      _clearButton = opts.clearButton;
 
       // Filter input bind
       _filterInput.addEventListener('keyup', function(e) {
@@ -210,6 +217,15 @@ window.App = (function app(window, document) {
         _isWindowFocused = true;
         _faviconReset();
       }, true);
+
+      // Clear Logs
+      if (_clearButton) {
+        _clearButton.addEventListener('click', function() {
+          while (_logContainer.hasChildNodes()) {
+            _logContainer.removeChild(_logContainer.lastChild);
+          }
+        });
+      }
 
       // socket.io init
       _socket = opts.socket;

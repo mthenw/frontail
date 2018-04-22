@@ -69,6 +69,9 @@ Web interface runs on **http://127.0.0.1:[port]**.
 Use `-` for streaming stdin:
 
     ./server | frontail -
+    
+    
+   
 
 ### Highlighting
 
@@ -87,8 +90,14 @@ Use `-` for streaming stdin:
 
 which means that every "err" string will be in red and every line containing "err" will be bolded.
 
-_New presets are very welcome. If you don't like default or you would like to share yours, please create PR with json file._
+### stdout
 
+Use `-o` or `--stdout` for outputting everything to stdout as well
+(disabled by default):
+
+    ./server | frontail - -O
+    
+   
 ### Running behind nginx
 
 Using the `--url-path` option `frontail` can run behind nginx with the example configuration

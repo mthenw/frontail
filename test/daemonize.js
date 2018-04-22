@@ -107,6 +107,14 @@ describe('daemonize', () => {
       daemon.daemon.lastCall.args[1].should.containDeep(['-k', 'key.file', '-c', 'cert.file']);
     });
 
+    it('with url-path option', () => {
+      optionsParser.parse(['node', '/path/to/frontail', '--url-path', '/test']);
+
+      daemonize('script', optionsParser);
+
+      daemon.daemon.lastCall.args[1].should.containDeep(['--url-path', '/test']);
+    });
+
     it('with hide-topbar option', () => {
       optionsParser.parse(['node', '/path/to/frontail', '--ui-hide-topbar']);
 

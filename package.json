@@ -1,6 +1,6 @@
 {
   "name": "frontail",
-  "version": "4.1.6",
+  "version": "4.2.1",
   "description": "streaming logs to the browser",
   "homepage": "https://github.com/mthenw/frontail",
   "author": "Maciej Winnicki <maciej.winnicki@gmail.com>",
@@ -22,6 +22,7 @@
     "eslint-plugin-import": "^1.16.0",
     "jsdom": "^9.12.0",
     "mocha": "~2.3.2",
+    "pkg": "^4.3.1",
     "should": "~3.3.2",
     "sinon": "~1.7.3",
     "supertest": "~0.8.1",

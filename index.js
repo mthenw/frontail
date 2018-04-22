@@ -4,7 +4,7 @@ const connect = require('connect');
 const cookieParser = require('cookie');
 const crypto = require('crypto');
 const path = require('path');
-const socketio = require('socket.io');
+const SocketIO = require('socket.io');
 const tail = require('./lib/tail');
 const connectBuilder = require('./lib/connect_builder');
 const program = require('./lib/options_parser');
@@ -57,7 +57,11 @@ const doSecure = !!(program.key && program.certificate);
 const sessionSecret = String(+new Date()) + Math.random();
 const sessionKey = 'sid';
 const files = program.args.join(' ');
-const filesNamespace = crypto.createHash('md5').update(files).digest('hex');
+const filesNamespace = crypto
+  .createHash('md5')
+  .update(files)
+  .digest('hex');
+const urlPath = program.urlPath.replace(/\/$/, ''); // remove trailing slash
 
 if (program.daemonize) {
   daemonize(__filename, program, {
@@ -68,7 +72,7 @@ if (program.daemonize) {
   /**
    * HTTP(s) server setup
    */
-  const appBuilder = connectBuilder();
+  const appBuilder = connectBuilder(urlPath);
   if (doAuthorization) {
     appBuilder.session(sessionSecret, sessionKey);
     appBuilder.authorize(program.user, program.password);
@@ -90,9 +94,8 @@ if (program.daemonize) {
   /**
    * socket.io setup
    */
-  const io = socketio.listen(server, {
-    log: false,
-  });
+  const io = new SocketIO({ path: path.join(urlPath, '/socket.io') });
+  io.attach(server);
 
   if (doAuthorization) {
     io.use((socket, next) => {

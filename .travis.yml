@@ -1,8 +1,16 @@
 language: node_js
 node_js:
-  - 4
-  - 5
-  - 6
+- 4
+- 5
+- 6
 script:
-  - npm run lint
-  - npm test
+- npm run lint
+- npm test
+deploy:
+  provider: npm
+  email: maciej.winnicki@gmail.com
+  api_key:
+    secure: S7VCwq19j0w2vBn27f0pQBWIFCN/3iZTyy9fUXuaTrvHztB7YQHBVxkIDNPYgWAttQLKsu0PH9BFzNeA7/StrKYKsn+z6fwh07GSOQGGwVO/OxvjfjglfgzNwLsuuT+N4R2ClrkqzIn7NaYVEM3bxofL+gwlHxWSfXfErW7mUds=
+  on:
+    tags: true
+    repo: mthenw/frontail

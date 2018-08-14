@@ -27,7 +27,7 @@
 
 ## Installation options
 
-* download a binary file from [Releases](https://github.com/mthenw/frontail/releases) page
+* download a binary file from [Releases](https://github.com/mthenw/frontail/releases) page (currently `frontail` doesn't work on Windows)
 * using [npm package](https://www.npmjs.com/package/frontail): `npm i frontail -g`
 * using [Docker image](https://registry.hub.docker.com/u/mthenw/frontail/): `docker run -d -P -v /var/log:/log mthenw/frontail /log/syslog`
 

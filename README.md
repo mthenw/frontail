@@ -89,6 +89,10 @@ which means that every "err" string will be in red and every line containing "er
 
 _New presets are very welcome. If you don't like default or you would like to share yours, please create PR with json file._
 
+Available presets:
+- default
+- npmlog
+
 ### Running behind nginx
 
 Using the `--url-path` option `frontail` can run behind nginx with the example configuration

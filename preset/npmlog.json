@@ -1,0 +1,15 @@
+{
+  "words": {
+    "verb": "color: blue; background-color: black;",
+    "info": "color: green;",
+    "http": "color: green; background-color: black;",
+    "WARN": "color: black; background-color: yellow; font-style: normal;",
+    "error": "color: red;",
+    "ERR!": "color: red; background-color: black;"
+  },
+  "lines": {
+    "WARN": "font-style: italic;",
+    "ERR!": "font-weight: bold;"
+  }
+}
+

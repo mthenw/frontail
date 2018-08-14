@@ -41,7 +41,7 @@ describe('connectBuilder', () => {
 
   it('should build app that setup session', (done) => {
     const app = connectBuilder('/')
-      .session('secret', 'sessionkey')
+      .session('secret')
       .build();
     app.use((req, res) => {
       res.end();
@@ -49,7 +49,7 @@ describe('connectBuilder', () => {
 
     request(app)
       .get('/')
-      .expect('set-cookie', /^sessionkey/, done);
+      .expect('set-cookie', /^connect.sid/, done);
   });
 
   it('should build app that serve static files', (done) => {

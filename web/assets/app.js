@@ -101,6 +101,21 @@ window.App = (function app(window, document) {
   };
 
   /**
+   * Set _filterValue from URL parameter `filter`
+   *
+   * @function
+   * @private
+   */
+  var _setFilterValueFromURL = function(filterInput, location) {
+    var _url = new URL(location);
+    var _filterValueFromURL = _url.searchParams.get('filter');
+    if (typeof _filterValueFromURL !== 'undefined' && _filterValueFromURL !== null) {
+      _filterValue = _filterValueFromURL;
+      filterInput.value = _filterValue; // eslint-disable-line
+    }
+  };
+
+  /**
    * @return {Boolean}
    * @private
    */
@@ -189,6 +204,8 @@ window.App = (function app(window, document) {
       _filterInput.focus();
       _topbar = opts.topbar;
       _body = opts.body;
+
+      _setFilterValueFromURL(_filterInput, window.location.href);
 
       // Filter input bind
       _filterInput.addEventListener('keyup', function(e) {

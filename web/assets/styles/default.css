@@ -1,9 +1,19 @@
 @import "bootstrap.min.css";
 
 body {
-    padding-top: 4em;
+    padding-top: 70px;
+}
+@media screen and (max-width: 768px) {
+    body {
+    padding-top: 140px;
+    }
 }
 
+
+.no-horiz-padding {
+    padding-left: 0px;
+    padding-right: 0px;
+}
 .no-topbar {
     padding-top: 10px;
 }

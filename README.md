@@ -22,6 +22,7 @@
 * themes (default, dark)
 * [highlighting](#highlighting)
 * search (`Tab` to focus, `Esc` to clear)
+* set filter from url parameter `filter`
 * tailing [multiple files](#tailing-multiple-files) and [stdin](#stdin)
 * basic authentication
 

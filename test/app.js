@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-const jsdom = require('jsdom');
+const jsdom = require('jsdom/lib/old-api.js');
 const EventEmitter = require('events').EventEmitter;
 
 describe('browser application', () => {
@@ -34,6 +34,7 @@ describe('browser application', () => {
 
     jsdom.env({
       html,
+      url: 'http://localhost?filter=line.*',
       src: [ansiup, src],
       onload: (domWindow) => {
         window = domWindow;
@@ -131,5 +132,53 @@ describe('browser application', () => {
 
     const line = window.document.querySelector('.line');
     line.innerHTML.should.equal('<p class="inner-line">&lt;a/&gt;</p>');
+  });
+
+  it('should work filter from URL', () => {
+    io.emit('line', 'line1');
+    io.emit('line', 'another');
+    io.emit('line', 'line2');
+
+    const filterInput = window.document.querySelector('#filter');
+    filterInput.value.should.be.equal('line.*');
+    const log = window.document.querySelector('.log');
+    log.childNodes.length.should.be.equal(3);
+    log.childNodes[0].style.display.should.be.equal('');
+    log.childNodes[1].style.display.should.be.equal('none');
+    log.childNodes[2].style.display.should.be.equal('');
+    window.location.href.should.containEql('filter=line.*');
+  });
+
+  it('should clean filter', () => {
+    io.emit('line', 'line1');
+    io.emit('line', 'another');
+    io.emit('line', 'line2');
+
+    const filterInput = window.document.querySelector('#filter');
+    const event = new window.KeyboardEvent('keyup', { keyCode: 27 });
+    filterInput.dispatchEvent(event);
+    const log = window.document.querySelector('.log');
+    log.childNodes.length.should.be.equal(3);
+    log.childNodes[0].style.display.should.be.equal('');
+    log.childNodes[1].style.display.should.be.equal('');
+    log.childNodes[2].style.display.should.be.equal('');
+    window.location.href.should.be.equal('http://localhost/');
+  });
+
+  it('should change filter', () => {
+    io.emit('line', 'line1');
+    io.emit('line', 'another');
+    io.emit('line', 'line2');
+
+    const log = window.document.querySelector('.log');
+    const filterInput = window.document.querySelector('#filter');
+    filterInput.value = 'other';
+    const event = new window.KeyboardEvent('keyup', { keyCode: 13 });
+    filterInput.dispatchEvent(event);
+    log.childNodes.length.should.be.equal(3);
+    log.childNodes[0].style.display.should.be.equal('none');
+    log.childNodes[1].style.display.should.be.equal('');
+    log.childNodes[2].style.display.should.be.equal('none');
+    window.location.href.should.containEql('filter=other');
   });
 });

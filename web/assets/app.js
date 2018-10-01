@@ -106,13 +106,31 @@ window.App = (function app(window, document) {
    * @function
    * @private
    */
-  var _setFilterValueFromURL = function(filterInput, location) {
-    var _url = new URL(location);
+  var _setFilterValueFromURL = function(filterInput, uri) {
+    var _url = new URL(uri);
     var _filterValueFromURL = _url.searchParams.get('filter');
     if (typeof _filterValueFromURL !== 'undefined' && _filterValueFromURL !== null) {
       _filterValue = _filterValueFromURL;
       filterInput.value = _filterValue; // eslint-disable-line
     }
+  };
+
+  /**
+   * Set parameter `filter` in URL
+   *
+   * @function
+   * @private
+   */
+  var _setFilterParam = function(value, uri) {
+    var _url = new URL(uri);
+    var _params = new URLSearchParams(_url.search.slice(1));
+    if (value === '') {
+      _params.delete('filter');
+    } else {
+      _params.set('filter', value);
+    }
+    _url.search = _params.toString();
+    window.history.replaceState(null, document.title, _url.toString());
   };
 
   /**
@@ -205,7 +223,7 @@ window.App = (function app(window, document) {
       _topbar = opts.topbar;
       _body = opts.body;
 
-      _setFilterValueFromURL(_filterInput, window.location.href);
+      _setFilterValueFromURL(_filterInput, window.location.toString());
 
       // Filter input bind
       _filterInput.addEventListener('keyup', function(e) {
@@ -216,6 +234,7 @@ window.App = (function app(window, document) {
         } else {
           _filterValue = this.value;
         }
+        _setFilterParam(_filterValue, window.location.toString());
         _filterLogs();
       });
 

@@ -146,6 +146,7 @@ describe('browser application', () => {
     log.childNodes[0].style.display.should.be.equal('');
     log.childNodes[1].style.display.should.be.equal('none');
     log.childNodes[2].style.display.should.be.equal('');
+    window.location.href.should.containEql('filter=line.*');
   });
 
   it('should clean filter', () => {
@@ -161,6 +162,7 @@ describe('browser application', () => {
     log.childNodes[0].style.display.should.be.equal('');
     log.childNodes[1].style.display.should.be.equal('');
     log.childNodes[2].style.display.should.be.equal('');
+    window.location.href.should.be.equal('http://localhost/');
   });
 
   it('should change filter', () => {
@@ -177,5 +179,6 @@ describe('browser application', () => {
     log.childNodes[0].style.display.should.be.equal('none');
     log.childNodes[1].style.display.should.be.equal('');
     log.childNodes[2].style.display.should.be.equal('none');
+    window.location.href.should.containEql('filter=other');
   });
 });

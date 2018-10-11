@@ -1,8 +1,8 @@
 'use strict';
 
-const connectBuilder = require('../lib/connect_builder');
 const request = require('supertest');
 const path = require('path');
+const connectBuilder = require('../lib/connect_builder');
 
 describe('connectBuilder', () => {
   it('should build connect app', () => {

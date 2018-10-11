@@ -1,16 +1,16 @@
 'use strict';
 
 const daemon = require('daemon-fix41');
-const optionsParser = require('../lib/options_parser');
-const daemonize = require('../lib/daemonize');
 const sinon = require('sinon');
 const fs = require('fs');
+const optionsParser = require('../lib/options_parser');
+const daemonize = require('../lib/daemonize');
 
 describe('daemonize', () => {
   beforeEach(() => {
     sinon.stub(daemon, 'daemon');
     daemon.daemon.returns({
-      pid: 1000,
+      pid: 1000
     });
     sinon.stub(fs, 'writeFileSync');
     sinon.stub(fs, 'openSync');
@@ -73,7 +73,7 @@ describe('daemonize', () => {
       optionsParser.parse(['node', '/path/to/frontail', '-U', 'user', '-P', 'passw0rd']);
 
       daemonize('script', optionsParser, {
-        doAuthorization: true,
+        doAuthorization: true
       });
 
       daemon.daemon.lastCall.args[1].should.containDeep(['-U', 'user', '-P', 'passw0rd']);
@@ -91,7 +91,7 @@ describe('daemonize', () => {
       optionsParser.parse(['node', '/path/to/frontail', '-k', 'key.file', '-c', 'cert.file']);
 
       daemonize('script', optionsParser, {
-        doSecure: true,
+        doSecure: true
       });
 
       daemon.daemon.lastCall.args[1].should.containDeep(['-k', 'key.file', '-c', 'cert.file']);
@@ -101,7 +101,7 @@ describe('daemonize', () => {
       optionsParser.parse(['node', '/path/to/frontail', '-k', 'key.file', '-c', 'cert.file']);
 
       daemonize('script', optionsParser, {
-        doSecure: true,
+        doSecure: true
       });
 
       daemon.daemon.lastCall.args[1].should.containDeep(['-k', 'key.file', '-c', 'cert.file']);
@@ -145,7 +145,7 @@ describe('daemonize', () => {
         '/path/to/frontail',
         '--ui-highlight',
         '--ui-highlight-preset',
-        'test.json',
+        'test.json'
       ]);
 
       daemonize('script', optionsParser);
@@ -181,7 +181,7 @@ describe('daemonize', () => {
     fs.openSync.lastCall.args[1].should.equal('a');
     daemon.daemon.lastCall.args[2].should.eql({
       stdout: 'file',
-      stderr: 'file',
+      stderr: 'file'
     });
   });
 });

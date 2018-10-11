@@ -1,16 +1,19 @@
 'use strict';
 
 const fs = require('fs');
-const tail = require('../lib/tail');
 const temp = require('temp');
+const tail = require('../lib/tail');
 
 const TEMP_FILE_PROFIX = '';
 const SPAWN_DELAY = 10;
 
 function writeLines(fd, count) {
   for (let i = 0; i < count; i += 1) {
-    fs.writeSync(fd, `line${i}
-`);
+    fs.writeSync(
+      fd,
+      `line${i}
+`
+    );
   }
   fs.closeSync(fd);
 }
@@ -34,7 +37,7 @@ describe('tail', () => {
       writeLines(info.fd, 20);
 
       const tailer = tail(info.path, {
-        buffer: 2,
+        buffer: 2
       });
       setTimeout(() => {
         tailer.getBuffer().should.be.eql(['line18', 'line19']);

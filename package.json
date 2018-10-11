@@ -21,9 +21,9 @@
     "untildify": "^3.0.2"
   },
   "devDependencies": {
-    "eslint": "^3.6.0",
-    "eslint-config-airbnb-base": "^8.0.0",
-    "eslint-plugin-import": "^1.16.0",
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
     "jsdom": "^11.11.0",
     "mocha": "~2.3.2",
     "pkg": "^4.3.3",

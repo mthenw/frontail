@@ -3,8 +3,8 @@
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
-const serverBuilder = require('../lib/server_builder');
 const sinon = require('sinon');
+const serverBuilder = require('../lib/server_builder');
 
 describe('serverBuilder', () => {
   describe('http server', () => {
@@ -29,10 +29,11 @@ describe('serverBuilder', () => {
     });
 
     it('should build server accepting requests', () => {
-      const callback = () => {
-      };
+      const callback = () => {};
 
-      serverBuilder().use(callback).build();
+      serverBuilder()
+        .use(callback)
+        .build();
 
       createServer.calledWith(callback).should.equal(true);
     });
@@ -44,7 +45,9 @@ describe('serverBuilder', () => {
     });
 
     it('should build server listening on specified port', () => {
-      serverBuilder().port(6666).build();
+      serverBuilder()
+        .port(6666)
+        .build();
 
       httpServer.listen.calledWith(6666).should.equal(true);
     });
@@ -56,7 +59,9 @@ describe('serverBuilder', () => {
     });
 
     it('should build server listening on specified host', () => {
-      serverBuilder().host('127.0.0.1').build();
+      serverBuilder()
+        .host('127.0.0.1')
+        .build();
 
       httpServer.listen.calledWith(9001, '127.0.0.1').should.equal(true);
     });
@@ -88,25 +93,36 @@ describe('serverBuilder', () => {
     });
 
     it('should build server', () => {
-      const server = serverBuilder().secure('key.pem', 'cert.pem').build();
+      const server = serverBuilder()
+        .secure('key.pem', 'cert.pem')
+        .build();
 
       server.should.be.an.instanceof(https.Server);
-      createHttpsServer.calledWith({
-        key: 'testkey',
-        cert: 'testcert',
-      }).should.equal(true);
+      createHttpsServer
+        .calledWith({
+          key: 'testkey',
+          cert: 'testcert'
+        })
+        .should.equal(true);
     });
 
     it('should build server accepting requests', () => {
-      const callback = () => {
-      };
+      const callback = () => {};
 
-      serverBuilder().use(callback).secure('key.pem', 'cert.pem').build();
+      serverBuilder()
+        .use(callback)
+        .secure('key.pem', 'cert.pem')
+        .build();
 
-      createHttpsServer.calledWith({
-        key: 'testkey',
-        cert: 'testcert',
-      }, callback).should.equal(true);
+      createHttpsServer
+        .calledWith(
+          {
+            key: 'testkey',
+            cert: 'testcert'
+          },
+          callback
+        )
+        .should.equal(true);
     });
 
     it('should throw error if key or cert not provided', () => {

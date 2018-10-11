@@ -5,13 +5,13 @@ const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
 const path = require('path');
 const SocketIO = require('socket.io');
+const fs = require('fs');
+const untildify = require('untildify');
 const tail = require('./lib/tail');
 const connectBuilder = require('./lib/connect_builder');
 const program = require('./lib/options_parser');
 const serverBuilder = require('./lib/server_builder');
 const daemonize = require('./lib/daemonize');
-const fs = require('fs');
-const untildify = require('untildify');
 
 /**
  * Parse args
@@ -38,7 +38,7 @@ const urlPath = program.urlPath.replace(/\/$/, ''); // remove trailing slash
 if (program.daemonize) {
   daemonize(__filename, program, {
     doAuthorization,
-    doSecure,
+    doSecure
   });
 } else {
   /**
@@ -113,7 +113,7 @@ if (program.daemonize) {
    * When connected send starting data
    */
   const tailer = tail(program.args, {
-    buffer: program.number,
+    buffer: program.number
   });
 
   const filesSocket = io.of(`/${filesNamespace}`).on('connection', (socket) => {

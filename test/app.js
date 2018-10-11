@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const jsdom = require('jsdom/lib/old-api.js');
-const EventEmitter = require('events').EventEmitter;
+const events = require('events');
 
 describe('browser application', () => {
   let io;
@@ -14,21 +14,36 @@ describe('browser application', () => {
       container: window.document.querySelector('.log'),
       filterInput: window.document.querySelector('#filter'),
       topbar: window.document.querySelector('.topbar'),
-      body: window.document.querySelector('body'),
+      body: window.document.querySelector('body')
     });
   }
 
   function clickOnElement(line) {
     const click = window.document.createEvent('MouseEvents');
-    click.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    click.initMouseEvent(
+      'click',
+      true,
+      true,
+      window,
+      0,
+      0,
+      0,
+      0,
+      0,
+      false,
+      false,
+      false,
+      false,
+      0,
+      null
+    );
     line.dispatchEvent(click);
   }
 
   beforeEach((done) => {
-    io = new EventEmitter();
-    const html =
-      '<title></title><body><div class="topbar"></div>' +
-      '<div class="log"></div><input type="test" id="filter"/></body>';
+    io = new events.EventEmitter();
+    const html = '<title></title><body><div class="topbar"></div>'
+      + '<div class="log"></div><input type="test" id="filter"/></body>';
     const ansiup = fs.readFileSync('./web/assets/ansi_up.js', 'utf-8');
     const src = fs.readFileSync('./web/assets/app.js', 'utf-8');
 
@@ -41,7 +56,7 @@ describe('browser application', () => {
 
         initApp();
         done();
-      },
+      }
     });
   });
 
@@ -106,8 +121,8 @@ describe('browser application', () => {
   it('should highlight word', () => {
     io.emit('options:highlightConfig', {
       words: {
-        line: 'background: black',
-      },
+        line: 'background: black'
+      }
     });
     io.emit('line', 'line1');
 
@@ -118,13 +133,15 @@ describe('browser application', () => {
   it('should highlight line', () => {
     io.emit('options:highlightConfig', {
       lines: {
-        line: 'background: black',
-      },
+        line: 'background: black'
+      }
     });
     io.emit('line', 'line1');
 
     const line = window.document.querySelector('.line');
-    line.parentNode.innerHTML.should.equal('<div class="line" style="background: black"><p class="inner-line">line1</p></div>');
+    line.parentNode.innerHTML.should.equal(
+      '<div class="line" style="background: black"><p class="inner-line">line1</p></div>'
+    );
   });
 
   it('should escape HTML', () => {

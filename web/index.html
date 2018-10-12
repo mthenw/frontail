@@ -12,7 +12,8 @@
 <body>
     <nav class="topbar navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container-fluid">
-            <span class="navbar-brand" href="#">tail -F __TITLE__</span>
+            <a class="navbar-brand" href="#">tail -f</a>
+            <p class="navbar-text" href="#">__TITLE__</p>
             <form class="navbar-form navbar-right" role="search" onkeypress="return event.keyCode != 13;">
                 <div class="form-group">
                     <input type="text" class="form-control query" placeholder="Filter" tabindex="1">
@@ -21,7 +22,10 @@
         </div>
     </nav>
 
-    <pre class="log"></pre>
+    <div class="container-fluid no-horiz-padding">
+        <pre class="log"></pre>
+    </div>
+
 
     <script src="__PATH__/socket.io/socket.io.js"></script>
     <script src="__PATH__/tinycon.min.js"></script>

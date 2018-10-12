@@ -93,6 +93,7 @@ _New presets are very welcome. If you don't like default or you would like to sh
 Available presets:
 - default
 - npmlog
+- python
 
 ### Running behind nginx
 

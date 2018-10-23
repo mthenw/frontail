@@ -1,51 +1,56 @@
-@import "bootstrap.min.css";
+@import 'default.css';
 
 body {
-    padding-top: 4em;
-    background-color: #2F3238;
+  padding-top: 4em;
+  background-color: #2f3238;
 }
 
 .no-topbar {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
 .navbar {
-    background-color: #26292E;
-    border: 0;
+  background-color: #26292e;
+  border: 0;
+}
+
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-brand:hover {
+  color: #999;
 }
 
 .form-control {
-    border: 0;
-    color: #7F8289;
-    background-color: #2F3238;
+  border: 0;
+  color: #7f8289;
+  background-color: #2f3238;
 }
 
 .log {
-    white-space: pre-wrap;
-    color: #7F8289;
-    font-size: .85em;
-    background: inherit;
-    border: 0;
-    padding: 0;
+  white-space: pre-wrap;
+  color: #7f8289;
+  font-size: 0.85em;
+  background: inherit;
+  border: 0;
+  padding: 0;
 }
 
 .log .inner-line {
-    padding: 0 15px;
-    margin-left: 84pt;
-    text-indent: -84pt;
-    margin-bottom: 0;
+  padding: 0 15px;
+  margin-left: 84pt;
+  text-indent: -84pt;
+  margin-bottom: 0;
 }
 
 .log .inner-line:empty::after {
-    content: '.';
-    visibility: hidden;
+  content: '.';
+  visibility: hidden;
 }
 
 .log.no-indent .inner-line {
-    margin-left: 0;
-    text-indent: 0;
+  margin-left: 0;
+  text-indent: 0;
 }
 
 .log .line-selected {
-    background-color: #302436;
+  background-color: #302436;
 }

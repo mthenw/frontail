@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>tail -F __TITLE__</title>
+    <title>tail -f __TITLE__</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="__PATH__/styles/__THEME__.css">
@@ -12,12 +12,16 @@
 <body>
     <nav class="topbar navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">tail -f __TITLE__</a>
-            <form class="navbar-form navbar-right" role="search" onkeypress="return event.keyCode != 13;">
-                <div class="form-group">
-                    <input type="text" class="form-control query" placeholder="Filter" tabindex="1">
+            <div class="row">
+                <div class="col-sm-10">
+                    <span class="navbar-brand">tail -f __TITLE__</span>
                 </div>
-            </form>
+                <div class="col-sm-2">
+                    <form class="navbar-form-custom" role="search" onkeypress="return event.keyCode != 13;">
+                        <input type="text" class="form-control query" placeholder="Filter" tabindex="1">
+                    </form>
+                </div>
+            </div>
         </div>
     </nav>
 

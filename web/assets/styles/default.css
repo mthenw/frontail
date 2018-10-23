@@ -1,53 +1,64 @@
-@import "bootstrap.min.css";
+@import 'bootstrap.min.css';
 
 body {
-    padding-top: 70px;
+  padding-top: 60px;
 }
 @media screen and (max-width: 768px) {
-    body {
-    padding-top: 140px;
-    }
+  body {
+    padding-top: 120px;
+  }
 }
 
+.navbar-brand {
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.navbar-form-custom {
+  padding: 8px 12px 8px 0;
+}
 
 .no-horiz-padding {
-    padding-left: 0px;
-    padding-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
+
 .no-topbar {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
 .navbar-inverse .navbar-brand {
-    color: white;
+  color: white;
 }
 
 .log {
-    white-space: pre-wrap;
-    color: black;
-    font-size: .85em;
-    background: inherit;
-    border: 0;
-    padding: 0;
+  white-space: pre-wrap;
+  color: black;
+  font-size: 0.85em;
+  background: inherit;
+  border: 0;
+  padding: 0;
 }
 
 .log .inner-line {
-    padding: 0 15px;
-    margin-left: 84pt;
-    text-indent: -84pt;
-    margin-bottom: 0;
+  padding: 0 15px;
+  margin-left: 84pt;
+  text-indent: -84pt;
+  margin-bottom: 0;
 }
 
 .log .inner-line:empty::after {
-    content: '.';
-    visibility: hidden;
+  content: '.';
+  visibility: hidden;
 }
 
 .log.no-indent .inner-line {
-    margin-left: 0;
-    text-indent: 0;
+  margin-left: 0;
+  text-indent: 0;
 }
 
 .log .line-selected {
-    background-color: #ffb2b0;
+  background-color: #ffb2b0;
 }

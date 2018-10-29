@@ -25,7 +25,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "jsdom": "^11.11.0",
-    "mocha": "~2.3.2",
+    "mocha": "^2.3.4",
     "pkg": "^4.3.3",
     "should": "~3.3.2",
     "sinon": "~1.7.3",

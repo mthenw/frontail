@@ -58,6 +58,7 @@
       --ui-highlight                highlight words or lines if defined string found in logs, default preset
       --ui-highlight-preset <path>  custom preset for highlighting (see ./preset/default.json)
       --path <path>                 prefix path for the running application, default /
+      --disable-usage-stats         disable gathering usage statistics
 
 Web interface runs on **http://127.0.0.1:[port]**.
 
@@ -121,3 +122,10 @@ http {
     }
 }
 ```
+
+### Usage statistics
+
+`frontail` by default (from `v4.5.0`) gathers __anonymous__ usage statistics in Google Analytics. It can be disabled with
+`--disable-usage-stats`.
+
+The data is used to help me understand how `frontail` is used and I can make it better.

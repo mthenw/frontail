@@ -12,6 +12,7 @@ const connectBuilder = require('./lib/connect_builder');
 const program = require('./lib/options_parser');
 const serverBuilder = require('./lib/server_builder');
 const daemonize = require('./lib/daemonize');
+const usageStats = require('./lib/stats');
 
 /**
  * Parse args
@@ -21,6 +22,13 @@ if (program.args.length === 0) {
   console.error('Arguments needed, use --help');
   process.exit();
 }
+
+/**
+ * Init usage statistics
+ */
+const stats = usageStats(!program.disableUsageStats);
+stats.track('runtime', 'init');
+stats.time('runtime', 'runtime');
 
 /**
  * Validate params
@@ -143,10 +151,13 @@ if (program.daemonize) {
     filesSocket.emit('line', line);
   });
 
+  stats.track('runtime', 'started');
+
   /**
    * Handle signals
    */
   const cleanExit = () => {
+    stats.timeEnd('runtime', 'runtime');
     process.exit();
   };
   process.on('SIGINT', cleanExit);

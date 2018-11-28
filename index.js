@@ -157,8 +157,9 @@ if (program.daemonize) {
    * Handle signals
    */
   const cleanExit = () => {
-    stats.timeEnd('runtime', 'runtime');
-    process.exit();
+    stats.timeEnd('runtime', 'runtime', () => {
+      process.exit();
+    });
   };
   process.on('SIGINT', cleanExit);
   process.on('SIGTERM', cleanExit);

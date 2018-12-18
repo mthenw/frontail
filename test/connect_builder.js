@@ -58,7 +58,7 @@ describe('connectBuilder', () => {
       .build();
 
     request(app)
-      .get('/foo')
+      .get('/foo.txt')
       .expect('bar', done);
   });
 

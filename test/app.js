@@ -129,7 +129,7 @@ describe('browser application', () => {
 
     const line = window.document.querySelector('.line');
     line.innerHTML.should.containEql(
-      '<span style="background: black">fooq</span> <span style="background: black">bar</span>'
+      '<span style="background: black">foo</span> <span style="background: black">bar</span>'
     );
   });
 

@@ -10,7 +10,7 @@ deploy:
   provider: npm
   email: maciej.winnicki@gmail.com
   api_key:
-    secure: S7VCwq19j0w2vBn27f0pQBWIFCN/3iZTyy9fUXuaTrvHztB7YQHBVxkIDNPYgWAttQLKsu0PH9BFzNeA7/StrKYKsn+z6fwh07GSOQGGwVO/OxvjfjglfgzNwLsuuT+N4R2ClrkqzIn7NaYVEM3bxofL+gwlHxWSfXfErW7mUds=
+    secure: OuE8bOpsq/XN2AL6z0SWqHtpfKB5Qg3wug+hZVka+AdWaU6Gm0uvs4yA7B/uw9o5gH6KKgM+CP50Lq1xhC12CZbKLjkAUuFJQb9FrU/7jEAp+t+DKpoVBcru8bBjTxxx4wO1zXFcbJZ9zb4c4h76j2nfaNVuPTBB+mDF/HDd914=
   on:
     tags: true
     repo: mthenw/frontail

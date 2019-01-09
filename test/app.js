@@ -121,13 +121,16 @@ describe('browser application', () => {
   it('should highlight word', () => {
     io.emit('options:highlightConfig', {
       words: {
-        line: 'background: black'
+        foo: 'background: black',
+        bar: 'background: black'
       }
     });
-    io.emit('line', 'line1');
+    io.emit('line', 'foo bar');
 
     const line = window.document.querySelector('.line');
-    line.innerHTML.should.containEql('<span style="background: black">line</span>');
+    line.innerHTML.should.containEql(
+      '<span style="background: black">fooq</span> <span style="background: black">bar</span>'
+    );
   });
 
   it('should highlight line', () => {

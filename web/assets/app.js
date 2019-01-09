@@ -177,7 +177,7 @@ window.App = (function app(window, document) {
 
     if (_highlightConfig && _highlightConfig.words) {
       Object.keys(_highlightConfig.words).forEach((wordCheck) => {
-        output = line.replace(
+        output = output.replace(
           wordCheck,
           '<span style="' + _highlightConfig.words[wordCheck] + '">' + wordCheck + '</span>'
         );

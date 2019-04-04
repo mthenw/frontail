@@ -31,6 +31,18 @@ window.App = (function app(window, document) {
    * @type {HTMLElement}
    * @private
    */
+  var _pausedBtn;
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  var _isPaused = false;
+
+  /**
+   * @type {HTMLElement}
+   * @private
+   */
   var _topbar;
 
   /**
@@ -216,6 +228,7 @@ window.App = (function app(window, document) {
       _logContainer = opts.container;
       _filterInput = opts.filterInput;
       _filterInput.focus();
+      _pausedBtn = opts.pausedBtn;
       _topbar = opts.topbar;
       _body = opts.body;
 
@@ -232,6 +245,16 @@ window.App = (function app(window, document) {
         }
         _setFilterParam(_filterValue, window.location.toString());
         _filterLogs();
+      });
+
+      // Paused button bind
+      _pausedBtn.addEventListener('mouseup', function() {
+        _isPaused = !_isPaused;
+        if (_isPaused) {
+          this.className += ' active';
+        } else {
+          this.classList.remove("active");
+        }
       });
 
       // Favicon counter bind
@@ -268,7 +291,9 @@ window.App = (function app(window, document) {
           _highlightConfig = highlightConfig;
         })
         .on('line', function(line) {
-          self.log(line);
+          if (!_isPaused) {
+            self.log(line);
+          }
         });
     },
 

@@ -13,6 +13,7 @@ describe('browser application', () => {
       socket: io,
       container: window.document.querySelector('.log'),
       filterInput: window.document.querySelector('#filter'),
+      pausedBtn: window.document.querySelector('#pausedBtn'),
       topbar: window.document.querySelector('.topbar'),
       body: window.document.querySelector('body')
     });
@@ -43,7 +44,8 @@ describe('browser application', () => {
   beforeEach((done) => {
     io = new events.EventEmitter();
     const html = '<title></title><body><div class="topbar"></div>'
-      + '<div class="log"></div><input type="test" id="filter"/></body>';
+      + '<div class="log"></div><button type="button" id="pausedBtn"></button>'
+      + '<input type="test" id="filter"/></body>';
     const ansiup = fs.readFileSync('./web/assets/ansi_up.js', 'utf-8');
     const src = fs.readFileSync('./web/assets/app.js', 'utf-8');
 
@@ -200,5 +202,35 @@ describe('browser application', () => {
     log.childNodes[1].style.display.should.be.equal('');
     log.childNodes[2].style.display.should.be.equal('none');
     window.location.href.should.containEql('filter=other');
+  });
+
+  it('should pause', () => {
+    io.emit('line', 'line1');
+    const btn = window.document.querySelector('#pausedBtn');
+    const event = window.document.createEvent('Event');
+    event.initEvent('mouseup', true, true);
+    btn.dispatchEvent(event);
+    io.emit('line', 'line2');
+
+    btn.className.should.containEql('active');
+    const log = window.document.querySelector('.log');
+    log.childNodes.length.should.be.equal(1);
+  });
+
+  it('should play', () => {
+    const btn = window.document.querySelector('#pausedBtn');
+    const event = window.document.createEvent('Event');
+    event.initEvent('mouseup', true, true);
+    btn.dispatchEvent(event);
+    io.emit('line', 'line1');
+    const log = window.document.querySelector('.log');
+    log.childNodes.length.should.be.equal(0);
+    btn.className.should.containEql('active');
+    btn.dispatchEvent(event);
+    io.emit('line', 'line2');
+
+    btn.className.should.not.containEql('active');
+    log.childNodes.length.should.be.equal(1);
+    log.childNodes[0].textContent.should.be.equal('line2');
   });
 });

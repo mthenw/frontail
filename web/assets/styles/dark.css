@@ -19,6 +19,17 @@ body {
   color: #999;
 }
 
+.btn-paused {
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%237f8289' viewBox='0 0 8 8'><path d='M1 1v6h2v-6h-2zm4 0v6h2v-6h-2z'></path></svg>") no-repeat center center;
+    background-color: #2f3238;
+    border: 1px solid transparent;
+}
+
+.btn-paused.active {
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%237f8289' viewBox='0 0 8 8'><path d='M1 1v6l6-3-6-3z'></path></svg>") no-repeat center center;
+    background-color: #2f3238;
+}
+
 .form-control {
   border: 0;
   color: #7f8289;

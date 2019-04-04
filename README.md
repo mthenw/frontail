@@ -18,6 +18,7 @@
 * log rotation
 * auto-scrolling
 * marking logs
+* pause
 * number of unread logs in favicon
 * themes (default, dark)
 * [highlighting](#highlighting)

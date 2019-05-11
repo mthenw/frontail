@@ -211,10 +211,12 @@ describe('browser application', () => {
     event.initEvent('mouseup', true, true);
     btn.dispatchEvent(event);
     io.emit('line', 'line2');
+    io.emit('line', 'line3');
 
     btn.className.should.containEql('active');
     const log = window.document.querySelector('.log');
-    log.childNodes.length.should.be.equal(1);
+    log.childNodes.length.should.be.equal(2);
+    log.lastChild.textContent.should.be.equal('==> SKIPED: 2 <==');
   });
 
   it('should play', () => {
@@ -224,13 +226,14 @@ describe('browser application', () => {
     btn.dispatchEvent(event);
     io.emit('line', 'line1');
     const log = window.document.querySelector('.log');
-    log.childNodes.length.should.be.equal(0);
+    log.childNodes.length.should.be.equal(1);
+    log.lastChild.textContent.should.be.equal('==> SKIPED: 1 <==');
     btn.className.should.containEql('active');
     btn.dispatchEvent(event);
     io.emit('line', 'line2');
 
     btn.className.should.not.containEql('active');
-    log.childNodes.length.should.be.equal(1);
-    log.childNodes[0].textContent.should.be.equal('line2');
+    log.childNodes.length.should.be.equal(2);
+    log.lastChild.textContent.should.be.equal('line2');
   });
 });

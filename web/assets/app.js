@@ -40,6 +40,12 @@ window.App = (function app(window, document) {
   var _isPaused = false;
 
   /**
+   * @type {number}
+   * @private
+   */
+  var _skipCounter = 0;
+
+  /**
    * @type {HTMLElement}
    * @private
    */
@@ -253,6 +259,7 @@ window.App = (function app(window, document) {
         if (_isPaused) {
           this.className += ' active';
         } else {
+          _skipCounter = 0;
           this.classList.remove("active");
         }
       });
@@ -291,7 +298,10 @@ window.App = (function app(window, document) {
           _highlightConfig = highlightConfig;
         })
         .on('line', function(line) {
-          if (!_isPaused) {
+          if (_isPaused) {
+            _skipCounter += 1;
+            self.log('==> SKIPED: ' + _skipCounter + ' <==', (_skipCounter > 1));
+          } else {
             self.log(line);
           }
         });
@@ -302,7 +312,7 @@ window.App = (function app(window, document) {
      *
      * @param {string} data data to log
      */
-    log: function log(data) {
+    log: function log(data, replace = false) {
       var wasScrolledBottom = _isScrolledBottom();
       var div = document.createElement('div');
       var p = document.createElement('p');
@@ -325,7 +335,11 @@ window.App = (function app(window, document) {
 
       div.appendChild(p);
       _filterElement(div);
-      _logContainer.appendChild(div);
+      if (replace) {
+        _logContainer.replaceChild(div, _logContainer.lastChild);
+      } else {
+        _logContainer.appendChild(div);
+      }
 
       if (_logContainer.children.length > _linesLimit) {
         _logContainer.removeChild(_logContainer.children[0]);

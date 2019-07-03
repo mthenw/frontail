@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:8.12.0
+FROM node:10.16.0-alpine
 
 WORKDIR /frontail
 ADD . .

@@ -1,6 +1,6 @@
 {
   "name": "frontail",
-  "version": "4.5.4",
+  "version": "4.6.0",
   "description": "streaming logs to the browser",
   "homepage": "https://github.com/mthenw/frontail",
   "author": "Maciej Winnicki <maciej.winnicki@gmail.com>",

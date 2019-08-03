@@ -60,7 +60,7 @@
       --path <path>                 prefix path for the running application, default /
       --disable-usage-stats         disable gathering usage statistics
 
-Web interface runs on **http://127.0.0.1:[port]**.
+Web interface runs on **http://[host]:[port]**.
 
 ### Tailing multiple files
 

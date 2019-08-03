@@ -58,8 +58,8 @@ if (program.daemonize) {
     appBuilder.authorize(program.user, program.password);
   }
   appBuilder
-    .static(path.join(__dirname, 'web/assets'))
-    .index(path.join(__dirname, 'web/index.html'), files, filesNamespace, program.theme);
+    .static(path.join(__dirname, 'web', 'assets'))
+    .index(path.join(__dirname, 'web', 'index.html'), files, filesNamespace, program.theme);
 
   const builder = serverBuilder();
   if (doSecure) {
@@ -74,7 +74,7 @@ if (program.daemonize) {
   /**
    * socket.io setup
    */
-  const io = new SocketIO({ path: path.join(urlPath, '/socket.io') });
+  const io = new SocketIO({ path: `${urlPath}/socket.io` });
   io.attach(server);
 
   if (doAuthorization) {
@@ -105,7 +105,7 @@ if (program.daemonize) {
     let presetPath;
 
     if (!program.uiHighlightPreset) {
-      presetPath = path.join(__dirname, 'preset/default.json');
+      presetPath = path.join(__dirname, 'preset', 'default.json');
     } else {
       presetPath = path.resolve(untildify(program.uiHighlightPreset));
     }

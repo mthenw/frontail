@@ -38,7 +38,6 @@
 
     Options:
 
-      -h, --help                    output usage information
       -V, --version                 output the version number
       -h, --host <host>             listening host, default 0.0.0.0
       -p, --port <port>             listening port, default 9001
@@ -59,6 +58,7 @@
       --ui-highlight-preset <path>  custom preset for highlighting (see ./preset/default.json)
       --path <path>                 prefix path for the running application, default /
       --disable-usage-stats         disable gathering usage statistics
+      --help                        output usage information
 
 Web interface runs on **http://[host]:[port]**.
 

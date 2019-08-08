@@ -30,7 +30,7 @@
     "eslint-plugin-import": "~2.14.0",
     "jsdom": "~11.12.0",
     "mocha": "~5.2.0",
-    "pkg": "~4.3.3",
+    "pkg": "~4.4.0",
     "should": "~3.3.2",
     "sinon": "~1.7.3",
     "supertest": "^3.3.0",

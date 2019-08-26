@@ -165,7 +165,7 @@ window.App = (function app(window, document) {
    * @private
    */
   var _updateFaviconCounter = function() {
-    if (_isWindowFocused) {
+    if (_isWindowFocused || _isPaused) {
       return;
     }
 

@@ -152,17 +152,6 @@ window.App = (function app(window, document) {
   };
 
   /**
-   * @return {Boolean}
-   * @private
-   */
-  var _isScrolledBottom = function() {
-    var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
-    var totalHeight = document.body.offsetHeight;
-    var clientHeight = document.documentElement.clientHeight; // eslint-disable-line
-    return totalHeight <= currentScroll + clientHeight;
-  };
-
-  /**
    * @return void
    * @private
    */
@@ -313,7 +302,7 @@ window.App = (function app(window, document) {
      * @param {string} data data to log
      */
     log: function log(data, replace = false) {
-      var wasScrolledBottom = _isScrolledBottom();
+      var wasScrolledBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight;
       var div = document.createElement('div');
       var p = document.createElement('p');
       p.className = 'inner-line';

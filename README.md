@@ -4,7 +4,6 @@
 
 ![frontial](https://user-images.githubusercontent.com/455261/29570317-660c8122-8756-11e7-9d2f-8fea19e05211.gif)
 
-[![Build Status](https://img.shields.io/travis/mthenw/frontail.svg?style=flat)](https://travis-ci.org/mthenw/frontail)
 [![Docker Pulls](https://img.shields.io/docker/pulls/mthenw/frontail.svg)](https://hub.docker.com/r/mthenw/frontail/)
 
 ## Quick start
@@ -39,7 +38,6 @@
 
     Options:
 
-      -h, --help                    output usage information
       -V, --version                 output the version number
       -h, --host <host>             listening host, default 0.0.0.0
       -p, --port <port>             listening port, default 9001
@@ -60,8 +58,9 @@
       --ui-highlight-preset <path>  custom preset for highlighting (see ./preset/default.json)
       --path <path>                 prefix path for the running application, default /
       --disable-usage-stats         disable gathering usage statistics
+      --help                        output usage information
 
-Web interface runs on **http://127.0.0.1:[port]**.
+Web interface runs on **http://[host]:[port]**.
 
 ### Tailing multiple files
 

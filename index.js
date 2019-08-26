@@ -26,7 +26,7 @@ if (program.args.length === 0) {
 /**
  * Init usage statistics
  */
-const stats = usageStats(!program.disableUsageStats);
+const stats = usageStats(!program.disableUsageStats, program);
 stats.track('runtime', 'init');
 stats.time('runtime', 'runtime');
 

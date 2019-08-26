@@ -31,7 +31,7 @@ window.App = (function app(window, document) {
    * @type {HTMLElement}
    * @private
    */
-  var _pausedBtn;
+  var _pauseBtn;
 
   /**
    * @type {boolean}
@@ -223,7 +223,7 @@ window.App = (function app(window, document) {
       _logContainer = opts.container;
       _filterInput = opts.filterInput;
       _filterInput.focus();
-      _pausedBtn = opts.pausedBtn;
+      _pauseBtn = opts.pauseBtn;
       _topbar = opts.topbar;
       _body = opts.body;
 
@@ -242,14 +242,14 @@ window.App = (function app(window, document) {
         _filterLogs();
       });
 
-      // Paused button bind
-      _pausedBtn.addEventListener('mouseup', function() {
+      // Pause button bind
+      _pauseBtn.addEventListener('mouseup', function() {
         _isPaused = !_isPaused;
         if (_isPaused) {
-          this.className += ' active';
+          this.className += ' play';
         } else {
           _skipCounter = 0;
-          this.classList.remove("active");
+          this.classList.remove('play');
         }
       });
 

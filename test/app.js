@@ -13,7 +13,7 @@ describe('browser application', () => {
       socket: io,
       container: window.document.querySelector('.log'),
       filterInput: window.document.querySelector('#filter'),
-      pausedBtn: window.document.querySelector('#pausedBtn'),
+      pauseBtn: window.document.querySelector('#pauseBtn'),
       topbar: window.document.querySelector('.topbar'),
       body: window.document.querySelector('body')
     });
@@ -44,7 +44,7 @@ describe('browser application', () => {
   beforeEach((done) => {
     io = new events.EventEmitter();
     const html = '<title></title><body><div class="topbar"></div>'
-      + '<div class="log"></div><button type="button" id="pausedBtn"></button>'
+      + '<div class="log"></div><button type="button" id="pauseBtn"></button>'
       + '<input type="test" id="filter"/></body>';
     const ansiup = fs.readFileSync('./web/assets/ansi_up.js', 'utf-8');
     const src = fs.readFileSync('./web/assets/app.js', 'utf-8');
@@ -206,21 +206,21 @@ describe('browser application', () => {
 
   it('should pause', () => {
     io.emit('line', 'line1');
-    const btn = window.document.querySelector('#pausedBtn');
+    const btn = window.document.querySelector('#pauseBtn');
     const event = window.document.createEvent('Event');
     event.initEvent('mouseup', true, true);
     btn.dispatchEvent(event);
     io.emit('line', 'line2');
     io.emit('line', 'line3');
 
-    btn.className.should.containEql('active');
+    btn.className.should.containEql('play');
     const log = window.document.querySelector('.log');
     log.childNodes.length.should.be.equal(2);
     log.lastChild.textContent.should.be.equal('==> SKIPED: 2 <==');
   });
 
   it('should play', () => {
-    const btn = window.document.querySelector('#pausedBtn');
+    const btn = window.document.querySelector('#pauseBtn');
     const event = window.document.createEvent('Event');
     event.initEvent('mouseup', true, true);
     btn.dispatchEvent(event);
@@ -228,11 +228,11 @@ describe('browser application', () => {
     const log = window.document.querySelector('.log');
     log.childNodes.length.should.be.equal(1);
     log.lastChild.textContent.should.be.equal('==> SKIPED: 1 <==');
-    btn.className.should.containEql('active');
+    btn.className.should.containEql('play');
     btn.dispatchEvent(event);
     io.emit('line', 'line2');
 
-    btn.className.should.not.containEql('active');
+    btn.className.should.not.containEql('play');
     log.childNodes.length.should.be.equal(2);
     log.lastChild.textContent.should.be.equal('line2');
   });

@@ -15,7 +15,7 @@ body {
   overflow: hidden;
 }
 
-.btn-paused {
+.btn-pause {
     margin: 8px 0 8px;
     background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23999' viewBox='0 0 8 8'><path d='M1 1v6h2v-6h-2zm4 0v6h2v-6h-2z'></path></svg>") no-repeat center center;
     background-color: #e2e6ea;
@@ -27,7 +27,7 @@ body {
     border: 1px solid #ccc;
 }
 
-.btn-paused.active {
+.btn-pause.play {
     background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23999' viewBox='0 0 8 8'><path d='M1 1v6l6-3-6-3z'></path></svg>") no-repeat center center;
     background-color: #e2e6ea;
 }

@@ -13,6 +13,7 @@ describe('browser application', () => {
       socket: io,
       container: window.document.querySelector('.log'),
       filterInput: window.document.querySelector('#filter'),
+      pauseBtn: window.document.querySelector('#pauseBtn'),
       topbar: window.document.querySelector('.topbar'),
       body: window.document.querySelector('body')
     });
@@ -43,7 +44,8 @@ describe('browser application', () => {
   beforeEach((done) => {
     io = new events.EventEmitter();
     const html = '<title></title><body><div class="topbar"></div>'
-      + '<div class="log"></div><input type="test" id="filter"/></body>';
+      + '<div class="log"></div><button type="button" id="pauseBtn"></button>'
+      + '<input type="test" id="filter"/></body>';
     const ansiup = fs.readFileSync('./web/assets/ansi_up.js', 'utf-8');
     const src = fs.readFileSync('./web/assets/app.js', 'utf-8');
 
@@ -200,5 +202,38 @@ describe('browser application', () => {
     log.childNodes[1].style.display.should.be.equal('');
     log.childNodes[2].style.display.should.be.equal('none');
     window.location.href.should.containEql('filter=other');
+  });
+
+  it('should pause', () => {
+    io.emit('line', 'line1');
+    const btn = window.document.querySelector('#pauseBtn');
+    const event = window.document.createEvent('Event');
+    event.initEvent('mouseup', true, true);
+    btn.dispatchEvent(event);
+    io.emit('line', 'line2');
+    io.emit('line', 'line3');
+
+    btn.className.should.containEql('play');
+    const log = window.document.querySelector('.log');
+    log.childNodes.length.should.be.equal(2);
+    log.lastChild.textContent.should.be.equal('==> SKIPED: 2 <==');
+  });
+
+  it('should play', () => {
+    const btn = window.document.querySelector('#pauseBtn');
+    const event = window.document.createEvent('Event');
+    event.initEvent('mouseup', true, true);
+    btn.dispatchEvent(event);
+    io.emit('line', 'line1');
+    const log = window.document.querySelector('.log');
+    log.childNodes.length.should.be.equal(1);
+    log.lastChild.textContent.should.be.equal('==> SKIPED: 1 <==');
+    btn.className.should.containEql('play');
+    btn.dispatchEvent(event);
+    io.emit('line', 'line2');
+
+    btn.className.should.not.containEql('play');
+    log.childNodes.length.should.be.equal(2);
+    log.lastChild.textContent.should.be.equal('line2');
   });
 });

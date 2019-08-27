@@ -31,6 +31,24 @@ window.App = (function app(window, document) {
    * @type {HTMLElement}
    * @private
    */
+  var _pauseBtn;
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  var _isPaused = false;
+
+  /**
+   * @type {number}
+   * @private
+   */
+  var _skipCounter = 0;
+
+  /**
+   * @type {HTMLElement}
+   * @private
+   */
   var _topbar;
 
   /**
@@ -147,7 +165,7 @@ window.App = (function app(window, document) {
    * @private
    */
   var _updateFaviconCounter = function() {
-    if (_isWindowFocused) {
+    if (_isWindowFocused || _isPaused) {
       return;
     }
 
@@ -205,6 +223,7 @@ window.App = (function app(window, document) {
       _logContainer = opts.container;
       _filterInput = opts.filterInput;
       _filterInput.focus();
+      _pauseBtn = opts.pauseBtn;
       _topbar = opts.topbar;
       _body = opts.body;
 
@@ -221,6 +240,17 @@ window.App = (function app(window, document) {
         }
         _setFilterParam(_filterValue, window.location.toString());
         _filterLogs();
+      });
+
+      // Pause button bind
+      _pauseBtn.addEventListener('mouseup', function() {
+        _isPaused = !_isPaused;
+        if (_isPaused) {
+          this.className += ' play';
+        } else {
+          _skipCounter = 0;
+          this.classList.remove('play');
+        }
       });
 
       // Favicon counter bind
@@ -257,7 +287,12 @@ window.App = (function app(window, document) {
           _highlightConfig = highlightConfig;
         })
         .on('line', function(line) {
-          self.log(line);
+          if (_isPaused) {
+            _skipCounter += 1;
+            self.log('==> SKIPED: ' + _skipCounter + ' <==', (_skipCounter > 1));
+          } else {
+            self.log(line);
+          }
         });
     },
 
@@ -266,7 +301,7 @@ window.App = (function app(window, document) {
      *
      * @param {string} data data to log
      */
-    log: function log(data) {
+    log: function log(data, replace = false) {
       var wasScrolledBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight;
       var div = document.createElement('div');
       var p = document.createElement('p');
@@ -289,7 +324,11 @@ window.App = (function app(window, document) {
 
       div.appendChild(p);
       _filterElement(div);
-      _logContainer.appendChild(div);
+      if (replace) {
+        _logContainer.replaceChild(div, _logContainer.lastChild);
+      } else {
+        _logContainer.appendChild(div);
+      }
 
       if (_logContainer.children.length > _linesLimit) {
         _logContainer.removeChild(_logContainer.children[0]);

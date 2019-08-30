@@ -10,7 +10,7 @@
     "CBuffer": "~0.1.4",
     "basic-auth-connect": "~1.0.0",
     "byline": "~5.0.0",
-    "commander": "^3.0.0-0",
+    "commander": "~3.0.1",
     "configstore": "~4.0.0",
     "connect": "~3.6.6",
     "cookie": "~0.1.0",

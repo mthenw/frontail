@@ -18,12 +18,9 @@ jobs:
       uses: actions/npm@master
       with:
         args: test
-    - name: Tag
-      uses: actions/bin/filter@master
-      with:
-        args: tag
     - name: Publish
       uses: actions/npm@master
+      if: startsWith(github.event.ref, 'refs/tags')
       env:
         NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       with:

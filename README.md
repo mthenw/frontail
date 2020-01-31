@@ -14,7 +14,7 @@
 
 ## Features
 
-* log rotation
+* log rotation (not on windows!)
 * auto-scrolling
 * marking logs
 * pausing logs

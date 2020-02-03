@@ -9,12 +9,11 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12
+        registry-url: https://registry.npmjs.org/
     - run: npm install
     - run: npm test
     - run: npm run lint
     - run: npm publish
       if: startsWith(github.event.ref, 'refs/tags')
       env:
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-      with:
-        args: publish --access public
+        NODE_AUTH_TOKEN: ${{secrets.npm_token}}

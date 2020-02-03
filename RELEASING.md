@@ -18,19 +18,13 @@ After all [pull requests](https://github.com/mthenw/frontail/pulls) for a releas
     $ git commit -am "Release <version>"
     ```
 
-1. Tag the version.
+1. Push the commit.
 
     ```sh
-    $ git tag v<version>
+    $ git push origin head
     ```
 
-1. Push the commit and tag.
-
-    ```sh
-    $ git push origin head --tags
-    ```
-
-1. Travis CI will publish new version to NPM.
+1. GitHub action will publish new version to NPM and push new tag.
 
 1. Publish new release on GitHub with [`release`](https://github.com/zeit/release) package.
 

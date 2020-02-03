@@ -12,7 +12,8 @@ jobs:
     - run: npm install
     - run: npm test
     - run: npm run lint
-    - run: npm publish --@mthenw:registry=https://registry.npmjs.org/
-      if: startsWith(github.event.ref, 'refs/tags')
+    - uses: primer/publish@master
       env:
-        NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        NPM_REGISTRY_URL: registry.npmjs.org

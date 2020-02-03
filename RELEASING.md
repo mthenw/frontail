@@ -29,6 +29,7 @@ After all [pull requests](https://github.com/mthenw/frontail/pulls) for a releas
 1. Publish new release on GitHub with [`release`](https://github.com/zeit/release) package.
 
     ```sh
+    $ git pull
     $ npx release -P
     ```
 

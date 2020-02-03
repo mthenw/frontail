@@ -9,13 +9,10 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12
-        registry-url: https://registry.npmjs.org/
     - run: npm install
     - run: npm test
     - run: npm run lint
-    - run: |
-        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
-        npm publish
+    - run: npm publish --@mthenw:registry=https://registry.npmjs.org/
       if: startsWith(github.event.ref, 'refs/tags')
       env:
         NODE_AUTH_TOKEN: ${{secrets.npm_token}}

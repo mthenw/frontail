@@ -5,20 +5,14 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: Build
-      uses: actions/npm@master
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
       with:
-        args: install
-    - name: Lint
-      uses: actions/npm@master
-      with:
-        args: run lint
-    - name: Test
-      uses: actions/npm@master
-      with:
-        args: test
-    - name: Publish
+        node-version: 12
+    - run: npm install
+    - run: npm test
+    - run: npm run lint
+    - run: npm publish
       uses: actions/npm@master
       if: startsWith(github.event.ref, 'refs/tags')
       env:

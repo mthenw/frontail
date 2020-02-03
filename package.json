@@ -27,9 +27,9 @@
     "uuid": "~3.3.2"
   },
   "devDependencies": {
-    "eslint": "~5.6.1",
-    "eslint-config-airbnb-base": "~13.1.0",
-    "eslint-plugin-import": "~2.14.0",
+    "eslint": "~6.8.0",
+    "eslint-config-airbnb-base": "~14.0.0",
+    "eslint-plugin-import": "~2.20.0",
     "jsdom": "~11.12.0",
     "mocha": "~5.2.0",
     "pkg": "~4.4.0",
@@ -53,6 +53,31 @@
       "node8-linux-x64",
       "node8-macos-x64"
     ]
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "rules": {
+      "no-console": "off",
+      "strict": "off",
+      "implicit-arrow-linebreak": "off",
+      "comma-dangle": [
+        "error",
+        {
+          "functions": "never"
+        }
+      ]
+    },
+    "env": {
+      "node": true
+    },
+    "ignorePatterns": [
+      "web/assets/tinycon.min.js",
+      "web/assets/ansi_up.js"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "always"
   },
   "repository": {
     "type": "git",

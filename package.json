@@ -18,10 +18,11 @@
     "cookie-parser": "~1.4.3",
     "daemon-fix41": "~1.1.2",
     "express-session": "~1.15.6",
-    "fs-tail-stream": "^1.1.0",
     "is-docker": "~1.1.0",
+    "read-last-lines": "^1.7.2",
     "serve-static": "~1.13.2",
     "socket.io": "^2.2.0",
+    "tail": "^2.0.3",
     "universal-analytics": "~0.4.20",
     "untildify": "~3.0.2",
     "uuid": "~3.3.2"

@@ -302,7 +302,7 @@ window.App = (function app(window, document) {
      * @param {string} data data to log
      */
     log: function log(data, replace = false) {
-      var wasScrolledBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight;
+      var wasScrolledBottom = (window.innerHeight + Math.ceil(window.pageYOffset + 1)) >= document.body.offsetHeight;
       var div = document.createElement('div');
       var p = document.createElement('p');
       p.className = 'inner-line';

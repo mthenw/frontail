@@ -10,7 +10,7 @@ describe('daemonize', () => {
   beforeEach(() => {
     sinon.stub(daemon, 'daemon');
     daemon.daemon.returns({
-      pid: 1000
+      pid: 1000,
     });
     sinon.stub(fs, 'writeFileSync');
     sinon.stub(fs, 'openSync');
@@ -70,41 +70,89 @@ describe('daemonize', () => {
     });
 
     it('with authorization', () => {
-      optionsParser.parse(['node', '/path/to/frontail', '-U', 'user', '-P', 'passw0rd']);
+      optionsParser.parse([
+        'node',
+        '/path/to/frontail',
+        '-U',
+        'user',
+        '-P',
+        'passw0rd',
+      ]);
 
       daemonize('script', optionsParser, {
-        doAuthorization: true
+        doAuthorization: true,
       });
 
-      daemon.daemon.lastCall.args[1].should.containDeep(['-U', 'user', '-P', 'passw0rd']);
+      daemon.daemon.lastCall.args[1].should.containDeep([
+        '-U',
+        'user',
+        '-P',
+        'passw0rd',
+      ]);
     });
 
     it('without authorization if option doAuthorization not passed', () => {
-      optionsParser.parse(['node', '/path/to/frontail', '-U', 'user', '-P', 'passw0rd']);
+      optionsParser.parse([
+        'node',
+        '/path/to/frontail',
+        '-U',
+        'user',
+        '-P',
+        'passw0rd',
+      ]);
 
       daemonize('script', optionsParser);
 
-      daemon.daemon.lastCall.args[1].should.not.containDeep(['-U', 'user', '-P', 'passw0rd']);
+      daemon.daemon.lastCall.args[1].should.not.containDeep([
+        '-U',
+        'user',
+        '-P',
+        'passw0rd',
+      ]);
     });
 
     it('with secure connection', () => {
-      optionsParser.parse(['node', '/path/to/frontail', '-k', 'key.file', '-c', 'cert.file']);
+      optionsParser.parse([
+        'node',
+        '/path/to/frontail',
+        '-k',
+        'key.file',
+        '-c',
+        'cert.file',
+      ]);
 
       daemonize('script', optionsParser, {
-        doSecure: true
+        doSecure: true,
       });
 
-      daemon.daemon.lastCall.args[1].should.containDeep(['-k', 'key.file', '-c', 'cert.file']);
+      daemon.daemon.lastCall.args[1].should.containDeep([
+        '-k',
+        'key.file',
+        '-c',
+        'cert.file',
+      ]);
     });
 
     it('without secure connection if option doSecure not passed', () => {
-      optionsParser.parse(['node', '/path/to/frontail', '-k', 'key.file', '-c', 'cert.file']);
+      optionsParser.parse([
+        'node',
+        '/path/to/frontail',
+        '-k',
+        'key.file',
+        '-c',
+        'cert.file',
+      ]);
 
       daemonize('script', optionsParser, {
-        doSecure: true
+        doSecure: true,
       });
 
-      daemon.daemon.lastCall.args[1].should.containDeep(['-k', 'key.file', '-c', 'cert.file']);
+      daemon.daemon.lastCall.args[1].should.containDeep([
+        '-k',
+        'key.file',
+        '-c',
+        'cert.file',
+      ]);
     });
 
     it('with url-path option', () => {
@@ -112,7 +160,10 @@ describe('daemonize', () => {
 
       daemonize('script', optionsParser);
 
-      daemon.daemon.lastCall.args[1].should.containDeep(['--url-path', '/test']);
+      daemon.daemon.lastCall.args[1].should.containDeep([
+        '--url-path',
+        '/test',
+      ]);
     });
 
     it('with hide-topbar option', () => {
@@ -145,12 +196,15 @@ describe('daemonize', () => {
         '/path/to/frontail',
         '--ui-highlight',
         '--ui-highlight-preset',
-        'test.json'
+        'test.json',
       ]);
 
       daemonize('script', optionsParser);
 
-      daemon.daemon.lastCall.args[1].should.containDeep(['--ui-highlight-preset', 'test.json']);
+      daemon.daemon.lastCall.args[1].should.containDeep([
+        '--ui-highlight-preset',
+        'test.json',
+      ]);
     });
 
     it('with file to tail', () => {
@@ -163,7 +217,12 @@ describe('daemonize', () => {
   });
 
   it('should write pid to pidfile', () => {
-    optionsParser.parse(['node', '/path/to/frontail', '--pid-path', '/path/to/pid']);
+    optionsParser.parse([
+      'node',
+      '/path/to/frontail',
+      '--pid-path',
+      '/path/to/pid',
+    ]);
 
     daemonize('script', optionsParser);
 
@@ -172,7 +231,12 @@ describe('daemonize', () => {
   });
 
   it('should log to file', () => {
-    optionsParser.parse(['node', '/path/to/frontail', '--log-path', '/path/to/log']);
+    optionsParser.parse([
+      'node',
+      '/path/to/frontail',
+      '--log-path',
+      '/path/to/log',
+    ]);
     fs.openSync.returns('file');
 
     daemonize('script', optionsParser);
@@ -181,7 +245,7 @@ describe('daemonize', () => {
     fs.openSync.lastCall.args[1].should.equal('a');
     daemon.daemon.lastCall.args[2].should.eql({
       stdout: 'file',
-      stderr: 'file'
+      stderr: 'file',
     });
   });
 });

@@ -6,18 +6,12 @@ const connectBuilder = require('../lib/connect_builder');
 
 describe('connectBuilder', () => {
   it('should build connect app', () => {
-    connectBuilder('/')
-      .build()
-      .should.have.property('use');
-    connectBuilder()
-      .build()
-      .should.have.property('listen');
+    connectBuilder('/').build().should.have.property('use');
+    connectBuilder().build().should.have.property('listen');
   });
 
   it('should build app requiring authorized user', (done) => {
-    const app = connectBuilder('/')
-      .authorize('user', 'pass')
-      .build();
+    const app = connectBuilder('/').authorize('user', 'pass').build();
 
     request(app)
       .get('/')
@@ -26,9 +20,7 @@ describe('connectBuilder', () => {
   });
 
   it('should build app allowing user to login', (done) => {
-    const app = connectBuilder('/')
-      .authorize('user', 'pass')
-      .build();
+    const app = connectBuilder('/').authorize('user', 'pass').build();
     app.use((req, res) => {
       res.end('secret!');
     });
@@ -40,9 +32,7 @@ describe('connectBuilder', () => {
   });
 
   it('should build app that setup session', (done) => {
-    const app = connectBuilder('/')
-      .session('secret')
-      .build();
+    const app = connectBuilder('/').session('secret').build();
     app.use((req, res) => {
       res.end();
     });
@@ -57,9 +47,7 @@ describe('connectBuilder', () => {
       .static(path.join(__dirname, 'fixtures'))
       .build();
 
-    request(app)
-      .get('/foo.txt')
-      .expect('bar', done);
+    request(app).get('/foo.txt').expect('bar', done);
   });
 
   it('should build app that serve index file', (done) => {
@@ -67,10 +55,7 @@ describe('connectBuilder', () => {
       .index(path.join(__dirname, 'fixtures/index'), '/testfile')
       .build();
 
-    request(app)
-      .get('/')
-      .expect(200)
-      .expect('Content-Type', 'text/html', done);
+    request(app).get('/').expect(200).expect('Content-Type', 'text/html', done);
   });
 
   it('should build app that serve index file on specified path', (done) => {
@@ -89,24 +74,30 @@ describe('connectBuilder', () => {
       .index(path.join(__dirname, 'fixtures/index_with_title'), '/testfile')
       .build();
 
-    request(app)
-      .get('/')
-      .expect('<head><title>/testfile</title></head>', done);
+    request(app).get('/').expect('<head><title>/testfile</title></head>', done);
   });
 
   it('should build app that sets socket.io namespace based on files', (done) => {
     const app = connectBuilder('/')
-      .index(path.join(__dirname, 'fixtures/index_with_ns'), '/testfile', 'ns', 'dark')
+      .index(
+        path.join(__dirname, 'fixtures/index_with_ns'),
+        '/testfile',
+        'ns',
+        'dark'
+      )
       .build();
 
-    request(app)
-      .get('/')
-      .expect('ns', done);
+    request(app).get('/').expect('ns', done);
   });
 
   it('should build app that sets theme', (done) => {
     const app = connectBuilder('/')
-      .index(path.join(__dirname, '/fixtures/index_with_theme'), '/testfile', 'ns', 'dark')
+      .index(
+        path.join(__dirname, '/fixtures/index_with_theme'),
+        '/testfile',
+        'ns',
+        'dark'
+      )
       .build();
 
     request(app)

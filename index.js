@@ -37,16 +37,13 @@ const doAuthorization = !!(program.user && program.password);
 const doSecure = !!(program.key && program.certificate);
 const sessionSecret = String(+new Date()) + Math.random();
 const files = program.args.join(' ');
-const filesNamespace = crypto
-  .createHash('md5')
-  .update(files)
-  .digest('hex');
+const filesNamespace = crypto.createHash('md5').update(files).digest('hex');
 const urlPath = program.urlPath.replace(/\/$/, ''); // remove trailing slash
 
 if (program.daemonize) {
   daemonize(__filename, program, {
     doAuthorization,
-    doSecure
+    doSecure,
   });
 } else {
   /**
@@ -59,7 +56,12 @@ if (program.daemonize) {
   }
   appBuilder
     .static(path.join(__dirname, 'web', 'assets'))
-    .index(path.join(__dirname, 'web', 'index.html'), files, filesNamespace, program.theme);
+    .index(
+      path.join(__dirname, 'web', 'index.html'),
+      files,
+      filesNamespace,
+      program.theme
+    );
 
   const builder = serverBuilder();
   if (doSecure) {
@@ -86,7 +88,10 @@ if (program.daemonize) {
         if (!sessionIdEncoded) {
           return next(new Error('Session cookie not provided'), false);
         }
-        const sessionId = cookieParser.signedCookie(sessionIdEncoded, sessionSecret);
+        const sessionId = cookieParser.signedCookie(
+          sessionIdEncoded,
+          sessionSecret
+        );
         if (sessionId) {
           return next(null);
         }
@@ -121,7 +126,7 @@ if (program.daemonize) {
    * When connected send starting data
    */
   const tailer = tail(program.args, {
-    buffer: program.number
+    buffer: program.number,
   });
 
   const filesSocket = io.of(`/${filesNamespace}`).on('connection', (socket) => {

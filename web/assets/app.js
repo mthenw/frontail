@@ -186,7 +186,7 @@ window.App = (function app(window, document) {
       Object.keys(_highlightConfig.words).forEach((wordCheck) => {
         output = output.replace(
           wordCheck,
-          '<span style="' + _highlightConfig.words[wordCheck] + '">' + wordCheck + '</span>'
+          '<span style="' + _highlightConfig.words[wordCheck] + '">' + wordCheck + '</span>',
         );
       });
     }
@@ -259,7 +259,7 @@ window.App = (function app(window, document) {
         function() {
           _isWindowFocused = false;
         },
-        true
+        true,
       );
       window.addEventListener(
         'focus',
@@ -267,7 +267,7 @@ window.App = (function app(window, document) {
           _isWindowFocused = true;
           _faviconReset();
         },
-        true
+        true,
       );
 
       // socket.io init
@@ -340,6 +340,6 @@ window.App = (function app(window, document) {
       }
 
       _updateFaviconCounter();
-    }
+    },
   };
 }(window, document));

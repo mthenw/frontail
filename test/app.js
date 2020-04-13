@@ -15,7 +15,7 @@ describe('browser application', () => {
       filterInput: window.document.querySelector('#filter'),
       pauseBtn: window.document.querySelector('#pauseBtn'),
       topbar: window.document.querySelector('.topbar'),
-      body: window.document.querySelector('body')
+      body: window.document.querySelector('body'),
     });
   }
 
@@ -43,9 +43,10 @@ describe('browser application', () => {
 
   beforeEach((done) => {
     io = new events.EventEmitter();
-    const html = '<title></title><body><div class="topbar"></div>'
-      + '<div class="log"></div><button type="button" id="pauseBtn"></button>'
-      + '<input type="test" id="filter"/></body>';
+    const html =
+      '<title></title><body><div class="topbar"></div>' +
+      '<div class="log"></div><button type="button" id="pauseBtn"></button>' +
+      '<input type="test" id="filter"/></body>';
     const ansiup = fs.readFileSync('./web/assets/ansi_up.js', 'utf-8');
     const src = fs.readFileSync('./web/assets/app.js', 'utf-8');
 
@@ -58,7 +59,7 @@ describe('browser application', () => {
 
         initApp();
         done();
-      }
+      },
     });
   });
 
@@ -70,7 +71,9 @@ describe('browser application', () => {
     log.childNodes[0].textContent.should.be.equal('test');
     log.childNodes[0].className.should.be.equal('line');
     log.childNodes[0].tagName.should.be.equal('DIV');
-    log.childNodes[0].innerHTML.should.be.equal('<p class="inner-line">test</p>');
+    log.childNodes[0].innerHTML.should.be.equal(
+      '<p class="inner-line">test</p>'
+    );
   });
 
   it('should select line when clicked', () => {
@@ -124,8 +127,8 @@ describe('browser application', () => {
     io.emit('options:highlightConfig', {
       words: {
         foo: 'background: black',
-        bar: 'background: black'
-      }
+        bar: 'background: black',
+      },
     });
     io.emit('line', 'foo bar');
 
@@ -138,8 +141,8 @@ describe('browser application', () => {
   it('should highlight line', () => {
     io.emit('options:highlightConfig', {
       lines: {
-        line: 'background: black'
-      }
+        line: 'background: black',
+      },
     });
     io.emit('line', 'line1');
 

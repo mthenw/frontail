@@ -37,7 +37,7 @@ describe('tail', () => {
       writeLines(info.fd, 20);
 
       const tailer = tail(info.path, {
-        buffer: 2
+        buffer: 2,
       });
       setTimeout(() => {
         tailer.getBuffer().should.be.eql(['line18', 'line19']);

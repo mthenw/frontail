@@ -207,6 +207,22 @@ describe('daemonize', () => {
       ]);
     });
 
+    it('with disable usage stats', () => {
+      optionsParser.parse([
+        'node',
+        '/path/to/frontail',
+        '--disable-usage-stats',
+        'test.json',
+      ]);
+
+      daemonize('script', optionsParser);
+
+      daemon.daemon.lastCall.args[1].should.containDeep([
+        '--disable-usage-stats',
+        'test.json',
+      ]);
+    });
+
     it('with file to tail', () => {
       optionsParser.parse(['node', '/path/to/frontail', '/path/to/file']);
 

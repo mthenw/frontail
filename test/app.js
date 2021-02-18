@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-const jsdom = require('jsdom/lib/old-api.js');
+const jsdom = require('jsdom');
 const events = require('events');
 
 describe('browser application', () => {

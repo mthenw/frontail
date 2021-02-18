@@ -1,59 +1,12 @@
 @import 'bootstrap.min.css';
+@import 'dark.css';
 
 body {
-  padding-top: 60px;
-}
-@media screen and (max-width: 768px) {
-  body {
-    padding-top: 120px;
-  }
-}
-
-.navbar-brand {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-.btn-pause {
-  margin: 8px 0 8px;
-  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23999' viewBox='0 0 8 8'><path d='M1 1v6h2v-6h-2zm4 0v6h2v-6h-2z'></path></svg>")
-    no-repeat center center;
-  background-color: #e2e6ea;
-  background-size: contain;
-  cursor: pointer;
-  display: inline-block;
-  height: 34px;
-  width: 34px;
-  border: 1px solid #ccc;
-}
-
-.btn-pause.play {
-  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23999' viewBox='0 0 8 8'><path d='M1 1v6l6-3-6-3z'></path></svg>")
-    no-repeat center center;
-  background-color: #e2e6ea;
-}
-
-.navbar-form-custom {
-  padding: 8px 0;
-}
-
-.no-horiz-padding {
-  padding-left: 0px;
-  padding-right: 0px;
-}
-
-.no-topbar {
-  padding-top: 10px;
-}
-
-.navbar-inverse .navbar-brand {
-  color: white;
+  user-select: none;
 }
 
 .log {
+  margin-top: 1rem;
   white-space: pre-wrap;
   color: black;
   font-size: 0.85em;
@@ -67,6 +20,8 @@ body {
   margin-left: 84pt;
   text-indent: -84pt;
   margin-bottom: 0;
+  user-select: text;
+  width: max-content;
 }
 
 .log .inner-line:empty::after {
@@ -81,4 +36,12 @@ body {
 
 .log .line-selected {
   background-color: #ffb2b0;
+}
+
+.btn-pause {
+  margin: 0 1rem;
+}
+
+.btn-pause svg {
+  height: 1.5rem;
 }

@@ -1,4 +1,4 @@
-/* global Tinycon:false, ansi_up:false */
+/* global Tinycon:false, ansiUp:false */
 
 window.App = (function app(window, document) {
   'use strict';
@@ -74,6 +74,18 @@ window.App = (function app(window, document) {
    * @private
    */
   var _isWindowFocused = true;
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  let _startSelected = true;
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  let _switchedSelecting = false;
 
   /**
    * @type {object}
@@ -232,7 +244,7 @@ window.App = (function app(window, document) {
       // Filter input bind
       _filterInput.addEventListener('keyup', function(e) {
         // ESC
-        if (e.keyCode === 27) {
+        if (e.key === "Escape") {
           this.value = '';
           _filterValue = '';
         } else {
@@ -246,10 +258,10 @@ window.App = (function app(window, document) {
       _pauseBtn.addEventListener('mouseup', function() {
         _isPaused = !_isPaused;
         if (_isPaused) {
-          this.className += ' play';
+          this.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' fill='%23999' viewBox='0 0 8 8'><path d='M1 1v6l6-3-6-3z'></path></svg>";
         } else {
           _skipCounter = 0;
-          this.classList.remove('play');
+          this.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' fill='%23999' viewBox='0 0 8 8'><path d='M1 1v6h2v-6h-2zm4 0v6h2v-6h-2z'></path></svg>";
         }
       });
 
@@ -289,7 +301,7 @@ window.App = (function app(window, document) {
         .on('line', function(line) {
           if (_isPaused) {
             _skipCounter += 1;
-            self.log('==> SKIPED: ' + _skipCounter + ' <==', (_skipCounter > 1));
+            self.log('==> SKIPPED: ' + _skipCounter + ' <==', (_skipCounter > 1));
           } else {
             self.log(line);
           }
@@ -302,23 +314,45 @@ window.App = (function app(window, document) {
      * @param {string} data data to log
      */
     log: function log(data, replace = false) {
-      var wasScrolledBottom = window.innerHeight + Math.ceil(window.pageYOffset + 1)
+      const wasScrolledBottom = window.innerHeight + Math.ceil(window.pageYOffset + 1)
         >= document.body.offsetHeight;
-      var div = document.createElement('div');
-      var p = document.createElement('p');
+      let div = document.createElement('div');
+      const p = document.createElement('p');
       p.className = 'inner-line';
 
       // convert ansi color codes to html && escape HTML tags
-      data = ansi_up.escape_for_html(data); // eslint-disable-line
+      const ansi_up = new AnsiUp;
       data = ansi_up.ansi_to_html(data); // eslint-disable-line
       p.innerHTML = _highlightWord(data);
 
       div.className = 'line';
       div = _highlightLine(data, div);
-      div.addEventListener('click', function click() {
+      div.addEventListener('mouseenter', function mouseenter(event) {
+        _switchedSelecting = false;
+        if(event.buttons === 1) {
+          if (_startSelected) {
+            this.className = 'line-selected';
+          } else {
+            this.className = 'line';
+          }
+        }
+      });
+
+      document.getElementById("logs").addEventListener('mouseleave', function mouseleave(event) {
+        if(event.buttons === 1 && !_switchedSelecting) {
+          _switchedSelecting = true;
+          console.log(_startSelected);
+          _startSelected = ! _startSelected;
+          console.log(_startSelected);
+        }
+      });
+
+      div.addEventListener('mousedown', function mousedown() {
         if (this.className.indexOf('selected') === -1) {
+          _startSelected = true;
           this.className = 'line-selected';
         } else {
+          _startSelected = false;
           this.className = 'line';
         }
       });

@@ -219,7 +219,7 @@ describe('browser application', () => {
     btn.className.should.containEql('play');
     const log = window.document.querySelector('.log');
     log.childNodes.length.should.be.equal(2);
-    log.lastChild.textContent.should.be.equal('==> SKIPED: 2 <==');
+    log.lastChild.textContent.should.be.equal('==> SKIPPED: 2 <==');
   });
 
   it('should play', () => {
@@ -230,7 +230,7 @@ describe('browser application', () => {
     io.emit('line', 'line1');
     const log = window.document.querySelector('.log');
     log.childNodes.length.should.be.equal(1);
-    log.lastChild.textContent.should.be.equal('==> SKIPED: 1 <==');
+    log.lastChild.textContent.should.be.equal('==> SKIPPED: 1 <==');
     btn.className.should.containEql('play');
     btn.dispatchEvent(event);
     io.emit('line', 'line2');

@@ -29,15 +29,15 @@
   "devDependencies": {
     "eslint": "~6.8.0",
     "eslint-config-airbnb-base": "~14.0.0",
-    "eslint-config-prettier": "^6.10.1",
-    "eslint-plugin-import": "~2.20.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
     "jsdom": "~11.12.0",
-    "mocha": "~5.2.0",
-    "pkg": "~4.4.7",
+    "mocha": "^8.3.1",
+    "pkg": "^4.4.9",
     "should": "~3.3.2",
     "sinon": "~1.7.3",
-    "supertest": "^3.3.0",
-    "temp": "~0.8.1"
+    "supertest": "^3.4.2",
+    "temp": "^0.8.4"
   },
   "scripts": {
     "lint": "eslint .",

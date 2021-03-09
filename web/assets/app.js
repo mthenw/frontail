@@ -289,7 +289,7 @@ window.App = (function app(window, document) {
         .on('line', function(line) {
           if (_isPaused) {
             _skipCounter += 1;
-            self.log('==> SKIPED: ' + _skipCounter + ' <==', (_skipCounter > 1));
+            self.log('==> SKIPPED: ' + _skipCounter + ' <==', (_skipCounter > 1));
           } else {
             self.log(line);
           }

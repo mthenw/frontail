@@ -5,39 +5,47 @@
     <title>tail -f __TITLE__</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="__PATH__/styles/__THEME__.css">
+    <link rel="stylesheet" type="text/css" href="__PATH__/styles/default.css">
     <link rel="icon" href="__PATH__/favicon.ico">
 </head>
 
 <body>
-    <nav class="topbar navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-light bg-light sticky-top">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-8">
-                    <span class="navbar-brand text-overflow" title="__TITLE__">tail -f __TITLE__</span>
-                </div>
-                <div class="col-sm-1 text-right">
-                    <button type="button" class="btn btn-light btn-pause" data-toggle="button" aria-pressed="false" autocomplete="off"></button>
-                </div>
-                <div class="col-sm-3">
-                    <form class="navbar-form-custom" role="search" onkeypress="return event.keyCode != 13;">
-                        <input type="text" class="form-control query" placeholder="Filter" tabindex="1">
-                    </form>
-                </div>
-            </div>
+          <span class="navbar-brand">tail -f __TITLE__</span>
+          <div class="d-flex">
+            <button type="button" class="btn d-flex btn-pause" data-toggle="button" aria-pressed="false" autocomplete="off">
+              <svg xmlns='http://www.w3.org/2000/svg' fill='%23999' viewBox='0 0 8 8'><path d='M1 1v6h2v-6h-2zm4 0v6h2v-6h-2z'></path></svg>
+            </button>
+            <input class="form-control me-2 query" type="search" placeholder="Filter" aria-label="Filter">
+          </div>
         </div>
     </nav>
 
-    <div class="container-fluid no-horiz-padding">
+    <div class="container-fluid no-horiz-padding" id="logs">
         <pre class="log"></pre>
+    </div>
+    <div class="form-check dark-switcher">
+      <input id="darkSwitch" class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+      <label class="form-check-label" for="flexCheckChecked">
+        Enable dark mode
+      </label>
     </div>
 
 
     <script src="__PATH__/socket.io/socket.io.js"></script>
     <script src="__PATH__/tinycon.min.js"></script>
     <script src="__PATH__/ansi_up.js"></script>
+    <script src="__PATH__/darkmode/theme.js"></script>
     <script src="__PATH__/app.js"></script>
     <script type="text/javascript">
+        const themeConfig = new ThemeConfig();
+        themeConfig.initTheme();
+        let darkSwitch = document.getElementById('darkSwitch');
+        darkSwitch.checked = themeConfig.getTheme() === 'dark';
+        darkSwitch.onchange = function () {
+            themeConfig.setTheme(darkSwitch.checked ? 'dark' : 'light');
+        };
         var socket = new io.connect('/__NAMESPACE__', {
             path: '__PATH__/socket.io',
             transports: ['websocket']

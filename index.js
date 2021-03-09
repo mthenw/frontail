@@ -4,7 +4,7 @@ const cookie = require('cookie');
 const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
 const path = require('path');
-const SocketIO = require('socket.io');
+const { Server } = require('socket.io');
 const fs = require('fs');
 const untildify = require('untildify');
 const tail = require('./lib/tail');
@@ -22,26 +22,27 @@ if (program.args.length === 0) {
   console.error('Arguments needed, use --help');
   process.exit();
 }
+const options = program.opts();
 
 /**
  * Init usage statistics
  */
-const stats = usageStats(!program.disableUsageStats, program);
+const stats = usageStats(!options.disableUsageStats, options);
 stats.track('runtime', 'init');
 stats.time('runtime', 'runtime');
-
+ 
 /**
  * Validate params
  */
-const doAuthorization = !!(program.user && program.password);
-const doSecure = !!(program.key && program.certificate);
+const doAuthorization = !!(options.user && options.password);
+const doSecure = !!(options.key && options.certificate);
 const sessionSecret = String(+new Date()) + Math.random();
 const files = program.args.join(' ');
 const filesNamespace = crypto.createHash('md5').update(files).digest('hex');
-const urlPath = program.urlPath.replace(/\/$/, ''); // remove trailing slash
+const urlPath = options.urlPath.replace(/\/$/, ''); // remove trailing slash
 
-if (program.daemonize) {
-  daemonize(__filename, program, {
+if (options.daemonize) {
+  daemonize(__filename, options, {
     doAuthorization,
     doSecure,
   });
@@ -52,31 +53,30 @@ if (program.daemonize) {
   const appBuilder = connectBuilder(urlPath);
   if (doAuthorization) {
     appBuilder.session(sessionSecret);
-    appBuilder.authorize(program.user, program.password);
+    appBuilder.authorize(options.user, options.password);
   }
   appBuilder
     .static(path.join(__dirname, 'web', 'assets'))
     .index(
       path.join(__dirname, 'web', 'index.html'),
       files,
-      filesNamespace,
-      program.theme
+      filesNamespace
     );
 
   const builder = serverBuilder();
   if (doSecure) {
-    builder.secure(program.key, program.certificate);
+    builder.secure(options.key, options.certificate);
   }
   const server = builder
     .use(appBuilder.build())
-    .port(program.port)
-    .host(program.host)
+    .port(options.port)
+    .host(options.host)
     .build();
 
   /**
    * socket.io setup
    */
-  const io = new SocketIO({ path: `${urlPath}/socket.io` });
+  const io = new Server({ path: `${urlPath}/socket.io` });
   io.attach(server);
 
   if (doAuthorization) {
@@ -106,13 +106,13 @@ if (program.daemonize) {
    * Setup UI highlights
    */
   let highlightConfig;
-  if (program.uiHighlight) {
+  if (options.uiHighlight) {
     let presetPath;
 
-    if (!program.uiHighlightPreset) {
+    if (!options.uiHighlightPreset) {
       presetPath = path.join(__dirname, 'preset', 'default.json');
     } else {
-      presetPath = path.resolve(untildify(program.uiHighlightPreset));
+      presetPath = path.resolve(untildify(options.uiHighlightPreset));
     }
 
     if (fs.existsSync(presetPath)) {
@@ -126,21 +126,21 @@ if (program.daemonize) {
    * When connected send starting data
    */
   const tailer = tail(program.args, {
-    buffer: program.number,
+    buffer: options.number,
   });
 
   const filesSocket = io.of(`/${filesNamespace}`).on('connection', (socket) => {
-    socket.emit('options:lines', program.lines);
+    socket.emit('options:lines', options.lines);
 
-    if (program.uiHideTopbar) {
+    if (options.uiHideTopbar) {
       socket.emit('options:hide-topbar');
     }
 
-    if (!program.uiIndent) {
+    if (!options.uiIndent) {
       socket.emit('options:no-indent');
     }
 
-    if (program.uiHighlight) {
+    if (options.uiHighlight) {
       socket.emit('options:highlightConfig', highlightConfig);
     }
 

@@ -4,7 +4,7 @@ const cookie = require('cookie');
 const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
 const path = require('path');
-const SocketIO = require('socket.io');
+const { Server } = require('socket.io');
 const fs = require('fs');
 const untildify = require('untildify');
 const tail = require('./lib/tail');
@@ -76,7 +76,7 @@ if (program.daemonize) {
   /**
    * socket.io setup
    */
-  const io = new SocketIO({ path: `${urlPath}/socket.io` });
+  const io = new Server({ path: `${urlPath}/socket.io` });
   io.attach(server);
 
   if (doAuthorization) {

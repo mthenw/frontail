@@ -50,9 +50,10 @@
       "web/**/*"
     ],
     "targets": [
-      "node8-alpine-x64",
-      "node8-linux-x64",
-      "node8-macos-x64"
+      "node12-alpine-x64",
+      "node12-linux-x64",
+      "node12-macos-x64",
+      "node12-windows-x64"
     ]
   },
   "eslintConfig": {

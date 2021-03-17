@@ -8,29 +8,29 @@
 
 ## Quick start
 
-* `npm i frontail -g` or download a binary file from [Releases](https://github.com/mthenw/frontail/releases) page
-* `frontail /var/log/syslog`
-* visit [http://127.0.0.1:9001](http://127.0.0.1:9001)
+- `npm i frontail -g` or download a binary file from [Releases](https://github.com/mthenw/frontail/releases) page
+- `frontail /var/log/syslog`
+- visit [http://127.0.0.1:9001](http://127.0.0.1:9001)
 
 ## Features
 
-* log rotation (not on windows!)
-* auto-scrolling
-* marking logs
-* pausing logs
-* number of unread logs in favicon
-* themes (default, dark)
-* [highlighting](#highlighting)
-* search (`Tab` to focus, `Esc` to clear)
-* set filter from url parameter `filter`
-* tailing [multiple files](#tailing-multiple-files) and [stdin](#stdin)
-* basic authentication
+- log rotation (not on Windows)
+- auto-scrolling
+- marking logs
+- pausing logs
+- number of unread logs in favicon
+- themes (default, dark)
+- [highlighting](#highlighting)
+- search (`Tab` to focus, `Esc` to clear)
+- set filter from url parameter `filter`
+- tailing [multiple files](#tailing-multiple-files) and [stdin](#stdin)
+- basic authentication
 
 ## Installation options
 
-* download a binary file from [Releases](https://github.com/mthenw/frontail/releases) page (currently `frontail` doesn't work on Windows)
-* using [npm package](https://www.npmjs.com/package/frontail): `npm i frontail -g`
-* using [Docker image](https://cloud.docker.com/repository/docker/mthenw/frontail): `docker run -d -P -v /var/log:/log mthenw/frontail /log/syslog`
+- download a binary file from [Releases](https://github.com/mthenw/frontail/releases) pagegit st
+- using [npm package](https://www.npmjs.com/package/frontail): `npm i frontail -g`
+- using [Docker image](https://cloud.docker.com/repository/docker/mthenw/frontail): `docker run -d -P -v /var/log:/log mthenw/frontail /log/syslog`
 
 ## Usage
 
@@ -92,6 +92,7 @@ which means that every "err" string will be in red and every line containing "er
 _New presets are very welcome. If you don't like default or you would like to share yours, please create PR with json file._
 
 Available presets:
+
 - default
 - npmlog
 - python
@@ -125,7 +126,7 @@ http {
 
 ### Usage statistics
 
-`frontail` by default (from `v4.5.0`) gathers __anonymous__ usage statistics in Google Analytics. It can be disabled with
+`frontail` by default (from `v4.5.0`) gathers **anonymous** usage statistics in Google Analytics. It can be disabled with
 `--disable-usage-stats`.
 
 The data is used to help me understand how `frontail` is used and I can make it better.

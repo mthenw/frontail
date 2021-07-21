@@ -69,12 +69,20 @@ describe('connectBuilder', () => {
       .expect('Content-Type', 'text/html', done);
   });
 
-  it('should build app that replace index title', (done) => {
+  it('should build app that populates index title with files', (done) => {
     const app = connectBuilder('/')
       .index(path.join(__dirname, 'fixtures/index_with_title'), '/testfile')
       .build();
 
-    request(app).get('/').expect('<head><title>/testfile</title></head>', done);
+    request(app).get('/').expect('<head><title>tail -f /testfile</title></head>', done);
+  });
+
+  it('should build app that populates index title with title argument', (done) => {
+    const app = connectBuilder('/')
+      .index(path.join(__dirname, 'fixtures/index_with_title'), '/testfile', false, false, 'TEST TITLE')
+      .build();
+
+    request(app).get('/').expect('<head><title>TEST TITLE</title></head>', done);
   });
 
   it('should build app that sets socket.io namespace based on files', (done) => {
@@ -103,7 +111,7 @@ describe('connectBuilder', () => {
     request(app)
       .get('/')
       .expect(
-        '<head><title>/testfile</title><link href="dark.css" rel="stylesheet" type="text/css"/></head>',
+        '<head><title>tail -f /testfile</title><link href="dark.css" rel="stylesheet" type="text/css"/></head>',
         done
       );
   });
@@ -116,7 +124,7 @@ describe('connectBuilder', () => {
     request(app)
       .get('/')
       .expect(
-        '<head><title>/testfile</title><link href="default.css" rel="stylesheet" type="text/css"/></head>',
+        '<head><title>tail -f /testfile</title><link href="default.css" rel="stylesheet" type="text/css"/></head>',
         done
       );
   });

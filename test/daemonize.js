@@ -243,7 +243,7 @@ describe('daemonize', () => {
     daemonize('script', optionsParser);
 
     fs.writeFileSync.lastCall.args[0].should.be.equal('/path/to/pid');
-    fs.writeFileSync.lastCall.args[1].should.be.equal(1000);
+    fs.writeFileSync.lastCall.args[1].should.be.equal('1000');
   });
 
   it('should log to file', () => {

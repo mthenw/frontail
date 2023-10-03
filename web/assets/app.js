@@ -182,14 +182,29 @@ window.App = (function app(window, document) {
   var _highlightWord = function(line) {
     var output = line;
 
-    if (_highlightConfig && _highlightConfig.words) {
-      Object.keys(_highlightConfig.words).forEach((wordCheck) => {
-        output = output.replace(
-          wordCheck,
-          '<span style="' + _highlightConfig.words[wordCheck] + '">' + wordCheck + '</span>',
-        );
-      });
-    }
+    if (_highlightConfig) {
+      if (_highlightConfig.words) {
+        Object.keys(_highlightConfig.words).forEach((wordCheck) => {
+          output = output.replace(
+            wordCheck,
+            '<span style="' + _highlightConfig.words[wordCheck] + '">' + wordCheck + '</span>',
+          );
+        });
+      }
+      if (_highlightConfig.regex_words) {
+        Object.keys(_highlightConfig.regex_words).forEach((r) => {
+          output = output.replace(
+            _highlightConfig.regex_words[r].reg_expr,
+            '<span style="' + _highlightConfig.regex_words[r].style + '">$1</span>',
+          );
+        });
+      }
+      if (_highlightConfig.replace_words) {
+        Object.keys(_highlightConfig.replace_words).forEach((r) => {
+          output = output.replace(r, _highlightConfig.replace_words[r]);
+        });
+      }
+   }
 
     return output;
   };
@@ -285,6 +300,14 @@ window.App = (function app(window, document) {
         })
         .on('options:highlightConfig', function(highlightConfig) {
           _highlightConfig = highlightConfig;
+          if (highlightConfig.regex_words) {
+            Object.keys(highlightConfig.regex_words).forEach((r) => {
+              _highlightConfig.regex_words[r] = {
+                reg_expr: new RegExp(`(${r})`,'g'),
+                style: highlightConfig.regex_words[r],
+              };
+            });
+          }
         })
         .on('line', function(line) {
           if (_isPaused) {

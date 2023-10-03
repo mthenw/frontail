@@ -4,5 +4,12 @@
   },
   "lines": {
     "err": "font-weight: bold;"
+  },
+  "regex_words": {
+    "Error:\\d+": "color: red;" 
+  },
+  "replace_words": {
+    "#011": "&emsp;",
+    "#015": "<BR>"
   }
 }

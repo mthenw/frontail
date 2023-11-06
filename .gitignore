@@ -3,3 +3,4 @@ test/fixtures/*.pem
 npm-debug.log
 dist
 .DS_Store
+.vscode/

@@ -87,7 +87,7 @@ window.App = (function app(window, document) {
    * @param {Object} element
    * @private
    */
-  var _filterElement = function(elem) {
+  var _filterElement = function (elem) {
     var pattern = new RegExp(_filterValue, 'i');
     var element = elem;
     if (pattern.test(element.textContent)) {
@@ -103,7 +103,7 @@ window.App = (function app(window, document) {
    * @function
    * @private
    */
-  var _filterLogs = function() {
+  var _filterLogs = function () {
     var collection = _logContainer.childNodes;
     var i = collection.length;
 
@@ -124,10 +124,13 @@ window.App = (function app(window, document) {
    * @function
    * @private
    */
-  var _setFilterValueFromURL = function(filterInput, uri) {
+  var _setFilterValueFromURL = function (filterInput, uri) {
     var _url = new URL(uri);
     var _filterValueFromURL = _url.searchParams.get('filter');
-    if (typeof _filterValueFromURL !== 'undefined' && _filterValueFromURL !== null) {
+    if (
+      typeof _filterValueFromURL !== 'undefined' &&
+      _filterValueFromURL !== null
+    ) {
       _filterValue = _filterValueFromURL;
       filterInput.value = _filterValue; // eslint-disable-line
     }
@@ -139,7 +142,7 @@ window.App = (function app(window, document) {
    * @function
    * @private
    */
-  var _setFilterParam = function(value, uri) {
+  var _setFilterParam = function (value, uri) {
     var _url = new URL(uri);
     var _params = new URLSearchParams(_url.search.slice(1));
     if (value === '') {
@@ -155,7 +158,7 @@ window.App = (function app(window, document) {
    * @return void
    * @private
    */
-  var _faviconReset = function() {
+  var _faviconReset = function () {
     _newLinesCount = 0;
     Tinycon.setBubble(0);
   };
@@ -164,7 +167,7 @@ window.App = (function app(window, document) {
    * @return void
    * @private
    */
-  var _updateFaviconCounter = function() {
+  var _updateFaviconCounter = function () {
     if (_isWindowFocused || _isPaused) {
       return;
     }
@@ -179,16 +182,40 @@ window.App = (function app(window, document) {
    * @return String
    * @private
    */
-  var _highlightWord = function(line) {
+  var _highlightWord = function (line) {
     var output = line;
 
-    if (_highlightConfig && _highlightConfig.words) {
-      Object.keys(_highlightConfig.words).forEach((wordCheck) => {
-        output = output.replace(
-          wordCheck,
-          '<span style="' + _highlightConfig.words[wordCheck] + '">' + wordCheck + '</span>',
-        );
-      });
+    if (_highlightConfig) {
+      if (_highlightConfig.words) {
+        Object.keys(_highlightConfig.words).forEach((wordCheck) => {
+          output = output.replace(
+            wordCheck,
+            '<span style="' +
+              _highlightConfig.words[wordCheck] +
+              '">' +
+              wordCheck +
+              '</span>'
+          );
+        });
+      }
+      if (_highlightConfig.regex_words) {
+        Object.keys(_highlightConfig.regex_words).forEach((r) => {
+          output = output.replace(
+            _highlightConfig.regex_words[r].reg_expr,
+            '<span style="' +
+              _highlightConfig.regex_words[r].style +
+              '">$1</span>'
+          );
+        });
+      }
+      if (_highlightConfig.replace_words) {
+        Object.keys(_highlightConfig.replace_words).forEach((r) => {
+          output = output.replace(
+            _highlightConfig.replace_words[r].reg_expr,
+            _highlightConfig.replace_words[r].new_word
+          );
+        });
+      }
     }
 
     return output;
@@ -198,7 +225,7 @@ window.App = (function app(window, document) {
    * @return HTMLElement
    * @private
    */
-  var _highlightLine = function(line, container) {
+  var _highlightLine = function (line, container) {
     if (_highlightConfig && _highlightConfig.lines) {
       Object.keys(_highlightConfig.lines).forEach((lineCheck) => {
         if (line.indexOf(lineCheck) !== -1) {
@@ -230,7 +257,7 @@ window.App = (function app(window, document) {
       _setFilterValueFromURL(_filterInput, window.location.toString());
 
       // Filter input bind
-      _filterInput.addEventListener('keyup', function(e) {
+      _filterInput.addEventListener('keyup', function (e) {
         // ESC
         if (e.keyCode === 27) {
           this.value = '';
@@ -243,7 +270,7 @@ window.App = (function app(window, document) {
       });
 
       // Pause button bind
-      _pauseBtn.addEventListener('mouseup', function() {
+      _pauseBtn.addEventListener('mouseup', function () {
         _isPaused = !_isPaused;
         if (_isPaused) {
           this.className += ' play';
@@ -256,40 +283,56 @@ window.App = (function app(window, document) {
       // Favicon counter bind
       window.addEventListener(
         'blur',
-        function() {
+        function () {
           _isWindowFocused = false;
         },
-        true,
+        true
       );
       window.addEventListener(
         'focus',
-        function() {
+        function () {
           _isWindowFocused = true;
           _faviconReset();
         },
-        true,
+        true
       );
 
       // socket.io init
       _socket = opts.socket;
       _socket
-        .on('options:lines', function(limit) {
+        .on('options:lines', function (limit) {
           _linesLimit = limit;
         })
-        .on('options:hide-topbar', function() {
+        .on('options:hide-topbar', function () {
           _topbar.className += ' hide';
           _body.className = 'no-topbar';
         })
-        .on('options:no-indent', function() {
+        .on('options:no-indent', function () {
           _logContainer.className += ' no-indent';
         })
-        .on('options:highlightConfig', function(highlightConfig) {
+        .on('options:highlightConfig', function (highlightConfig) {
           _highlightConfig = highlightConfig;
+          if (highlightConfig.regex_words) {
+            Object.keys(highlightConfig.regex_words).forEach((r) => {
+              _highlightConfig.regex_words[r] = {
+                reg_expr: new RegExp(`(${r})`, 'g'),
+                style: highlightConfig.regex_words[r],
+              };
+            });
+          }
+          if (highlightConfig.replace_words) {
+            Object.keys(highlightConfig.replace_words).forEach((r) => {
+              _highlightConfig.replace_words[r] = {
+                reg_expr: new RegExp(`(${r})`, 'g'),
+                new_word: highlightConfig.replace_words[r],
+              };
+            });
+          }
         })
-        .on('line', function(line) {
+        .on('line', function (line) {
           if (_isPaused) {
             _skipCounter += 1;
-            self.log('==> SKIPPED: ' + _skipCounter + ' <==', (_skipCounter > 1));
+            self.log('==> SKIPPED: ' + _skipCounter + ' <==', _skipCounter > 1);
           } else {
             self.log(line);
           }
@@ -302,8 +345,9 @@ window.App = (function app(window, document) {
      * @param {string} data data to log
      */
     log: function log(data, replace = false) {
-      var wasScrolledBottom = window.innerHeight + Math.ceil(window.pageYOffset + 1)
-        >= document.body.offsetHeight;
+      var wasScrolledBottom =
+        window.innerHeight + Math.ceil(window.pageYOffset + 1) >=
+        document.body.offsetHeight;
       var div = document.createElement('div');
       var p = document.createElement('p');
       p.className = 'inner-line';
@@ -342,4 +386,4 @@ window.App = (function app(window, document) {
       _updateFaviconCounter();
     },
   };
-}(window, document));
+})(window, document);

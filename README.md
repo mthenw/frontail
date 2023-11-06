@@ -83,11 +83,17 @@ Use `-` for streaming stdin:
     },
     "lines": {
         "err": "font-weight: bold;"
+    },
+    "regex_words": {
+        "Error:\\d+": "color: red;" 
+    },
+    "replace_words": {
+        "#011": "&emsp;", "#012": "<BR>", "#015": "<BR>"
     }
 }
 ```
 
-which means that every "err" string will be in red and every line containing "err" will be bolded.
+which means that every "err" string will be in red and every line containing "err" will be bolded, "Error:\d+" (javascript regular expression syntax) will be in red and "#0XX" (which are used to escape tab and cr/lf on rsyslogd) will be replaced with their html counterparts.
 
 _New presets are very welcome. If you don't like default or you would like to share yours, please create PR with json file._
 
